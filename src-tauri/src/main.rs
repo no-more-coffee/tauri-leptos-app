@@ -5,15 +5,8 @@ use itunes_xml::{parse_itunes_xml, Library, Track};
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn greet(name: &str) -> String {
-    let Ok(library) = parse_itunes_xml("../itunes-xml/tests/fixtures/Export.xml") else {
-        return "File not found".to_string()
-    };
-    format!(
-        "Hello, {}! You've been greeted from Rust!. Tracks: {:?}",
-        name,
-        library.tracks.len()
-    )
+fn greet(name: &str) -> Result<Library, String> {
+    parse_itunes_xml("../itunes-xml/tests/fixtures/single-track.xml").map_err(|err| err.to_string())
 }
 
 fn main() {

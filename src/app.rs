@@ -1,18 +1,37 @@
-use leptos::leptos_dom::ev::{SubmitEvent};
+// use itunes_xml::{Library, Track};
+use leptos::leptos_dom::ev::SubmitEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::to_value;
+use serde_wasm_bindgen::{from_value, to_value};
+use std::collections::HashMap;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
 extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"])]
-    async fn invoke(cmd: &str, args: JsValue) -> JsValue;
+    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"], catch)]
+    async fn invoke(cmd: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
 }
 
 #[derive(Serialize, Deserialize)]
 struct GreetArgs<'a> {
     name: &'a str,
+}
+
+// TODO Fix u64 id to str conversion
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Library {
+    pub tracks: HashMap<String, Track>,
+    pub playlists: HashMap<String, Playlist>,
+}
+
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
+pub struct Track {
+    pub id: u64,
+}
+
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Playlist {
+    pub id: u64,
 }
 
 #[component]
@@ -34,8 +53,20 @@ pub fn App(cx: Scope) -> impl IntoView {
 
             let args = to_value(&GreetArgs { name: &name.get() }).unwrap();
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-            let new_msg = invoke("greet", args).await.as_string().unwrap();
-            set_greet_msg.set(new_msg);
+
+            // JsValue(Object({"playlists":{"1":{"id":1}},"tracks":{"5994":{"id":5994}}}))
+            // let res = Ok(Library { tracks: {"5994": Track { id: 5994 }}, playlists: {"1": Playlist { id: 1 }} })
+            // log!("{:?}", res);
+            let msg = match invoke("greet", args).await.map(from_value::<Library>) {
+                Ok(Ok(library)) => {
+                    format!("{:?}", library.tracks)
+                }
+                Ok(Err(err)) => {
+                    format!("{:?}", err)
+                }
+                Err(e) => e.as_string().unwrap_or("Failed to greet".to_string()),
+            };
+            set_greet_msg.set(msg);
         });
     };
 

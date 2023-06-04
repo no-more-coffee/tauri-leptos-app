@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Major Version</key><integer>1</integer>
+	<key>Minor Version</key><integer>1</integer>
+	<key>Date</key><date>2020-02-24T06:20:25Z</date>
+	<key>Application Version</key><string>1.0.3.1</string>
+	<key>Features</key><integer>5</integer>
+	<key>Show Content Ratings</key><true/>
+	<key>Music Folder</key><string>file:///path/to/Music/Music/Media/</string>
+	<key>Library Persistent ID</key><string>2F3F8612B7B1370C</string>
+	<key>Tracks</key>
+	<dict>
+		<key>5994</key>
+		<dict>
+			<key>Track ID</key><integer>5994</integer>
+			<key>Name</key><string>Bizarre Love Triangle (feat. Sarah Marie Young)</string>
+			<key>Artist</key><string>Scott Bradlee's Postmodern Jukebox</string>
+			<key>Album Artist</key><string>Scott Bradlee's Postmodern Jukebox</string>
+			<key>Composer</key><string>Gillian Gilbert, Peter Hook, Stephen Morris &#38; Bernard Sumner</string>
+			<key>Album</key><string>Bizarre Love Triangle (feat. Sarah Marie Young) - Single</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>Purchased AAC audio file</string>
+			<key>Size</key><integer>8145438</integer>
+			<key>Total Time</key><integer>230541</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Disc Count</key><integer>1</integer>
+			<key>Track Number</key><integer>1</integer>
+			<key>Track Count</key><integer>1</integer>
+			<key>Year</key><integer>2016</integer>
+			<key>Date Modified</key><date>2019-01-24T13:14:21Z</date>
+			<key>Date Added</key><date>2016-11-19T13:51:49Z</date>
+			<key>Bit Rate</key><integer>256</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Equalizer</key><string>None</string>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3587278628</integer>
+			<key>Play Date UTC</key><date>2017-09-03T07:17:08Z</date>
+			<key>Release Date</key><date>2016-11-17T08:00:00Z</date>
+			<key>Normalization</key><integer>2145</integer>
+			<key>Sort Album</key><string>Bizarre Love Triangle (feat. Sarah Marie Young) - Single</string>
+			<key>Sort Artist</key><string>Scott Bradlee's Postmodern Jukebox</string>
+			<key>Sort Composer</key><string>Gillian Gilbert, Peter Hook, Stephen Morris &#38; Bernard Sumner</string>
+			<key>Sort Name</key><string>Bizarre Love Triangle (feat. Sarah Marie Young)</string>
+			<key>Persistent ID</key><string>193E85CF3B0D9513</string>
+			<key>Track Type</key><string>File</string>
+			<key>Purchased</key><true/>
+			<key>Location</key><string>file:///path/to/file/01%20Bizarre%20Love%20Triangle%20(feat.%20Sarah%20Marie%20Young).m4a</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+	</dict>
+	<key>Playlists</key>
+	<array>
+		<dict>
+			<key>Name</key><string>All</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>84983</integer>
+			<key>Playlist Persistent ID</key><string>212185231B0FDAA9</string>
+			<key>All Items</key><true/>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>5994</integer>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

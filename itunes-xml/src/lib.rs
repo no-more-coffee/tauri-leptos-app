@@ -1,21 +1,22 @@
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::io::BufReader;
 use std::{fmt::Debug, fs::File};
 
 use xml::reader::{EventReader, XmlEvent};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Library {
     pub tracks: HashMap<u64, Track>,
     pub playlists: HashMap<u64, Playlist>,
 }
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Serialize, Deserialize)]
 pub struct Track {
     pub id: u64,
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Playlist {
     pub id: u64,
 }
@@ -251,7 +252,7 @@ mod tests {
         // let elements_iterator = ElementsIterator { parser };
 
         // let result = parse_document(elements_iterator);
-        let result: std::result::Result<(),  xml::reader::Error> = Ok(());
+        let result: std::result::Result<(), xml::reader::Error> = Ok(());
         assert_eq!(Ok(()), result);
     }
 }
