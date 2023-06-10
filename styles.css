@@ -110,3 +110,13 @@ button {
     background-color: #0f0f0f69;
   }
 }
+
+tr:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+th:nth-child(even),td:nth-child(even) {
+  background-color: rgba(150, 212, 212, 0.4);
+}
+
+tr:hover {background-color: #D6EEEE;}
