@@ -47,12 +47,16 @@ fn parse_document(mut it: ElementsIterator) -> Result<Library, xml::reader::Erro
     let mut playlists = HashMap::<u64, Playlist>::new();
 
     match it.next() {
-        Some(Element::Plist) => println!("Skipping 'plist' wrapper"),
+        Some(Element::Plist) => {
+            // println!("Skipping 'plist' wrapper");
+        }
         element => panic!("Unexpected element {:?}", element),
     };
 
     match it.next() {
-        Some(Element::Dict) => println!("Root dict start"),
+        Some(Element::Dict) => {
+            // println!("Root dict start")
+        }
         element => panic!("Unexpected element {:?}", element),
     };
 

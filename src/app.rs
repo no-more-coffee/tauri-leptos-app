@@ -1,20 +1,29 @@
 // use itunes_xml::{Library, Track};
+use leptos::ev::MouseEvent;
 use leptos::*;
-use leptos::{ev::MouseEvent, leptos_dom::ev::SubmitEvent};
 use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::{from_value, to_value};
+// use serde_wasm_bindgen::{from_value, to_value};
 use std::collections::HashMap;
-use wasm_bindgen::prelude::*;
+use std::path::PathBuf;
+use tauri_sys::dialog::FileDialogBuilder;
+use tauri_sys::tauri;
+// use wasm_bindgen::prelude::*;
 
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"], catch)]
-    async fn invoke(cmd: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
-}
+// #[wasm_bindgen]
+// extern "C" {
+//     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"], catch)]
+//     async fn invoke(cmd: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
+// }
 
 #[derive(Serialize, Deserialize)]
 struct GreetArgs<'a> {
     name: &'a str,
+}
+
+async fn greet11(name: String) -> Result<Library, String> {
+    tauri::invoke("greet", &GreetArgs { name: &name })
+        .await
+        .map_err(|e| e.to_string())
 }
 
 // TODO Fix u64 id to str conversion
@@ -24,7 +33,7 @@ pub struct Library {
     pub playlists: HashMap<String, Playlist>,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
 pub struct Track {
     pub id: u64,
 }
@@ -34,59 +43,87 @@ pub struct Playlist {
     pub id: u64,
 }
 
+async fn pick_file() -> Result<Option<PathBuf>, String> {
+    FileDialogBuilder::new()
+        .set_title("Select a file to mark this test as passing")
+        .pick_file()
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
-    let (name, set_name) = create_signal(cx, String::new());
-    let (message, set_message) = create_signal(cx, String::new());
+    // let (name, set_name) = create_signal(cx, String::default());
+    let (message, set_message) = create_signal(cx, String::default());
+    let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
-    let update_name = move |ev| {
-        let v = event_target_value(&ev);
-        log!("{:?}", v);
-        set_name.set(v);
-    };
+    // let update_name = move |ev| {
+    //     let v = event_target_value(&ev);
+    //     log!("{:?}", v);
+    //     set_name.set(v);
+    // };
+
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
-            // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-            log!("Before");
-            let args = JsValue::default();
-            log!("{:?}", invoke("save_file_path", args).await);
-            log!("After");
-            // let msg = match invoke2("save_file_path").await {
-            //     Ok(ok) => {
-            //         format!("{:?}", ok)
-            //     }
-            //     Err(e) => e.as_string().unwrap_or("Failed to greet".to_string()),
-            // };
-            // set_message.set(msg);
+            let msg = match pick_file().await {
+                Ok(Some::<PathBuf>(f)) => f.to_string_lossy().to_string(),
+                Ok(None) => String::default(),
+                Err(e) => e,
+            };
+            set_message.set(msg);
         });
     };
 
-    let greet = move |ev: SubmitEvent| {
+    // let greet = move |ev: SubmitEvent| {
+    let submit = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
-            if name.get().is_empty() {
+            if message.get().is_empty() {
                 return;
             }
 
-            let args =
-                to_value(&GreetArgs { name: &name.get() }).expect("Failed to serialize args");
+            // let args =
+            //     to_value(&GreetArgs { name: &name.get() }).expect("Failed to serialize args");
             // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
             // JsValue(Object({"playlists":{"1":{"id":1}},"tracks":{"5994":{"id":5994}}}))
             // let res = Ok(Library { tracks: {"5994": Track { id: 5994 }}, playlists: {"1": Playlist { id: 1 }} })
             // log!("{:?}", res);
-            let msg = match invoke("greet", args).await.map(from_value::<Library>) {
-                Ok(Ok(library)) => {
-                    format!("{:?}", library.tracks)
+            // let msg = match greet11().await.map(from_value::<Library>) {
+            let msg = match greet11(message.get()).await {
+                Ok(library) => {
+                    let m = format!("{:?}", &library.tracks);
+                    set_tracks.set(library.tracks.into_values().collect());
+                    m
                 }
-                Ok(Err(err)) => {
-                    format!("{:?}", err)
-                }
-                Err(e) => e.as_string().unwrap_or("Failed to greet".to_string()),
+                Err(e) => e,
             };
             set_message.set(msg);
         });
+    };
+
+    let tracks_table = move || {
+        view! { cx,
+            <table>
+                <tr>
+                    <th>{"Track ID"}</th>
+                    <th>{"Name"}</th>
+                    <th>{"Artist"}</th>
+                </tr>
+
+                { tracks.get().into_iter()
+                    .map(|n| view! { cx,
+                        <tr>
+                            <td>{n.id}</td>
+                            <td>{n.id}</td>
+                            <td>{n.id}</td>
+                        </tr>
+                    })
+                    .collect::<Vec<_>>()
+                }
+            </table>
+        }
     };
 
     view! { cx,
@@ -111,41 +148,21 @@ pub fn App(cx: Scope) -> impl IntoView {
             //     <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">"rust-analyzer"</a>
             // </p>
 
-            <form class="row" on:submit=greet>
-                <input
-                    id="greet-input"
-                    placeholder="Enter a name..."
-                    on:input=update_name
-                />
-                <button type="submit">"Greet"</button>
-            </form>
+            // <form class="row" on:submit=greet>
+            //     <input
+            //         id="greet-input"
+            //         placeholder="Enter a name..."
+            //         on:input=update_name
+            //     />
+            //     <button type="submit">"Submit"</button>
+            // </form>
 
             <button on:click=button_click>{"Press"}</button>
+            <button on:click=submit>{"Submit"}</button>
 
             <p><b>{ move || message.get() }</b></p>
 
-            <table>
-                <tr>
-                    <th>{"Track ID"}</th>
-                    <th>{"Name"}</th>
-                    <th>{"Artist"}</th>
-                </tr>
-                <tr>
-                    <td>5994</td>
-                    <td>{"Cross my heart"}</td>
-                    <td>{"Diana"}</td>
-                </tr>
-                <tr>
-                    <td>5994</td>
-                    <td>{"Each and everyone"}</td>
-                    <td>{"Vladimir"}</td>
-                </tr>
-                <tr>
-                    <td>5994</td>
-                    <td>{"Each and everyone"}</td>
-                    <td>{"EBTG"}</td>
-                </tr>
-            </table>
+            {tracks_table}
         </main>
     }
 }

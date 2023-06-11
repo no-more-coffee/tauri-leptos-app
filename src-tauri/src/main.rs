@@ -14,25 +14,25 @@ struct AppState {
 #[tauri::command]
 fn greet(name: &str, app_state: State<AppState>) -> Result<Library, String> {
     println!("{:?}", name);
-    println!("{:?}", app_state.file_path.clone());
+    // println!("{:?}", app_state.file_path.clone());
 
-    parse_itunes_xml("../itunes-xml/tests/fixtures/single-track.xml").map_err(|err| err.to_string())
+    parse_itunes_xml(name).map_err(|err| err.to_string())
 }
 
-#[tauri::command]
-fn save_file_path(app_state: State<AppState>) -> Result<(), String> {
-    let saved_file_path = app_state.file_path.clone();
-    FileDialogBuilder::default().pick_file(move |path_buf| {
-        // do something with the optional file path here
-        // the file path is `None` if the user closed the dialog
-        if let Some(file_path) = path_buf {
-            let mut state = saved_file_path.lock().unwrap();
-            *state = file_path.to_string_lossy().to_string();
-        }
-    });
+// #[tauri::command]
+// fn save_file_path(app_state: State<AppState>) -> Result<(), String> {
+//     let saved_file_path = app_state.file_path.clone();
+//     FileDialogBuilder::default().pick_file(move |path_buf| {
+//         // do something with the optional file path here
+//         // the file path is `None` if the user closed the dialog
+//         if let Some(file_path) = path_buf {
+//             let mut state = saved_file_path.lock().unwrap();
+//             *state = file_path.to_string_lossy().to_string();
+//         }
+//     });
 
-    Ok(())
-}
+//     Ok(())
+// }
 
 fn main() {
     let app_state = AppState {
@@ -41,7 +41,7 @@ fn main() {
 
     tauri::Builder::default()
         .manage(app_state)
-        .invoke_handler(tauri::generate_handler![greet, save_file_path])
+        .invoke_handler(tauri::generate_handler![greet])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
