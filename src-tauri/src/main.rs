@@ -12,11 +12,11 @@ struct AppState {
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn greet(name: &str, app_state: State<AppState>) -> Result<Library, String> {
-    println!("{:?}", name);
+fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<Library, String> {
+    println!("{:?}", path);
     // println!("{:?}", app_state.file_path.clone());
 
-    parse_itunes_xml(name).map_err(|err| err.to_string())
+    parse_itunes_xml(path).map_err(|err| err.to_string())
 }
 
 // #[tauri::command]
@@ -41,7 +41,7 @@ fn main() {
 
     tauri::Builder::default()
         .manage(app_state)
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![parse_itunes_xml_command])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

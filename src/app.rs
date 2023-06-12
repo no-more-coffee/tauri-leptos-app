@@ -16,14 +16,17 @@ use tauri_sys::tauri;
 // }
 
 #[derive(Serialize, Deserialize)]
-struct GreetArgs<'a> {
-    name: &'a str,
+struct ParseCommandArgs<'a> {
+    path: &'a str,
 }
 
-async fn greet11(name: String) -> Result<Library, String> {
-    tauri::invoke("greet", &GreetArgs { name: &name })
-        .await
-        .map_err(|e| e.to_string())
+async fn parse_itunes_xml(lib_path: String) -> Result<Library, String> {
+    tauri::invoke(
+        "parse_itunes_xml_command",
+        &ParseCommandArgs { path: &lib_path },
+    )
+    .await
+    .map_err(|e| e.to_string())
 }
 
 // TODO Fix u64 id to str conversion
@@ -54,7 +57,7 @@ async fn pick_file() -> Result<Option<PathBuf>, String> {
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
     // let (name, set_name) = create_signal(cx, String::default());
-    let (message, set_message) = create_signal(cx, String::default());
+    let (lib_path, set_lib_path) = create_signal(cx, String::default());
     let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
     // let update_name = move |ev| {
@@ -66,12 +69,12 @@ pub fn App(cx: Scope) -> impl IntoView {
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
-            let msg = match pick_file().await {
+            let picked_file = match pick_file().await {
                 Ok(Some::<PathBuf>(f)) => f.to_string_lossy().to_string(),
                 Ok(None) => String::default(),
                 Err(e) => e,
             };
-            set_message.set(msg);
+            set_lib_path.set(picked_file);
         });
     };
 
@@ -79,7 +82,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     let submit = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
-            if message.get().is_empty() {
+            if lib_path.get().is_empty() {
                 return;
             }
 
@@ -91,15 +94,13 @@ pub fn App(cx: Scope) -> impl IntoView {
             // let res = Ok(Library { tracks: {"5994": Track { id: 5994 }}, playlists: {"1": Playlist { id: 1 }} })
             // log!("{:?}", res);
             // let msg = match greet11().await.map(from_value::<Library>) {
-            let msg = match greet11(message.get()).await {
+            match parse_itunes_xml(lib_path.get()).await {
                 Ok(library) => {
-                    let m = format!("{:?}", &library.tracks);
                     set_tracks.set(library.tracks.into_values().collect());
-                    m
                 }
-                Err(e) => e,
+                Err(e) => log!("{:?}", e),
             };
-            set_message.set(msg);
+            // set_message.set(msg);
         });
     };
 
@@ -160,7 +161,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             <button on:click=button_click>{"Press"}</button>
             <button on:click=submit>{"Submit"}</button>
 
-            <p><b>{ move || message.get() }</b></p>
+            <p><b>{ move || lib_path.get() }</b></p>
 
             {tracks_table}
         </main>
