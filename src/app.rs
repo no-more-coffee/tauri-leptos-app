@@ -1,8 +1,7 @@
-// use itunes_xml::{Library, Track};
+use itunes_xml::{Track, Playlist};
 use leptos::ev::MouseEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
-// use serde_wasm_bindgen::{from_value, to_value};
 use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
@@ -34,16 +33,6 @@ async fn parse_itunes_xml(lib_path: String) -> Result<Library, String> {
 pub struct Library {
     pub tracks: HashMap<String, Track>,
     pub playlists: HashMap<String, Playlist>,
-}
-
-#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
-pub struct Track {
-    pub id: u64,
-}
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Playlist {
-    pub id: u64,
 }
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
@@ -96,6 +85,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             // let msg = match greet11().await.map(from_value::<Library>) {
             match parse_itunes_xml(lib_path.get()).await {
                 Ok(library) => {
+                    log!("{:?}", library);
                     set_tracks.set(library.tracks.into_values().collect());
                 }
                 Err(e) => log!("{:?}", e),
@@ -111,14 +101,16 @@ pub fn App(cx: Scope) -> impl IntoView {
                     <th>{"Track ID"}</th>
                     <th>{"Name"}</th>
                     <th>{"Artist"}</th>
+                    <th>{"BPM"}</th>
                 </tr>
 
                 { tracks.get().into_iter()
                     .map(|n| view! { cx,
                         <tr>
                             <td>{n.id}</td>
-                            <td>{n.id}</td>
-                            <td>{n.id}</td>
+                            <td>{n.name}</td>
+                            <td>{n.artist}</td>
+                            <td>{n.bpm}</td>
                         </tr>
                     })
                     .collect::<Vec<_>>()
