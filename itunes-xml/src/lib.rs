@@ -140,14 +140,45 @@ impl Track {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Playlist {
-    pub id: u64,                         // <key>Playlist ID</key><integer>50344</integer>
+    pub id: u64,                     // <key>Playlist ID</key><integer>50344</integer>
     pub name: String, // `bson:"Name,omitempty"` // <key>Name</key><string>Music</string>
     pub persistent_id: String, // `bson:"PersistentID,omitempty"` // <key>Playlist Persistent ID</key><string>87864958089CA4B9</string>
     pub description: Option<String>, // `bson:"Description,omitempty"` // <key>Description</key><string></string>
-    pub all_items: bool,             // `bson:"AllItems,omitempty"` // <key>All Items</key><true/>
+    pub parent_persistent_id: Option<String>, // `bson:"PersistentID,omitempty"` // <key>Parent Persistent ID</key><string>87864958089CA4B9</string>
+    pub all_items: bool, // `bson:"AllItems,omitempty"` // <key>All Items</key><true/>
     pub distinguished_kind: Option<i64>, // <key>Distinguished Kind</key><integer>4</integer>
-    pub music: Option<bool>,         // <key>Music</key><true/>
-    pub items: HashSet<u64>,         // `bson:"Items,omitempty"` // <key>Playlist Items</key>
+    pub music: Option<bool>, // <key>Music</key><true/>
+    pub master: Option<bool>, // <key>Master</key><true/>
+    pub visible: Option<bool>, // <key>Visible</key><true/>
+    pub folder: Option<bool>, // <key>Folder</key><true/>
+    pub movies: Option<bool>, // <key>Movies</key><true/>
+    pub tv_shows: Option<bool>, // TV Shows
+    pub audiobooks: Option<bool>, // Audiobooks
+    pub podcasts: Option<bool>, // Podcasts
+    pub items: HashSet<u64>, // `bson:"Items,omitempty"` // <key>Playlist Items</key>
+    pub smart_info: Option<String>, /*
+                         <key>Smart Info</key>
+                         <data>
+                         AQEAAwAAAAIAAAAZAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                         AAAAAA==
+                         </data>
+                         */
+    pub smart_criteria: Option<String>, /*
+                                           <key>Smart Criteria</key>
+                                           <data>
+                                           U0xzdAABAAEAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAQAAAAAAAAAAAAAAAAAAAAAAAAA
+                                           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAQIbEAAAAAAAAAAAAAAAAAAAAB
+                                           AAAAAAAQIbEAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AgAEAAAA
+                                           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARAAAAAAAIIAE
+                                           AAAAAAAAAAAAAAAAAAAAAQAAAAAAIIAEAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAA
+                                           AAAAAAAAAAAAhQAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+                                           AAAAAAAAAEQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAAAAA
+                                           AAEAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+                                           </data>
+                                        */
 }
 
 #[derive(Debug)]
@@ -328,9 +359,19 @@ impl ElementsIterator {
             name: String::default(),
             persistent_id: String::default(),
             description: None,
+            parent_persistent_id: None,
             all_items: false,
             distinguished_kind: None,
             music: None,
+            master: None,
+            visible: None,
+            folder: None,
+            movies: None,
+            tv_shows: None,
+            audiobooks: None,
+            podcasts: None,
+            smart_info: None,
+            smart_criteria: None,
             items: HashSet::new(),
         };
 
@@ -346,9 +387,19 @@ impl ElementsIterator {
                 "Name" => playlist.name = self.next_str().unwrap(),
                 "Playlist Persistent ID" => playlist.persistent_id = self.next_str().unwrap(),
                 "Description" => playlist.description = self.next_str(),
+                "Parent Persistent ID" => playlist.parent_persistent_id = self.next_str(),
                 "All Items" => playlist.all_items = self.next_bool().unwrap(),
                 "Distinguished Kind" => playlist.distinguished_kind = self.next_int(),
                 "Music" => playlist.music = self.next_bool(),
+                "Master" => playlist.master = self.next_bool(),
+                "Visible" => playlist.visible = self.next_bool(),
+                "Folder" => playlist.folder = self.next_bool(),
+                "Movies" => playlist.movies = self.next_bool(),
+                "TV Shows" => playlist.tv_shows = self.next_bool(),
+                "Audiobooks" => playlist.audiobooks = self.next_bool(),
+                "Podcasts" => playlist.podcasts = self.next_bool(),
+                "Smart Info" => playlist.smart_info = self.next_str(),
+                "Smart Criteria" => playlist.smart_criteria = self.next_str(),
                 "Playlist Items" => {
                     match self.next() {
                         Some(Element::Array) => (),
