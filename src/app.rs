@@ -118,6 +118,15 @@ pub fn App(cx: Scope) -> impl IntoView {
                 { tracks.get().into_iter()
                     .map(|n| view! { cx,
                         <tr>
+                            <td>
+                                <audio
+                                    controls
+                                    src="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
+                                        <a href="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
+                                            {"Feather (Feat. Cise Starr & Akin From Cyne)"}
+                                        </a>
+                                </audio>
+                            </td>
                             <td>{n.id}</td>
                             <td>{n.name}</td>
                             <td>{n.artist}</td>
@@ -161,16 +170,9 @@ pub fn App(cx: Scope) -> impl IntoView {
             //     <button type="submit">"Submit"</button>
             // </form>
 
-            <button on:click=button_click>{"Press"}</button>
-            <button on:click=submit>{"Submit"}</button>
-            <button on:click=load>{"Load"}</button>
-            // <audio
-            //     controls
-            //     src="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
-            //         <a href="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
-            //             {"Feather (Feat. Cise Starr & Akin From Cyne)"}
-            //         </a>
-            // </audio>
+            <button on:click=button_click>{"Choose Library"}</button>
+            <button on:click=submit>{"Read Library"}</button>
+            <button on:click=load>{"Load Tracks"}</button>
 
             <p><b>{ move || lib_path.get() }</b></p>
             <p><b>{ move || lib_loaded.get() }</b></p>
