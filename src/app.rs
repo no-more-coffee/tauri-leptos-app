@@ -1,4 +1,4 @@
-use itunes_xml::{Track, Playlist};
+use itunes_xml::{Playlist, Track};
 use leptos::ev::MouseEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
@@ -6,26 +6,28 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
-// use wasm_bindgen::prelude::*;
 
-// #[wasm_bindgen]
-// extern "C" {
-//     #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "tauri"], catch)]
-//     async fn invoke(cmd: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
-// }
-
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize)]
 struct ParseCommandArgs<'a> {
     path: &'a str,
 }
 
-async fn parse_itunes_xml(lib_path: String) -> Result<Library, String> {
+#[derive(Serialize)]
+struct NoArgs;
+
+async fn parse_itunes_xml(lib_path: String) -> Result<String, String> {
     tauri::invoke(
         "parse_itunes_xml_command",
         &ParseCommandArgs { path: &lib_path },
     )
     .await
     .map_err(|e| e.to_string())
+}
+
+async fn fetch_library() -> Result<Library, String> {
+    tauri::invoke("fetch_library_command", &NoArgs {})
+        .await
+        .map_err(|e| e.to_string())
 }
 
 // TODO Fix u64 id to str conversion
@@ -47,6 +49,7 @@ async fn pick_file() -> Result<Option<PathBuf>, String> {
 pub fn App(cx: Scope) -> impl IntoView {
     // let (name, set_name) = create_signal(cx, String::default());
     let (lib_path, set_lib_path) = create_signal(cx, String::default());
+    let (lib_loaded, set_lib_loaded) = create_signal(cx, String::default());
     let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
     // let update_name = move |ev| {
@@ -67,7 +70,7 @@ pub fn App(cx: Scope) -> impl IntoView {
         });
     };
 
-    // let greet = move |ev: SubmitEvent| {
+    // let submit = move |ev: SubmitEvent| {
     let submit = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
@@ -75,22 +78,30 @@ pub fn App(cx: Scope) -> impl IntoView {
                 return;
             }
 
-            // let args =
-            //     to_value(&GreetArgs { name: &name.get() }).expect("Failed to serialize args");
-            // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-
-            // JsValue(Object({"playlists":{"1":{"id":1}},"tracks":{"5994":{"id":5994}}}))
-            // let res = Ok(Library { tracks: {"5994": Track { id: 5994 }}, playlists: {"1": Playlist { id: 1 }} })
-            // log!("{:?}", res);
-            // let msg = match greet11().await.map(from_value::<Library>) {
             match parse_itunes_xml(lib_path.get()).await {
+                Ok(lib_loaded) => {
+                    log!("{:?}", lib_loaded);
+                    set_lib_loaded.set(lib_loaded);
+                }
+                Err(e) => log!("{:?}", e),
+            };
+        });
+    };
+
+    let load = move |ev: MouseEvent| {
+        ev.prevent_default();
+        spawn_local(async move {
+            if lib_loaded.get().is_empty() {
+                return;
+            }
+
+            match fetch_library().await {
                 Ok(library) => {
                     log!("{:?}", library);
                     set_tracks.set(library.tracks.into_values().collect());
                 }
                 Err(e) => log!("{:?}", e),
             };
-            // set_message.set(msg);
         });
     };
 
@@ -152,8 +163,17 @@ pub fn App(cx: Scope) -> impl IntoView {
 
             <button on:click=button_click>{"Press"}</button>
             <button on:click=submit>{"Submit"}</button>
+            <button on:click=load>{"Load"}</button>
+            // <audio
+            //     controls
+            //     src="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
+            //         <a href="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
+            //             {"Feather (Feat. Cise Starr & Akin From Cyne)"}
+            //         </a>
+            // </audio>
 
             <p><b>{ move || lib_path.get() }</b></p>
+            <p><b>{ move || lib_loaded.get() }</b></p>
 
             {tracks_table}
         </main>
