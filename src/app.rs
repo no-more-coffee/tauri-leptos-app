@@ -2,14 +2,28 @@ use itunes_xml::{Playlist, Track};
 use leptos::ev::MouseEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
+use serde_wasm_bindgen::to_value;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
+use wasm_bindgen::prelude::wasm_bindgen;
+use wasm_bindgen::JsValue;
+
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "fs"], catch)]
+    async fn exists(path: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
+}
 
 #[derive(Serialize)]
 struct ParseCommandArgs<'a> {
     path: &'a str,
+}
+
+#[derive(Serialize)]
+struct FsOptions {
+    dir: Option<u16>,
 }
 
 #[derive(Serialize)]
@@ -57,6 +71,13 @@ pub fn App(cx: Scope) -> impl IntoView {
     //     log!("{:?}", v);
     //     set_name.set(v);
     // };
+
+    let greet = move |ev: MouseEvent| {
+        ev.prevent_default();
+        spawn_local(async move {
+            log!("{:?}", exists("swing", to_value(&FsOptions{dir: Some(1)}).unwrap()).await);
+        });
+    };
 
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -173,6 +194,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             <button on:click=button_click>{"Choose Library"}</button>
             <button on:click=submit>{"Read Library"}</button>
             <button on:click=load>{"Load Tracks"}</button>
+            <button on:click=greet>{"Exists"}</button>
 
             <p><b>{ move || lib_path.get() }</b></p>
             <p><b>{ move || lib_loaded.get() }</b></p>
