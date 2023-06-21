@@ -1,26 +1,35 @@
-use axum::{extract::Path, response::IntoResponse, routing::get, Router};
-use hyper::{Body, Response};
+use axum::{
+    body::Body,
+    extract::Path,
+    http::StatusCode,
+    response::{IntoResponse, Response},
+    routing::get,
+    Router,
+};
 use tokio::fs::File;
 use tokio_util::codec::{BytesCodec, FramedRead};
 use urlencoding::decode;
 
 pub async fn main() {
-    // build our application with a single route
-    // let app = Router::new().route("/", get(|| async { "Hello, World!" }));
     let app = Router::new().route("/files/*file_path", get(serve_file));
 
-    // run it with hyper on localhost:3000
     axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
         .serve(app.into_make_service())
         .await
         .unwrap();
 }
 
-async fn serve_file(Path(file_path): Path<String>) -> impl IntoResponse {
-    let decoded_path = format!("/{}", decode(&file_path).unwrap());
-    let file = File::open(decoded_path).await.unwrap();
+async fn serve_file(Path(path_param): Path<String>) -> Response {
+    let decoded_path = match decode(&path_param) {
+        Ok(s) => format!("/{}", s),
+        Err(e) => return (StatusCode::BAD_REQUEST, format!("{}. Path param: {}", e, path_param)).into_response(),
+    };
+    let file = match File::open(&decoded_path).await {
+        Ok(f) => f,
+        Err(e) => return (StatusCode::INTERNAL_SERVER_ERROR, format!("{}. Path: {}", e, decoded_path)).into_response(),
+    };
     let stream = FramedRead::new(file, BytesCodec::new());
     let body = Body::wrap_stream(stream);
     let response = Response::new(body);
-    response
+    response.into_response()
 }
