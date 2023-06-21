@@ -1,0 +1,1963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Major Version</key><integer>1</integer>
+	<key>Minor Version</key><integer>1</integer>
+	<key>Date</key><date>2022-08-07T15:44:40Z</date>
+	<key>Application Version</key><string>12.9.5.5</string>
+	<key>Features</key><integer>5</integer>
+	<key>Music Folder</key><string>file:///Users/qu/Music/iTunes/iTunes%20Media/</string>
+	<key>Library Persistent ID</key><string>099BECFAF50E3D48</string>
+	<key>Tracks</key>
+	<dict>
+		<key>6090</key>
+		<dict>
+			<key>Track ID</key><integer>6090</integer>
+			<key>Name</key><string>One Night Stand</string>
+			<key>Artist</key><string>Artie Shaw</string>
+			<key>Album</key><string>Classic Artie Shaw Bluebird and Victor Sessions</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>4507169</integer>
+			<key>Total Time</key><integer>187742</integer>
+			<key>Track Number</key><integer>8</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>200</integer>
+			<key>Date Modified</key><date>2019-01-24T13:17:00Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:29Z</date>
+			<key>Bit Rate</key><integer>192</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>13</integer>
+			<key>Play Date</key><integer>3736073948</integer>
+			<key>Play Date UTC</key><date>2022-05-22T11:19:08Z</date>
+			<key>Skip Count</key><integer>25</integer>
+			<key>Skip Date</key><date>2022-05-12T07:30:09Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>723</integer>
+			<key>Persistent ID</key><string>8FAD38445BC7130D</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Artie%20Show%20-%20One%20night%20stand.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>6370</key>
+		<dict>
+			<key>Track ID</key><integer>6370</integer>
+			<key>Name</key><string>Bojangles</string>
+			<key>Artist</key><string>Duke Ellington, Ben Webster</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7067829</integer>
+			<key>Total Time</key><integer>176587</integer>
+			<key>Track Number</key><integer>19</integer>
+			<key>BPM</key><integer>181</integer>
+			<key>Date Modified</key><date>2019-03-23T14:33:44Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:32Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3741505709</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:08:29Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2019-07-01T17:28:56Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1206</integer>
+			<key>Persistent ID</key><string>C52906FAB85EF6C4</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/19%20-%20Duke%20Ellington%20-%20Bojangles.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>6440</key>
+		<dict>
+			<key>Track ID</key><integer>6440</integer>
+			<key>Name</key><string>Ruint</string>
+			<key>Artist</key><string>Johny Hodges</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8437690</integer>
+			<key>Total Time</key><integer>210834</integer>
+			<key>Track Number</key><integer>16</integer>
+			<key>BPM</key><integer>112</integer>
+			<key>Date Modified</key><date>2019-01-24T13:16:28Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:33Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>5</integer>
+			<key>Play Date</key><integer>3737291886</integer>
+			<key>Play Date UTC</key><date>2022-06-05T13:38:06Z</date>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-07-10T17:28:12Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1254</integer>
+			<key>Persistent ID</key><string>224F2C8C50E6A777</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/16%20-%20Johny%20Hodges%20-%20Ruint.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>6480</key>
+		<dict>
+			<key>Track ID</key><integer>6480</integer>
+			<key>Name</key><string>Keepin' out of mischiefs now</string>
+			<key>Artist</key><string>Louis Armstrong</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8169147</integer>
+			<key>Total Time</key><integer>204120</integer>
+			<key>Track Number</key><integer>7</integer>
+			<key>BPM</key><integer>128</integer>
+			<key>Date Modified</key><date>2019-01-24T13:15:58Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:33Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3593361659</integer>
+			<key>Play Date UTC</key><date>2017-11-12T17:00:59Z</date>
+			<key>Skip Count</key><integer>8</integer>
+			<key>Skip Date</key><date>2019-03-16T12:42:01Z</date>
+			<key>Normalization</key><integer>2500</integer>
+			<key>Persistent ID</key><string>83C5134A97555ECE</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/07%20-%20Louis%20Armstrong%20-%20Keepin'%20out%20of%20mischiefs%20now.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>6586</key>
+		<dict>
+			<key>Track ID</key><integer>6586</integer>
+			<key>Name</key><string>Five O'Clock Drag</string>
+			<key>Artist</key><string>Duke Ellington</string>
+			<key>Album</key><string>The Blanton-Webster Band (CD 3)</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>5444948</integer>
+			<key>Total Time</key><integer>194377</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>BPM</key><integer>140</integer>
+			<key>Date Modified</key><date>2019-01-24T13:15:46Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:33Z</date>
+			<key>Bit Rate</key><integer>224</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>5</integer>
+			<key>Play Date</key><integer>3633785132</integer>
+			<key>Play Date UTC</key><date>2019-02-23T13:45:32Z</date>
+			<key>Skip Count</key><integer>11</integer>
+			<key>Skip Date</key><date>2022-06-19T17:24:35Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Rating Computed</key><true/>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>1183</integer>
+			<key>Sort Album</key><string>Blanton-Webster Band (CD 3)</string>
+			<key>Persistent ID</key><string>15B3BC0A9DBE73D1</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/03%20Five%20O'Clock%20Drag.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>6632</key>
+		<dict>
+			<key>Track ID</key><integer>6632</integer>
+			<key>Name</key><string>Music Makers</string>
+			<key>Artist</key><string>Harry James</string>
+			<key>Album</key><string>The Complete Harry James in Hi-Fi Disc 1</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7633694</integer>
+			<key>Total Time</key><integer>190928</integer>
+			<key>Track Number</key><integer>13</integer>
+			<key>Year</key><integer>2008</integer>
+			<key>BPM</key><integer>138</integer>
+			<key>Date Modified</key><date>2019-01-24T13:16:19Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:33Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>9</integer>
+			<key>Play Date</key><integer>3655744112</integer>
+			<key>Play Date UTC</key><date>2019-11-04T17:28:32Z</date>
+			<key>Skip Count</key><integer>18</integer>
+			<key>Skip Date</key><date>2022-01-15T11:54:21Z</date>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2077</integer>
+			<key>Sort Album</key><string>Complete Harry James in Hi-Fi Disc 1</string>
+			<key>Persistent ID</key><string>007562DF93B0C4EB</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/13%20Music%20Makers.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>7468</key>
+		<dict>
+			<key>Track ID</key><integer>7468</integer>
+			<key>Name</key><string>Big Shoe</string>
+			<key>Artist</key><string>Johnny Hodges</string>
+			<key>Album</key><string>Side by Side</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>13324824</integer>
+			<key>Total Time</key><integer>333087</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>BPM</key><integer>132</integer>
+			<key>Date Modified</key><date>2022-03-26T10:56:16Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:38Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3737278440</integer>
+			<key>Play Date UTC</key><date>2022-06-05T09:54:00Z</date>
+			<key>Skip Count</key><integer>10</integer>
+			<key>Skip Date</key><date>2022-06-06T07:54:00Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2458</integer>
+			<key>Persistent ID</key><string>04E930CFE6428AA5</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Duke%20Ellington%20and%20Johnny%20Hodges%20-%20Big%20Shoe%20(Remastered%202017).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>8578</key>
+		<dict>
+			<key>Track ID</key><integer>8578</integer>
+			<key>Name</key><string>Well, Git It</string>
+			<key>Artist</key><string>Tommy Dorsey</string>
+			<key>Album</key><string>Swingdance - vol. 2</string>
+			<key>Genre</key><string>Swing</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>1296384</integer>
+			<key>Total Time</key><integer>185887</integer>
+			<key>Track Number</key><integer>1</integer>
+			<key>BPM</key><integer>190</integer>
+			<key>Date Modified</key><date>2019-01-24T13:17:47Z</date>
+			<key>Date Added</key><date>2020-02-23T16:46:49Z</date>
+			<key>Bit Rate</key><integer>56</integer>
+			<key>Sample Rate</key><integer>22050</integer>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-05-12T07:35:11Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2542</integer>
+			<key>Persistent ID</key><string>133931DE7E8BF6C1</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Tommy%20Dorsey%20-%20Well,%20Git%20It!.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>9336</key>
+		<dict>
+			<key>Track ID</key><integer>9336</integer>
+			<key>Name</key><string>Fish Market</string>
+			<key>Artist</key><string>Roy Eldridge</string>
+			<key>Album</key><string>I Can't Get Started</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7715966</integer>
+			<key>Total Time</key><integer>192783</integer>
+			<key>Track Number</key><integer>11</integer>
+			<key>Track Count</key><integer>15</integer>
+			<key>Year</key><integer>2002</integer>
+			<key>BPM</key><integer>127</integer>
+			<key>Date Modified</key><date>2019-09-18T16:57:15Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:00Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3735898557</integer>
+			<key>Play Date UTC</key><date>2022-05-20T10:35:57Z</date>
+			<key>Normalization</key><integer>2282</integer>
+			<key>Persistent ID</key><string>1DA9A4E4B866809E</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/11.Fish%20Market.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>9466</key>
+		<dict>
+			<key>Track ID</key><integer>9466</integer>
+			<key>Name</key><string>Opus One</string>
+			<key>Artist</key><string>Mills Brothers</string>
+			<key>Album Artist</key><string>SWING</string>
+			<key>Composer</key><string>Sid Garris/Sy Oliver</string>
+			<key>Album</key><string>SWING</string>
+			<key>Genre</key><string>BW</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>3225694</integer>
+			<key>Total Time</key><integer>133694</integer>
+			<key>Track Number</key><integer>38</integer>
+			<key>Year</key><integer>1990</integer>
+			<key>BPM</key><integer>154</integer>
+			<key>Date Modified</key><date>2019-01-24T13:17:34Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:02Z</date>
+			<key>Bit Rate</key><integer>192</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3737274526</integer>
+			<key>Play Date UTC</key><date>2022-06-05T08:48:46Z</date>
+			<key>Skip Count</key><integer>16</integer>
+			<key>Skip Date</key><date>2022-06-19T17:57:42Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>10245</integer>
+			<key>Persistent ID</key><string>462BC3EFAC15BF0D</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Mills%20Brothers%20-%20Opus%20One.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>10194</key>
+		<dict>
+			<key>Track ID</key><integer>10194</integer>
+			<key>Name</key><string>Swingin At Newport (Live 1957/Newport)</string>
+			<key>Artist</key><string>Count Basie</string>
+			<key>Album Artist</key><string>Count Basie</string>
+			<key>Album</key><string>Count Basie At Newport (VME Live In Newport/1957)</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>20578363</integer>
+			<key>Total Time</key><integer>510275</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Disc Count</key><integer>1</integer>
+			<key>Track Number</key><integer>36</integer>
+			<key>Track Count</key><integer>74</integer>
+			<key>Year</key><integer>2015</integer>
+			<key>BPM</key><integer>161</integer>
+			<key>Date Modified</key><date>2022-03-26T10:56:15Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:18Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3735986032</integer>
+			<key>Play Date UTC</key><date>2022-05-21T10:53:52Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2018-07-23T16:31:40Z</date>
+			<key>Normalization</key><integer>7353</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>8FD3CFFCEB744033</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/36.%20Count%20Basie%20-%20Swingin%20At%20Newport%20(Live%201957_Newport).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>10600</key>
+		<dict>
+			<key>Track ID</key><integer>10600</integer>
+			<key>Name</key><string>Louise (cut)</string>
+			<key>Artist</key><string>Lester Young</string>
+			<key>Album</key><string>Pres And Teddy</string>
+			<key>Genre</key><string>jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7986499</integer>
+			<key>Total Time</key><integer>282226</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>Year</key><integer>1956</integer>
+			<key>BPM</key><integer>150</integer>
+			<key>Date Modified</key><date>2019-01-24T13:17:29Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:23Z</date>
+			<key>Bit Rate</key><integer>219</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Comments</key><string>With The Teddy Wilson Quartet</string>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3694513019</integer>
+			<key>Play Date UTC</key><date>2021-01-26T10:36:59Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2022-05-22T15:55:05Z</date>
+			<key>Normalization</key><integer>967</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>DBE30DA8D404A74C</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Lester%20Young%20-%20Louise%20(cut).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>10718</key>
+		<dict>
+			<key>Track ID</key><integer>10718</integer>
+			<key>Name</key><string>Capital Idea (The Gene Krupa Sextet #2)</string>
+			<key>Artist</key><string>The Gene Krupa Sextet</string>
+			<key>Album Artist</key><string>Gene Krupa</string>
+			<key>Album</key><string>Five Classic Albums Plus (The Gene Krupa Sextet #1 / #2 / #3 / Hey Here's Gene Krupa / The Gene Krupa Trio Collates) [Remastered]</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8194403</integer>
+			<key>Total Time</key><integer>200359</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>15</integer>
+			<key>Year</key><integer>2012</integer>
+			<key>BPM</key><integer>173</integer>
+			<key>Date Modified</key><date>2020-05-20T17:25:00Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:27Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3672508279</integer>
+			<key>Play Date UTC</key><date>2020-05-16T18:11:19Z</date>
+			<key>Skip Count</key><integer>11</integer>
+			<key>Skip Date</key><date>2022-05-29T00:06:16Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>961</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Artist</key><string>Gene Krupa Sextet</string>
+			<key>Persistent ID</key><string>A6BF75F159630F0F</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/The%20Gene%20Krupa%20Sextet%20-%20Capital%20Idea%20(The%20Gene%20Krupa%20Sextet%20%232)%20-%20Five%20Classic%20Albums%20Plus%20(The%20Gene%20Krupa%20Sextet%20%231%20_%20%232%20_%20%233%20_%20Hey%20Here's%20Gene%20Krupa%20_%20The%20Gene%20Krupa%20Trio%20Collates)%20%5BRemastered%5D.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>10738</key>
+		<dict>
+			<key>Track ID</key><integer>10738</integer>
+			<key>Name</key><string>A Jumpin' Something (07/08-54)</string>
+			<key>Artist</key><string>Earl Hines</string>
+			<key>Album Artist</key><string>Earl Hines</string>
+			<key>Album</key><string>Complete Jazz Series 1953 - 1954</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6951512</integer>
+			<key>Total Time</key><integer>172094</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>158</integer>
+			<key>Date Modified</key><date>2020-05-20T17:24:15Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:27Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>2</integer>
+			<key>Play Date</key><integer>3730219635</integer>
+			<key>Play Date UTC</key><date>2022-03-15T17:07:15Z</date>
+			<key>Skip Count</key><integer>10</integer>
+			<key>Skip Date</key><date>2022-06-19T17:56:56Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>4168</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Name</key><string>Jumpin' Something (07/08-54)</string>
+			<key>Persistent ID</key><string>4515FBF61FB00AEA</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Earl%20Hines%20-%20A%20Jumpin'%20Something%20(07_08-54)%20-%20Complete%20Jazz%20Series%201953%20-%201954.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12062</key>
+		<dict>
+			<key>Track ID</key><integer>12062</integer>
+			<key>Name</key><string>One O'clock Jump  (Recorded February 10, 1939, New York)</string>
+			<key>Artist</key><string>Chick Webb Feat. Ella Fitzgerald</string>
+			<key>Album Artist</key><string>Chick Webb Feat. Ella Fitzgerald</string>
+			<key>Album</key><string>Ballroom Swing -  Chick and Ella (Digitally Remastered)</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7873868</integer>
+			<key>Total Time</key><integer>192888</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>7</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>230</integer>
+			<key>Date Modified</key><date>2019-01-24T13:17:58Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:39Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>9</integer>
+			<key>Play Date</key><integer>3699189929</integer>
+			<key>Play Date UTC</key><date>2021-03-21T13:45:29Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2021-04-07T06:37:51Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>3306</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>24FDD52BC3F4E3AB</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Chick%20Webb/Chick%20Webb%20Feat.%20Ella%20Fitzgerald%20-%20One%20O'clock%20Jump%20%20(Recorded%20February%2010,%201939,%20New%20York).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12092</key>
+		<dict>
+			<key>Track ID</key><integer>12092</integer>
+			<key>Name</key><string>Okay for Baby</string>
+			<key>Artist</key><string>The Big 18</string>
+			<key>Album Artist</key><string>The Big 18</string>
+			<key>Album</key><string>Live Echoes of the Swinging Bands</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>9094224</integer>
+			<key>Total Time</key><integer>221413</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>8</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>155</integer>
+			<key>Date Modified</key><date>2020-05-20T17:29:12Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:39Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>15</integer>
+			<key>Play Date</key><integer>3737274747</integer>
+			<key>Play Date UTC</key><date>2022-06-05T08:52:27Z</date>
+			<key>Skip Count</key><integer>11</integer>
+			<key>Skip Date</key><date>2021-10-05T20:38:57Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>3125</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album Artist</key><string>Big 18</string>
+			<key>Sort Artist</key><string>Big 18</string>
+			<key>Persistent ID</key><string>43C87D8FB852FCCF</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/The%20Big%2018%20-%20Live%20Echoes%20of%20the%20Swinging%20Bands/8%20-%20Okay%20for%20Baby.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12126</key>
+		<dict>
+			<key>Track ID</key><integer>12126</integer>
+			<key>Name</key><string>Park At 106th</string>
+			<key>Artist</key><string>Duke Ellington</string>
+			<key>Album</key><string>Duke Ellington</string>
+			<key>Genre</key><string>lm</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>3752064</integer>
+			<key>Total Time</key><integer>145972</integer>
+			<key>Track Number</key><integer>21</integer>
+			<key>Year</key><integer>2005</integer>
+			<key>BPM</key><integer>140</integer>
+			<key>Date Modified</key><date>2019-01-24T13:18:06Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:39Z</date>
+			<key>Bit Rate</key><integer>205</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>5</integer>
+			<key>Play Date</key><integer>3724857726</integer>
+			<key>Play Date UTC</key><date>2022-01-12T15:42:06Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2021-12-12T19:22:33Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2478</integer>
+			<key>Persistent ID</key><string>D86AA80047409FD5</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Duke%20Ellington/140-Duke%20Ellington-Park%20At%20106th.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12246</key>
+		<dict>
+			<key>Track ID</key><integer>12246</integer>
+			<key>Name</key><string>Splanky</string>
+			<key>Artist</key><string>Count Basie</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>9375872</integer>
+			<key>Total Time</key><integer>234344</integer>
+			<key>Track Number</key><integer>10</integer>
+			<key>BPM</key><integer>157</integer>
+			<key>Date Modified</key><date>2019-01-24T13:18:00Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:40Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Rating</key><integer>100</integer>
+			<key>Rating Computed</key><true/>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>1326</integer>
+			<key>Persistent ID</key><string>4B76E473A7B1BB96</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Count%20Basie/157_Splanky.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12644</key>
+		<dict>
+			<key>Track ID</key><integer>12644</integer>
+			<key>Name</key><string>Benny's Bugle</string>
+			<key>Artist</key><string>Hot Swing Sextet</string>
+			<key>Album Artist</key><string>Hot Swing Sextet</string>
+			<key>Album</key><string>Black Market Stuff</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7624054</integer>
+			<key>Total Time</key><integer>186671</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>1</integer>
+			<key>Year</key><integer>2018</integer>
+			<key>BPM</key><integer>198</integer>
+			<key>Date Modified</key><date>2020-05-20T17:25:00Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:43Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>5</integer>
+			<key>Play Date</key><integer>3731770765</integer>
+			<key>Play Date UTC</key><date>2022-04-02T15:59:25Z</date>
+			<key>Skip Count</key><integer>9</integer>
+			<key>Skip Date</key><date>2021-03-05T07:28:02Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Rating Computed</key><true/>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>3823</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>961D6E8289BAB38A</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Hot%20Swing%20Sextet/Hot%20Swing%20Sextet%20-%20Black%20Market%20Stuff/1%20-%20Benny's%20Bugle.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>12878</key>
+		<dict>
+			<key>Track ID</key><integer>12878</integer>
+			<key>Name</key><string>The Last Jump</string>
+			<key>Artist</key><string>Charlie Barnet</string>
+			<key>Album Artist</key><string>Charlie Barnet</string>
+			<key>Album</key><string>Scotch and Soda</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6590170</integer>
+			<key>Total Time</key><integer>163160</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>23</integer>
+			<key>Year</key><integer>2008</integer>
+			<key>BPM</key><integer>243</integer>
+			<key>Date Modified</key><date>2020-05-20T17:27:14Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:45Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3731860906</integer>
+			<key>Play Date UTC</key><date>2022-04-03T17:01:46Z</date>
+			<key>Skip Count</key><integer>2</integer>
+			<key>Skip Date</key><date>2021-12-05T17:53:00Z</date>
+			<key>Normalization</key><integer>3015</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Name</key><string>Last Jump</string>
+			<key>Persistent ID</key><string>BC2B2E21A4112125</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Charlie%20Barnet/Scotch%20and%20Soda/Charlie%20Barnet%20-%20The%20Last%20Jump.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>13882</key>
+		<dict>
+			<key>Track ID</key><integer>13882</integer>
+			<key>Name</key><string>Fat and Greasy (Remastered - Take 1)</string>
+			<key>Artist</key><string>Fats Waller</string>
+			<key>Album Artist</key><string>Fats Waller</string>
+			<key>Album</key><string>The Essential Fats Waller</string>
+			<key>Genre</key><string>Джаз;Инструментальный джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7661216</integer>
+			<key>Total Time</key><integer>189074</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>5</integer>
+			<key>Year</key><integer>2014</integer>
+			<key>BPM</key><integer>164</integer>
+			<key>Date Modified</key><date>2020-05-20T17:24:29Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:52Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>9</integer>
+			<key>Play Date</key><integer>3741438799</integer>
+			<key>Play Date UTC</key><date>2022-07-23T13:33:19Z</date>
+			<key>Skip Count</key><integer>18</integer>
+			<key>Skip Date</key><date>2021-10-15T17:14:05Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1283</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album</key><string>Essential Fats Waller</string>
+			<key>Persistent ID</key><string>15D794D987E1D27D</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Fats%20Waller/Fats%20Waller%20-%20Fat%20and%20Greasy%20(Remastered%20-%20Take%201)%20-%20The%20Essential%20Fats%20Waller.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>13942</key>
+		<dict>
+			<key>Track ID</key><integer>13942</integer>
+			<key>Name</key><string>Jorbita</string>
+			<key>Artist</key><string>The Schwings Band</string>
+			<key>Album Artist</key><string>The Schwings Band</string>
+			<key>Album</key><string>Teisutis</string>
+			<key>Kind</key><string>Apple Lossless audio file</string>
+			<key>Size</key><integer>38648875</integer>
+			<key>Total Time</key><integer>195803</integer>
+			<key>Track Number</key><integer>1</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>BPM</key><integer>194</integer>
+			<key>Date Modified</key><date>2020-05-20T17:27:42Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:53Z</date>
+			<key>Bit Rate</key><integer>2304</integer>
+			<key>Sample Rate</key><integer>48000</integer>
+			<key>Play Count</key><integer>11</integer>
+			<key>Play Date</key><integer>3741439196</integer>
+			<key>Play Date UTC</key><date>2022-07-23T13:39:56Z</date>
+			<key>Skip Count</key><integer>12</integer>
+			<key>Skip Date</key><date>2021-03-05T07:07:49Z</date>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1200</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album Artist</key><string>Schwings Band</string>
+			<key>Sort Artist</key><string>Schwings Band</string>
+			<key>Persistent ID</key><string>1A2C05589F4B5569</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/THE%20SCHWINGS%20BAND/The%20Schwings%20Band%20-%20Teisutis/The%20Schwings%20Band%20-%20Teisutis%20-%2001%20Jorbita.m4a</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>14646</key>
+		<dict>
+			<key>Track ID</key><integer>14646</integer>
+			<key>Name</key><string>Miss Jiveola Brown</string>
+			<key>Artist</key><string>Cee Cee Johnson &#38; His Band</string>
+			<key>Album Artist</key><string>Various Artists</string>
+			<key>Album</key><string>Jumpin' the Blues</string>
+			<key>Genre</key><string>Rock;Blues</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7935788</integer>
+			<key>Total Time</key><integer>194638</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>13</integer>
+			<key>Year</key><integer>2016</integer>
+			<key>BPM</key><integer>200</integer>
+			<key>Date Modified</key><date>2019-06-10T14:31:03Z</date>
+			<key>Date Added</key><date>2020-02-23T16:47:59Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3697816773</integer>
+			<key>Play Date UTC</key><date>2021-03-05T16:19:33Z</date>
+			<key>Skip Count</key><integer>10</integer>
+			<key>Skip Date</key><date>2022-05-12T07:29:49Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>1201</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>AC40A380A22C7457</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Cee%20Cee%20Johnson%20&#38;%20His%20Band%20-%20Miss%20Jiveola%20Brown%20-%20Jumpin'%20the%20Blues.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>15378</key>
+		<dict>
+			<key>Track ID</key><integer>15378</integer>
+			<key>Name</key><string>Woodchopper's Ball (04-12-39)</string>
+			<key>Artist</key><string>Woody Herman</string>
+			<key>Album Artist</key><string>Woody Herman</string>
+			<key>Album</key><string>Complete Jazz Series 1939</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7948278</integer>
+			<key>Total Time</key><integer>196702</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>8</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>178</integer>
+			<key>Date Modified</key><date>2019-07-01T09:34:41Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:05Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3737275743</integer>
+			<key>Play Date UTC</key><date>2022-06-05T09:09:03Z</date>
+			<key>Skip Count</key><integer>13</integer>
+			<key>Skip Date</key><date>2022-07-10T17:36:46Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>1165</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>61EF00A9E7E82F25</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Woody%20Herman/Woody%20Herman%20-%20Woodchopper's%20Ball%20(04-12-39).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>15506</key>
+		<dict>
+			<key>Track ID</key><integer>15506</integer>
+			<key>Name</key><string>Used To Be Duke</string>
+			<key>Artist</key><string>Johnny Hodges;Harry Carney;Lawrence Brown;Louis Bellson;Jimmy Hamilton;Shorty Baker</string>
+			<key>Album Artist</key><string>Johnny Hodges</string>
+			<key>Album</key><string>Three Classic Albums Plus (The Blues / In A Tender Mood / Johnny Hodges And His Strings Play The Prettiest Gershwin)(Digitally Rem</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>17922530</integer>
+			<key>Total Time</key><integer>443193</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>16</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>197</integer>
+			<key>Date Modified</key><date>2020-05-20T17:27:52Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:06Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>8</integer>
+			<key>Play Date</key><integer>3740724194</integer>
+			<key>Play Date UTC</key><date>2022-07-15T07:03:14Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2022-05-29T00:06:48Z</date>
+			<key>Loved</key><true/>
+			<key>Normalization</key><integer>1157</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>AF15E86FECAC53A5</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Johnny%20Hodges/Johnny%20Hodges%20-%20More%20Of%20Johnny%20Hodges_%20Used%20To%20Be%20Duke%20-%20Three%20Classic%20Albums%20Plus%20(The%20Blues%20_%20In%20A%20Tender%20Mood%20_%20Johnny%20Hodges%20And%20His%20Strings%20Play%20The%20Prettiest%20Gershwin)(Digitally%20Rem.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>15890</key>
+		<dict>
+			<key>Track ID</key><integer>15890</integer>
+			<key>Name</key><string>Boogie Woogie Notion</string>
+			<key>Artist</key><string>Sammy Price</string>
+			<key>Album Artist</key><string>Sammy Price</string>
+			<key>Album</key><string>Essential Masters 1939-1949</string>
+			<key>Genre</key><string>Rock; Blues</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6553266</integer>
+			<key>Total Time</key><integer>160862</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>33</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>192</integer>
+			<key>Date Modified</key><date>2020-05-20T17:28:03Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:10Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>2</integer>
+			<key>Play Date</key><integer>3735234245</integer>
+			<key>Play Date UTC</key><date>2022-05-12T18:04:05Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2019-09-25T15:21:22Z</date>
+			<key>Normalization</key><integer>1297</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>DD56888AC6501A58</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Sammy%20Price/Sammy%20Price%20-%20Boogie%20Woogie%20Notion%20-%20Essential%20Masters%201939-1949.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>16148</key>
+		<dict>
+			<key>Track ID</key><integer>16148</integer>
+			<key>Name</key><string>Duck Fever</string>
+			<key>Artist</key><string>Fred Jackson</string>
+			<key>Album Artist</key><string>Various Artists</string>
+			<key>Album</key><string>Honkers &#38; Bar Walkers Vol. 1</string>
+			<key>Genre</key><string>Jazz;Rock;Blues</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6046092</integer>
+			<key>Total Time</key><integer>147670</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>12</integer>
+			<key>Year</key><integer>1992</integer>
+			<key>BPM</key><integer>190</integer>
+			<key>Date Modified</key><date>2020-05-20T17:25:16Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:12Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Skip Count</key><integer>5</integer>
+			<key>Skip Date</key><date>2022-05-12T07:35:17Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>3038</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>E936F9EC16219C61</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/swing/Fred%20Jackson%20-%20Duck%20Fever%20-%20Honkers%20&#38;%20Bar%20Walkers%20Vol.%201.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>16262</key>
+		<dict>
+			<key>Track ID</key><integer>16262</integer>
+			<key>Name</key><string>Bashful Baby Blues</string>
+			<key>Artist</key><string>Freddie Slack and His Orchestra</string>
+			<key>Album Artist</key><string>Freddie Slack</string>
+			<key>Album</key><string>Freddie Slack - Best Of The Capitol Years</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7072317</integer>
+			<key>Total Time</key><integer>174994</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>25</integer>
+			<key>Year</key><integer>2017</integer>
+			<key>BPM</key><integer>149</integer>
+			<key>Date Modified</key><date>2020-05-20T17:28:08Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:13Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>5</integer>
+			<key>Play Date</key><integer>3741506480</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:21:20Z</date>
+			<key>Skip Count</key><integer>2</integer>
+			<key>Skip Date</key><date>2022-05-22T08:43:35Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1246</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>B0224D9B5E84FFD9</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Freddie%20Slack/Freddie%20Slack%20and%20His%20Orchestra%20-%20Bashful%20Baby%20Blues%20-%20Freddie%20Slack%20-%20Best%20Of%20The%20Capitol%20Years.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>16476</key>
+		<dict>
+			<key>Track ID</key><integer>16476</integer>
+			<key>Name</key><string>Moten Swing</string>
+			<key>Artist</key><string>Floyd Domino</string>
+			<key>Album Artist</key><string>Floyd Domino</string>
+			<key>Album</key><string>Floyd Domino's All-Stars</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7632265</integer>
+			<key>Total Time</key><integer>188708</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Disc Count</key><integer>1</integer>
+			<key>Track Number</key><integer>7</integer>
+			<key>Track Count</key><integer>13</integer>
+			<key>Year</key><integer>2018</integer>
+			<key>BPM</key><integer>179</integer>
+			<key>Date Modified</key><date>2020-05-20T17:25:10Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:15Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3732627012</integer>
+			<key>Play Date UTC</key><date>2022-04-12T13:50:12Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2022-05-22T17:54:13Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1354</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>8FE595020A8622CA</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Floyd%20Domino/Floyd%20Domino's%20All-Stars/Floyd%20Domino%20-%20Moten%20Swing.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>16648</key>
+		<dict>
+			<key>Track ID</key><integer>16648</integer>
+			<key>Name</key><string>If I Could Be With You</string>
+			<key>Artist</key><string>The International Jazzmen</string>
+			<key>Album Artist</key><string>Capitol International Jazzmen</string>
+			<key>Album</key><string>Jazz Classics, Vol. 6</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6731319</integer>
+			<key>Total Time</key><integer>166504</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>124</integer>
+			<key>Date Modified</key><date>2020-07-04T06:09:49Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:17Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3694463008</integer>
+			<key>Play Date UTC</key><date>2021-01-25T20:43:28Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2021-08-02T07:20:04Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1263</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Artist</key><string>International Jazzmen</string>
+			<key>Persistent ID</key><string>33285A851605D203</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Capitol%20Jazzmen/Capitol%20Jazzmen%20-%20If%20I%20Could%20Be%20With%20You%20-%20Jazz%20Classics,%20Vol.%206.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>16686</key>
+		<dict>
+			<key>Track ID</key><integer>16686</integer>
+			<key>Name</key><string>Bottle It</string>
+			<key>Artist</key><string>Buddy Tate</string>
+			<key>Album Artist</key><string>Budd Johnson</string>
+			<key>Album</key><string>Blues À La Mode, Swinging Like Tate and the High and Mighty Hawk</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>14674999</integer>
+			<key>Total Time</key><integer>363650</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>4</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>BPM</key><integer>218</integer>
+			<key>Date Modified</key><date>2019-10-26T09:10:19Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:17Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3735839490</integer>
+			<key>Play Date UTC</key><date>2022-05-19T18:11:30Z</date>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2753</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>0950A917C9F58DED</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Buddy%20Tate/Buddy%20Tate%20-%20Bottle%20It%20-%20Blues%20%C3%80%20La%20Mode,%20Swinging%20Like%20Tate%20and%20the%20High%20and%20Mighty%20Hawk.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>17170</key>
+		<dict>
+			<key>Track ID</key><integer>17170</integer>
+			<key>Name</key><string>The Bus Blues</string>
+			<key>Artist</key><string>Artie Shaw</string>
+			<key>Album Artist</key><string>Artie Shaw</string>
+			<key>Album</key><string>The Complete Rhythm Makers Sessions 1937 - 1938 - Volume 1</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8163612</integer>
+			<key>Total Time</key><integer>199000</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>23</integer>
+			<key>Year</key><integer>2013</integer>
+			<key>BPM</key><integer>197</integer>
+			<key>Date Modified</key><date>2020-05-20T17:23:11Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:21Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>8</integer>
+			<key>Play Date</key><integer>3735983249</integer>
+			<key>Play Date UTC</key><date>2022-05-21T10:07:29Z</date>
+			<key>Skip Count</key><integer>10</integer>
+			<key>Skip Date</key><date>2022-06-05T08:46:28Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>3337</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album</key><string>Complete Rhythm Makers Sessions 1937 - 1938 - Volume 1</string>
+			<key>Sort Name</key><string>Bus Blues</string>
+			<key>Persistent ID</key><string>5C4A074E4629E902</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Artie%20Shaw/Artie%20Shaw%20-%20The%20Bus%20Blues%20-%20The%20Complete%20Rhythm%20Makers%20Sessions%201937%20-%201938%20-%20Volume%201.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>17324</key>
+		<dict>
+			<key>Track ID</key><integer>17324</integer>
+			<key>Name</key><string>One O'Clock Jump</string>
+			<key>Artist</key><string>Metronome All Stars</string>
+			<key>Album Artist</key><string>Metronome All Stars</string>
+			<key>Album</key><string>Metronome/Esquire All-Stars 1939-46</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8310031</integer>
+			<key>Total Time</key><integer>206262</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>6</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>174</integer>
+			<key>Date Modified</key><date>2020-05-20T17:30:00Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:23Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3736073398</integer>
+			<key>Play Date UTC</key><date>2022-05-22T11:09:58Z</date>
+			<key>Skip Count</key><integer>5</integer>
+			<key>Skip Date</key><date>2022-05-29T15:24:25Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>2527</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>59A855602BF957F9</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Metronome%20All%20Stars/Metronome%20All%20Star%20Band%20-%20One%20O'Clock%20Jump%20-%20Metronome_Esquire%20All-Stars%201939-46.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>17738</key>
+		<dict>
+			<key>Track ID</key><integer>17738</integer>
+			<key>Name</key><string>Blow, Illinois, Blow</string>
+			<key>Artist</key><string>Illinois Jacquet</string>
+			<key>Album Artist</key><string>Illinois Jacquet</string>
+			<key>Album</key><string>BD Music Presents Illinois Jacquet</string>
+			<key>Genre</key><string>Rock;Blues</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6926163</integer>
+			<key>Total Time</key><integer>170788</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>17</integer>
+			<key>Year</key><integer>2005</integer>
+			<key>BPM</key><integer>210</integer>
+			<key>Date Modified</key><date>2020-05-20T17:26:22Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:27Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3737275265</integer>
+			<key>Play Date UTC</key><date>2022-06-05T09:01:05Z</date>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-05-29T00:06:54Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Normalization</key><integer>1172</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>BA98F255FCD676E2</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Illinois%20Jacquet/Illinois%20Jacquet%20-%20BD%20Music%20Presents%20Illinois%20Jacquet%20-%2017%20-%20Blow,%20Illinois,%20Blow.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>17968</key>
+		<dict>
+			<key>Track ID</key><integer>17968</integer>
+			<key>Name</key><string>Honeysuckle Rose (Remastered 2017)</string>
+			<key>Artist</key><string>Illinois Jacquet</string>
+			<key>Album Artist</key><string>Illinois Jacquet</string>
+			<key>Album</key><string>Remastered Hits (All Tracks Remastered 2017)</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>16303533</integer>
+			<key>Total Time</key><integer>405760</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>12</integer>
+			<key>Year</key><integer>2017</integer>
+			<key>BPM</key><integer>211</integer>
+			<key>Date Modified</key><date>2020-05-20T17:29:15Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:29Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3735906966</integer>
+			<key>Play Date UTC</key><date>2022-05-20T12:56:06Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2022-05-20T12:44:23Z</date>
+			<key>Loved</key><true/>
+			<key>Normalization</key><integer>1865</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>2819D9FA9E7B3B75</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Illinois%20Jacquet/Illinois%20Jacquet%20-%20Honeysuckle%20Rose%20(Remastered%202017)%20-%20Remastered%20Hits%20(All%20Tracks%20Remastered%202017).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>18134</key>
+		<dict>
+			<key>Track ID</key><integer>18134</integer>
+			<key>Name</key><string>Hop Skip and Jump</string>
+			<key>Artist</key><string>Roy Eldridge;Artie Shaw and His Gramercy Five</string>
+			<key>Album Artist</key><string>Roy Eldridge</string>
+			<key>Album</key><string>Flip and Jazz</string>
+			<key>Genre</key><string>Jazz;Rock;Blues</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7174274</integer>
+			<key>Total Time</key><integer>177293</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>5</integer>
+			<key>Year</key><integer>2014</integer>
+			<key>BPM</key><integer>178</integer>
+			<key>Date Modified</key><date>2020-05-20T17:24:13Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:31Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3731844544</integer>
+			<key>Play Date UTC</key><date>2022-04-03T12:29:04Z</date>
+			<key>Skip Count</key><integer>11</integer>
+			<key>Skip Date</key><date>2022-05-15T17:39:57Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>5291</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>8F2CF36E47F258A1</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Artie%20Shaw/Artie%20Shaw%20and%20His%20Gramercy%20Five%20-%20Hop%20Skip%20and%20Jump%20-%20Flip%20and%20Jazz.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>18276</key>
+		<dict>
+			<key>Track ID</key><integer>18276</integer>
+			<key>Name</key><string>It goes without saying</string>
+			<key>Artist</key><string>The Dan Barrett-Enric Peidro Quintet</string>
+			<key>Album Artist</key><string>The Dan Barrett-Enric Peidro Quintet</string>
+			<key>Album</key><string>IT GOES WITHOUT SAYING</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8289393</integer>
+			<key>Total Time</key><integer>203650</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>BPM</key><integer>177</integer>
+			<key>Date Modified</key><date>2020-05-20T17:28:59Z</date>
+			<key>Date Added</key><date>2020-02-23T16:48:32Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>7</integer>
+			<key>Play Date</key><integer>3706192257</integer>
+			<key>Play Date UTC</key><date>2021-06-10T14:50:57Z</date>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-05-13T13:20:54Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1077</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album Artist</key><string>Dan Barrett-Enric Peidro Quintet</string>
+			<key>Sort Artist</key><string>Dan Barrett-Enric Peidro Quintet</string>
+			<key>Persistent ID</key><string>D222F6D025A4BEC1</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Enric%20Piedro/The%20Dan%20Barrett-Enric%20Peidro%20Quintet%20-%20It%20goes%20without%20saying.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>18304</key>
+		<dict>
+			<key>Track ID</key><integer>18304</integer>
+			<key>Name</key><string>Shortnin' Bread</string>
+			<key>Artist</key><string>Bob Crosby</string>
+			<key>Album Artist</key><string>Various Artists</string>
+			<key>Album</key><string>Swing &#38; Jazz Essentials</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7914588</integer>
+			<key>Total Time</key><integer>193880</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>23</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>196</integer>
+			<key>Date Modified</key><date>2020-08-19T19:52:42Z</date>
+			<key>Date Added</key><date>2020-08-19T19:51:59Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3724861966</integer>
+			<key>Play Date UTC</key><date>2022-01-12T16:52:46Z</date>
+			<key>Skip Count</key><integer>2</integer>
+			<key>Skip Date</key><date>2022-01-20T15:29:57Z</date>
+			<key>Normalization</key><integer>1267</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>0C3C93FA33FD0BBC</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Bob%20Crosby/Bob%20Crosby%20-%20Shortnin'%20Bread%20-%20Swing%20&#38;%20Jazz%20Essentials.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19080</key>
+		<dict>
+			<key>Track ID</key><integer>19080</integer>
+			<key>Name</key><string>Sugarfoot Stomp</string>
+			<key>Artist</key><string>Fletcher Henderson &#38; Rex Stewart</string>
+			<key>Album Artist</key><string>Fletcher Henderson</string>
+			<key>Album</key><string>Jazz Favorites</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>10421987</integer>
+			<key>Total Time</key><integer>258168</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>8</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>228</integer>
+			<key>Date Modified</key><date>2020-09-23T17:50:07Z</date>
+			<key>Date Added</key><date>2020-09-23T17:49:42Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>7</integer>
+			<key>Play Date</key><integer>3736325296</integer>
+			<key>Play Date UTC</key><date>2022-05-25T09:08:16Z</date>
+			<key>Skip Count</key><integer>5</integer>
+			<key>Skip Date</key><date>2021-03-05T14:31:34Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1922</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>897675AD1D82F08C</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Rex%20Stewart/Fletcher%20Henderson%20&#38;%20Rex%20Stewart%20-%20Sugarfoot%20Stomp%20-%20Jazz%20Favorites.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19114</key>
+		<dict>
+			<key>Track ID</key><integer>19114</integer>
+			<key>Name</key><string>The Big Head</string>
+			<key>Artist</key><string>Coleman Hawkins</string>
+			<key>Album Artist</key><string>Coleman Hawkins</string>
+			<key>Album</key><string>Jazz Masters 34</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8231112</integer>
+			<key>Total Time</key><integer>200698</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>1995</integer>
+			<key>BPM</key><integer>115</integer>
+			<key>Date Modified</key><date>2020-01-25T11:48:54Z</date>
+			<key>Date Added</key><date>2020-09-24T16:46:38Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>6</integer>
+			<key>Play Date</key><integer>3741507018</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:30:18Z</date>
+			<key>Skip Count</key><integer>2</integer>
+			<key>Skip Date</key><date>2022-04-15T22:26:43Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Loved</key><true/>
+			<key>Normalization</key><integer>841</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Name</key><string>Big Head</string>
+			<key>Persistent ID</key><string>6F133358BBD0A782</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Coleman%20Hawkins/Coleman%20Hawkins%20-%20The%20Big%20Head%20-%20Jazz%20Masters%2034.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19124</key>
+		<dict>
+			<key>Track ID</key><integer>19124</integer>
+			<key>Name</key><string>Just an Old Manuscript</string>
+			<key>Artist</key><string>Glen Gray</string>
+			<key>Album Artist</key><string>Glen Gray</string>
+			<key>Album</key><string>The Very Best Of</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6868564</integer>
+			<key>Total Time</key><integer>167915</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>15</integer>
+			<key>Year</key><integer>2013</integer>
+			<key>BPM</key><integer>128</integer>
+			<key>Date Modified</key><date>2020-01-25T11:50:27Z</date>
+			<key>Date Added</key><date>2020-09-25T11:12:24Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>2</integer>
+			<key>Play Date</key><integer>3737288443</integer>
+			<key>Play Date UTC</key><date>2022-06-05T12:40:43Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2021-01-31T19:44:59Z</date>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1438</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album</key><string>Very Best Of</string>
+			<key>Persistent ID</key><string>E3B7D10E321224C7</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Glen%20Gray%20&#38;%20The%20Casa%20Loma%20Orchestra/Glen%20Gray%20-%20Just%20an%20Old%20Manuscript%20-%20The%20Very%20Best%20Of.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19162</key>
+		<dict>
+			<key>Track ID</key><integer>19162</integer>
+			<key>Name</key><string>Midnight Stroll (04-26-40)</string>
+			<key>Artist</key><string>Erskine Hawkins</string>
+			<key>Album Artist</key><string>Erskine Hawkins</string>
+			<key>Album</key><string>Complete Jazz Series 1939 - 1940</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7285271</integer>
+			<key>Total Time</key><integer>180062</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>11</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>167</integer>
+			<key>Date Modified</key><date>2020-12-06T11:43:35Z</date>
+			<key>Date Added</key><date>2020-12-06T11:42:40Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3741506297</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:18:17Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2021-10-15T17:14:45Z</date>
+			<key>Normalization</key><integer>904</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>584830D0E08EEF9F</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Erskine%20Hawkins/Erskine%20Hawkins%20-%20Midnight%20Stroll%20(04-26-40)%20-%20Complete%20Jazz%20Series%201939%20-%201940.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19260</key>
+		<dict>
+			<key>Track ID</key><integer>19260</integer>
+			<key>Name</key><string>Staying Home</string>
+			<key>Artist</key><string>The Schwings Band</string>
+			<key>Album Artist</key><string>The Schwings Band</string>
+			<key>Album</key><string>Good Thing</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6654985</integer>
+			<key>Total Time</key><integer>163840</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2020</integer>
+			<key>BPM</key><integer>183</integer>
+			<key>Date Modified</key><date>2021-01-05T10:28:08Z</date>
+			<key>Date Added</key><date>2021-01-05T10:27:17Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3741438155</integer>
+			<key>Play Date UTC</key><date>2022-07-23T13:22:35Z</date>
+			<key>Skip Count</key><integer>2</integer>
+			<key>Skip Date</key><date>2022-05-15T16:04:44Z</date>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1026</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album Artist</key><string>Schwings Band</string>
+			<key>Sort Artist</key><string>Schwings Band</string>
+			<key>Persistent ID</key><string>C1E862BF71311E29</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/THE%20SCHWINGS%20BAND/The%20Schwings%20Band%20-%20Good%20Thing/The%20Schwings%20Band%20-%20Good%20Thing%20-%2002%20Staying%20Home.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19396</key>
+		<dict>
+			<key>Track ID</key><integer>19396</integer>
+			<key>Name</key><string>Sunday Swing</string>
+			<key>Artist</key><string>Fizz Jazz</string>
+			<key>Album Artist</key><string>Fizz Jazz</string>
+			<key>Album</key><string>Live at the studio</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8613855</integer>
+			<key>Total Time</key><integer>212427</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2017</integer>
+			<key>BPM</key><integer>153</integer>
+			<key>Date Modified</key><date>2021-03-06T07:05:25Z</date>
+			<key>Date Added</key><date>2021-03-06T06:19:26Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>2</integer>
+			<key>Play Date</key><integer>3698658062</integer>
+			<key>Play Date UTC</key><date>2021-03-15T10:01:02Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2022-07-10T18:40:54Z</date>
+			<key>Normalization</key><integer>1887</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>6F5E3869FF887DAD</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Fizz%20Jazz/Fizz%20Jazz%20-%20Live%20at%20the%20studio%20-%2002%20Sunday%20Swing.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19416</key>
+		<dict>
+			<key>Track ID</key><integer>19416</integer>
+			<key>Name</key><string>You Blew Out In My Heart</string>
+			<key>Artist</key><string>Swing Up Orchestra</string>
+			<key>Album Artist</key><string>Swing Up Orchestra</string>
+			<key>Album</key><string>Hop, Skip And Jump</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>9757621</integer>
+			<key>Total Time</key><integer>241815</integer>
+			<key>Track Number</key><integer>3</integer>
+			<key>Year</key><integer>2019</integer>
+			<key>BPM</key><integer>136</integer>
+			<key>Date Modified</key><date>2021-03-06T06:41:26Z</date>
+			<key>Date Added</key><date>2021-03-06T06:20:59Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3698657330</integer>
+			<key>Play Date UTC</key><date>2021-03-15T09:48:50Z</date>
+			<key>Skip Count</key><integer>6</integer>
+			<key>Skip Date</key><date>2022-06-19T18:56:30Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1620</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>C01B29EBA1D69FB6</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Swing%20Up%20Orchestra/Swing%20Up%20Orchestra%20-%20Hop,%20Skip%20And%20Jump%20-%2003%20You%20Blew%20Out%20In%20My%20Heart.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19544</key>
+		<dict>
+			<key>Track ID</key><integer>19544</integer>
+			<key>Name</key><string>Corner Pocket (Alternate Take)</string>
+			<key>Artist</key><string>Count Basie</string>
+			<key>Album Artist</key><string>Count Basie</string>
+			<key>Album</key><string>April in Paris</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>12418863</integer>
+			<key>Total Time</key><integer>307905</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>12</integer>
+			<key>Year</key><integer>2015</integer>
+			<key>BPM</key><integer>140</integer>
+			<key>Date Modified</key><date>2020-08-19T19:19:13Z</date>
+			<key>Date Added</key><date>2021-03-13T07:59:53Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>2</integer>
+			<key>Play Date</key><integer>3734595601</integer>
+			<key>Play Date UTC</key><date>2022-05-05T08:40:01Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2022-06-06T07:56:24Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>1113</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>362FB361E51C446D</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Count%20Basie/Count%20Basie%20-%20Corner%20Pocket%20(Alternate%20Take)%20-%20April%20in%20Paris.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>19546</key>
+		<dict>
+			<key>Track ID</key><integer>19546</integer>
+			<key>Name</key><string>Ducky Bumps</string>
+			<key>Artist</key><string>Count Basie</string>
+			<key>Album Artist</key><string>Count Basie</string>
+			<key>Album</key><string>On My Way &#38; Shoutin' Again! (Remastered Version) (Doxy Collection)</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8768235</integer>
+			<key>Total Time</key><integer>215562</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2018</integer>
+			<key>BPM</key><integer>119</integer>
+			<key>Date Modified</key><date>2020-09-25T11:33:16Z</date>
+			<key>Date Added</key><date>2021-03-13T08:02:00Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3741505195</integer>
+			<key>Play Date UTC</key><date>2022-07-24T07:59:55Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2022-01-12T16:08:04Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Normalization</key><integer>5076</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>3A5E48C7BCDBD5EE</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Count%20Basie/Count%20Basie%20-%20Ducky%20Bumps%20-%20On%20My%20Way%20&#38;%20Shoutin'%20Again!%20(Remastered%20Version)%20(Doxy%20Collection).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>22766</key>
+		<dict>
+			<key>Track ID</key><integer>22766</integer>
+			<key>Name</key><string>Bugle Blues</string>
+			<key>Artist</key><string>Count Basie</string>
+			<key>Album Artist</key><string>Count Basie</string>
+			<key>Album</key><string>The Fives (1936-1942)</string>
+			<key>Genre</key><string>Blues</string>
+			<key>Kind</key><string>Apple Lossless audio file</string>
+			<key>Size</key><integer>10079016</integer>
+			<key>Total Time</key><integer>144373</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Track Count</key><integer>24</integer>
+			<key>Year</key><integer>1996</integer>
+			<key>BPM</key><integer>223</integer>
+			<key>Date Modified</key><date>2021-08-29T08:04:45Z</date>
+			<key>Date Added</key><date>2021-08-13T10:38:05Z</date>
+			<key>Bit Rate</key><integer>550</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3741506624</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:23:44Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2021-09-10T17:47:49Z</date>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Sort Album</key><string>Fives (1936-1942)</string>
+			<key>Persistent ID</key><string>97B8DCF82723100A</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Count%20Basie/Count%20Basie%20-%20The%20Fives/02%20Count%20Basie%20-%20Bugle%20Blues.m4a</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>22806</key>
+		<dict>
+			<key>Track ID</key><integer>22806</integer>
+			<key>Name</key><string>Baby, But You Did</string>
+			<key>Artist</key><string>Ray Anthony &#38; His Orchestra</string>
+			<key>Album Artist</key><string>Ray Anthony &#38; His Orchestra</string>
+			<key>Album</key><string>Essential Jazz Masters</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6879892</integer>
+			<key>Total Time</key><integer>171075</integer>
+			<key>Disc Number</key><integer>2</integer>
+			<key>Track Number</key><integer>2</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>211</integer>
+			<key>Date Modified</key><date>2021-08-28T11:07:56Z</date>
+			<key>Date Added</key><date>2021-08-28T07:46:35Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3725103257</integer>
+			<key>Play Date UTC</key><date>2022-01-15T11:54:17Z</date>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-05-04T22:08:43Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Rating Computed</key><true/>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Loved</key><true/>
+			<key>Persistent ID</key><string>D80FD8659217F3EB</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Ray%20Anthony/Ray%20Anthony%20&#38;%20His%20Orchestra%20-%20Baby,%20But%20You%20Did%20-%20Essential%20Jazz%20Masters.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>22852</key>
+		<dict>
+			<key>Track ID</key><integer>22852</integer>
+			<key>Name</key><string>You're The One For Me</string>
+			<key>Artist</key><string>Ray Anthony &#38; His Orchestra</string>
+			<key>Album Artist</key><string>Ray Anthony &#38; His Orchestra</string>
+			<key>Album</key><string>Essential Jazz Masters</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>6252964</integer>
+			<key>Total Time</key><integer>155480</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>35</integer>
+			<key>Year</key><integer>2011</integer>
+			<key>BPM</key><integer>118</integer>
+			<key>Date Modified</key><date>2021-08-28T08:03:51Z</date>
+			<key>Date Added</key><date>2021-08-28T07:46:35Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>3</integer>
+			<key>Play Date</key><integer>3741505348</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:02:28Z</date>
+			<key>Skip Count</key><integer>1</integer>
+			<key>Skip Date</key><date>2022-02-06T16:40:45Z</date>
+			<key>Rating</key><integer>80</integer>
+			<key>Rating Computed</key><true/>
+			<key>Album Rating</key><integer>80</integer>
+			<key>Persistent ID</key><string>668F13537DD64574</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Ray%20Anthony/Ray%20Anthony%20&#38;%20His%20Orchestra%20-%20You're%20The%20One%20For%20Me%20-%20Essential%20Jazz%20Masters.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>22916</key>
+		<dict>
+			<key>Track ID</key><integer>22916</integer>
+			<key>Name</key><string>Bearcat Shuffle (Remastered)</string>
+			<key>Artist</key><string>Andy Kirk</string>
+			<key>Album Artist</key><string>Andy Kirk</string>
+			<key>Album</key><string>Golden Hits (Remastered)</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>7487728</integer>
+			<key>Total Time</key><integer>184633</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>6</integer>
+			<key>Year</key><integer>2021</integer>
+			<key>BPM</key><integer>156</integer>
+			<key>Date Modified</key><date>2022-03-26T11:23:32Z</date>
+			<key>Date Added</key><date>2021-11-14T15:09:27Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3741505532</integer>
+			<key>Play Date UTC</key><date>2022-07-24T08:05:32Z</date>
+			<key>Skip Count</key><integer>4</integer>
+			<key>Skip Date</key><date>2022-05-05T10:20:06Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>6688A8637465BA27</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Andy%20Kirk/Andy%20Kirk%20-%20Bearcat%20Shuffle%20(Remastered)%20-%20Golden%20Hits%20(Remastered).mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>22970</key>
+		<dict>
+			<key>Track ID</key><integer>22970</integer>
+			<key>Name</key><string>Midnight Stroll (07-08-40)</string>
+			<key>Artist</key><string>Andy Kirk</string>
+			<key>Album Artist</key><string>Andy Kirk</string>
+			<key>Album</key><string>Complete Jazz Series 1940 - 1942</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>8112420</integer>
+			<key>Total Time</key><integer>201299</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>1</integer>
+			<key>Year</key><integer>2009</integer>
+			<key>BPM</key><integer>139</integer>
+			<key>Date Modified</key><date>2022-03-26T11:23:33Z</date>
+			<key>Date Added</key><date>2021-11-14T15:59:25Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>1</integer>
+			<key>Play Date</key><integer>3719826912</integer>
+			<key>Play Date UTC</key><date>2021-11-15T10:15:12Z</date>
+			<key>Rating</key><integer>100</integer>
+			<key>Album Rating</key><integer>100</integer>
+			<key>Album Rating Computed</key><true/>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>E2BD38D838E70E05</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Andy%20Kirk/Andy%20Kirk%20-%20Midnight%20Stroll%20(07-08-40)%20-%20Complete%20Jazz%20Series%201940%20-%201942.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>27770</key>
+		<dict>
+			<key>Track ID</key><integer>27770</integer>
+			<key>Name</key><string>Panama Rag</string>
+			<key>Artist</key><string>Louis Armstrong</string>
+			<key>Album Artist</key><string>Louis Armstrong</string>
+			<key>Album</key><string>Satchmo Plays King Oliver</string>
+			<key>Genre</key><string>Jazz</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>9785044</integer>
+			<key>Total Time</key><integer>240770</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>7</integer>
+			<key>Year</key><integer>2006</integer>
+			<key>BPM</key><integer>222</integer>
+			<key>Date Modified</key><date>2022-03-26T11:24:34Z</date>
+			<key>Date Added</key><date>2022-02-06T07:37:10Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3732079984</integer>
+			<key>Play Date UTC</key><date>2022-04-06T05:53:04Z</date>
+			<key>Skip Count</key><integer>3</integer>
+			<key>Skip Date</key><date>2022-04-23T17:08:56Z</date>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>D52CF671F1F5306A</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Louis%20Armstrong/Louis%20Armstrong%20-%20Panama%20Rag%20-%20Satchmo%20Plays%20King%20Oliver.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+		<key>27974</key>
+		<dict>
+			<key>Track ID</key><integer>27974</integer>
+			<key>Name</key><string>C Jam Blues</string>
+			<key>Artist</key><string>Rex Stewart/Fred Hunt/Roy Williams/John Barnes/Jim Douglas/Ron Mathewson/Lennie Hastings</string>
+			<key>Album Artist</key><string>Rex Stewart/Fred Hunt/Roy Williams/John Barnes/Jim Douglas/Ron Mathewson/Lennie Hastings</string>
+			<key>Album</key><string>Rex Stewart with the Alex Welsh Band</string>
+			<key>Genre</key><string>Джаз</string>
+			<key>Kind</key><string>MPEG audio file</string>
+			<key>Size</key><integer>13897343</integer>
+			<key>Total Time</key><integer>343928</integer>
+			<key>Disc Number</key><integer>1</integer>
+			<key>Track Number</key><integer>7</integer>
+			<key>Year</key><integer>2015</integer>
+			<key>BPM</key><integer>190</integer>
+			<key>Date Modified</key><date>2022-04-20T12:53:19Z</date>
+			<key>Date Added</key><date>2022-04-20T12:53:10Z</date>
+			<key>Bit Rate</key><integer>320</integer>
+			<key>Sample Rate</key><integer>44100</integer>
+			<key>Play Count</key><integer>4</integer>
+			<key>Play Date</key><integer>3736868449</integer>
+			<key>Play Date UTC</key><date>2022-05-31T16:00:49Z</date>
+			<key>Artwork Count</key><integer>1</integer>
+			<key>Persistent ID</key><string>2FC1C28A79843FEE</string>
+			<key>Track Type</key><string>File</string>
+			<key>Location</key><string>file:///Users/qu/Music/Rex%20Stewart/Rex%20Stewart%20-%20C%20Jam%20Blues%20-%20Rex%20Stewart%20with%20the%20Alex%20Welsh%20Band.mp3</string>
+			<key>File Folder Count</key><integer>-1</integer>
+			<key>Library Folder Count</key><integer>-1</integer>
+		</dict>
+	</dict>
+	<key>Playlists</key>
+	<array>
+		<dict>
+			<key>Name</key><string>_lin next party</string>
+			<key>Description</key><string></string>
+			<key>Playlist ID</key><integer>73381</integer>
+			<key>Playlist Persistent ID</key><string>03AFBBDA8CE9FEC2</string>
+			<key>Parent Persistent ID</key><string>A004125E950DD092</string>
+			<key>All Items</key><true/>
+			<key>Playlist Items</key>
+			<array>
+				<dict>
+					<key>Track ID</key><integer>6440</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19114</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>22852</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19546</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>16648</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>9336</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19124</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>6480</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>7468</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19416</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>6632</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>22970</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19544</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>6586</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12126</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>16262</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>10600</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19396</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>9466</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12092</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>22916</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12246</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>10738</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>10194</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>13882</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19162</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>10718</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>17324</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>18276</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>18134</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>15378</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>16476</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>6370</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19260</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>16148</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>27974</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>8578</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>15890</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>13942</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>18304</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>17170</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>15506</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12644</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>6090</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>14646</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>17738</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>17968</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>22806</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>16686</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>27770</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>22766</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>19080</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12062</integer>
+				</dict>
+				<dict>
+					<key>Track ID</key><integer>12878</integer>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>
