@@ -2,7 +2,7 @@
 target = "./index.html"
 
 [watch]
-ignore = ["./src-tauri", "./itunes-xml"]
+ignore = ["./src-tauri", "./itunes-xml", "./backend"]
 
 [serve]
 address = "127.0.0.1"

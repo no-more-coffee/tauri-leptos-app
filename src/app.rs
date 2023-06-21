@@ -2,7 +2,6 @@ use itunes_xml::{Playlist, Track};
 use leptos::ev::MouseEvent;
 use leptos::*;
 use serde::{Deserialize, Serialize};
-use serde_wasm_bindgen::to_value;
 use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
@@ -72,13 +71,6 @@ pub fn App(cx: Scope) -> impl IntoView {
     //     set_name.set(v);
     // };
 
-    let greet = move |ev: MouseEvent| {
-        ev.prevent_default();
-        spawn_local(async move {
-            log!("{:?}", exists("swing", to_value(&FsOptions{dir: Some(1)}).unwrap()).await);
-        });
-    };
-
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
         spawn_local(async move {
@@ -126,10 +118,38 @@ pub fn App(cx: Scope) -> impl IntoView {
         });
     };
 
+    let track_row = move |track: Track| {
+        let location =
+            track
+                .location
+                .unwrap()
+                .replacen("file://", "http://localhost:3000/files", 1);
+        view! { cx,
+            <tr>
+                <td>
+                    <audio
+                        controls
+                        preload="none"
+                        src={location}>
+                        // <source src={location} />
+                        //     <a href={location}>
+                        //         {track.name.clone()}
+                        //     </a>
+                        "Cannot play the audio element"
+                    </audio>
+                </td>
+                <td>{track.id}</td>
+                <td>{track.name}</td>
+                <td>{track.artist}</td>
+                <td>{track.bpm}</td>
+            </tr>
+        }
+    };
     let tracks_table = move || {
         view! { cx,
             <table>
                 <tr>
+                    <th>{"Play"}</th>
                     <th>{"Track ID"}</th>
                     <th>{"Name"}</th>
                     <th>{"Artist"}</th>
@@ -137,23 +157,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 </tr>
 
                 { tracks.get().into_iter()
-                    .map(|n| view! { cx,
-                        <tr>
-                            <td>
-                                <audio
-                                    controls
-                                    src="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
-                                        <a href="/media/01 Feather (Feat. Cise Starr & Akin From Cyne).mp3">
-                                            {"Feather (Feat. Cise Starr & Akin From Cyne)"}
-                                        </a>
-                                </audio>
-                            </td>
-                            <td>{n.id}</td>
-                            <td>{n.name}</td>
-                            <td>{n.artist}</td>
-                            <td>{n.bpm}</td>
-                        </tr>
-                    })
+                    .map(track_row)
                     .collect::<Vec<_>>()
                 }
             </table>
@@ -194,7 +198,6 @@ pub fn App(cx: Scope) -> impl IntoView {
             <button on:click=button_click>{"Choose Library"}</button>
             <button on:click=submit>{"Read Library"}</button>
             <button on:click=load>{"Load Tracks"}</button>
-            <button on:click=greet>{"Exists"}</button>
 
             <p><b>{ move || lib_path.get() }</b></p>
             <p><b>{ move || lib_loaded.get() }</b></p>

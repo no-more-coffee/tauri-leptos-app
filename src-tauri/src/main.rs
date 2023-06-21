@@ -45,6 +45,8 @@ fn fetch_library_command(app_state: State<AppState>) -> Result<Library, String> 
 // }
 
 fn main() {
+    tauri::async_runtime::spawn(backend::main());
+
     let app_state = AppState {
         library: Arc::new(Mutex::new(Library {
             tracks: HashMap::new(),
