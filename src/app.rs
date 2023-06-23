@@ -6,23 +6,10 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
-use wasm_bindgen::prelude::wasm_bindgen;
-use wasm_bindgen::JsValue;
-
-#[wasm_bindgen]
-extern "C" {
-    #[wasm_bindgen(js_namespace = ["window", "__TAURI__", "fs"], catch)]
-    async fn exists(path: &str, args: JsValue) -> Result<JsValue, js_sys::JsString>;
-}
 
 #[derive(Serialize)]
 struct ParseCommandArgs<'a> {
     path: &'a str,
-}
-
-#[derive(Serialize)]
-struct FsOptions {
-    dir: Option<u16>,
 }
 
 #[derive(Serialize)]
@@ -64,12 +51,6 @@ pub fn App(cx: Scope) -> impl IntoView {
     let (lib_path, set_lib_path) = create_signal(cx, String::default());
     let (lib_loaded, set_lib_loaded) = create_signal(cx, String::default());
     let (tracks, set_tracks) = create_signal(cx, Vec::new());
-
-    // let update_name = move |ev| {
-    //     let v = event_target_value(&ev);
-    //     log!("{:?}", v);
-    //     set_name.set(v);
-    // };
 
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -119,25 +100,25 @@ pub fn App(cx: Scope) -> impl IntoView {
     };
 
     let track_row = move |track: Track| {
-        let location =
-            track
-                .location
-                .unwrap()
-                .replacen("file://", "http://localhost:3000/files", 1);
-        view! { cx,
-            <tr>
-                <td>
-                    <audio
+        let location_opt = track
+            .location
+            .map(|l| l.replacen("file://", "http://localhost:3000/files", 1));
+        let track_play_element = match location_opt {
+            Some(l) => view! { cx,
+                    <td><audio
                         controls
                         preload="none"
-                        src={location}>
-                        // <source src={location} />
-                        //     <a href={location}>
-                        //         {track.name.clone()}
-                        //     </a>
+                        src={l}>
                         "Cannot play the audio element"
-                    </audio>
-                </td>
+                    </audio></td>
+            },
+            None => view! { cx,
+                    <td>{"Not found"}</td>
+            },
+        };
+        view! { cx,
+            <tr>
+                {track_play_element}
                 <td>{track.id}</td>
                 <td>{track.name}</td>
                 <td>{track.artist}</td>
@@ -166,35 +147,6 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <main class="container">
-            // <div class="row">
-            //     <a href="https://tauri.app" target="_blank">
-            //         <img src="public/tauri.svg" class="logo tauri" alt="Tauri logo"/>
-            //     </a>
-            //     <a href="https://docs.rs/leptos/" target="_blank">
-            //         <img src="public/leptos.svg" class="logo leptos" alt="Leptos logo"/>
-            //     </a>
-            // </div>
-
-            // <p>"Click on the Tauri and Leptos logos to learn more."</p>
-
-            // <p>
-            //     "Recommended IDE setup: "
-            //     <a href="https://code.visualstudio.com/" target="_blank">"VS Code"</a>
-            //     " + "
-            //     <a href="https://github.com/tauri-apps/tauri-vscode" target="_blank">"Tauri"</a>
-            //     " + "
-            //     <a href="https://github.com/rust-lang/rust-analyzer" target="_blank">"rust-analyzer"</a>
-            // </p>
-
-            // <form class="row" on:submit=greet>
-            //     <input
-            //         id="greet-input"
-            //         placeholder="Enter a name..."
-            //         on:input=update_name
-            //     />
-            //     <button type="submit">"Submit"</button>
-            // </form>
-
             <button on:click=button_click>{"Choose Library"}</button>
             <button on:click=submit>{"Read Library"}</button>
             <button on:click=load>{"Load Tracks"}</button>
