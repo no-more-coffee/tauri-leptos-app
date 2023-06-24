@@ -94,28 +94,6 @@ button {
 }
 
 tr:nth-child(even) {
-  background-color: #D6EEEE;
-}
-
-tr:hover {background-color: #D6EEEE;}
-
-.btn-group button {
-  background-color: #04AA6D; /* Green background */
-  border: 1px solid green; /* Green border */
-  color: white; /* White text */
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  float: left; /* Float the buttons side by side */
-}
-
-.btn-group button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
-}
-
-/* Clear floats (clearfix hack) */
-.btn-group:after {
-  content: "";
-  clear: both;
-  display: table;
+  background-color: #dddddd;
 }
 

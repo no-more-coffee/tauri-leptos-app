@@ -67,6 +67,8 @@ pub struct Track {
     pub purchased: Option<bool>,             // `bson:"Purchased,omitempty"`
     pub music_video: Option<bool>,           // `bson:"MusicVideo,omitempty"`
     pub has_video: Option<bool>,             // `bson:"HasVideo,omitempty"`
+    pub hd: Option<bool>,                    // `bson:"HD,omitempty"`
+    pub favorited: Option<bool>,             // `bson:"Favorited,omitempty"`
     pub location: Option<String>,            // `bson:"Location,omitempty"`
     pub file_folder_count: Option<i64>,      // `bson:"FileFolderCount,omitempty"`
     pub library_folder_count: Option<i64>,   // `bson:"LibraryFolderCount,omitempty"`
@@ -130,6 +132,8 @@ impl Track {
             purchased: None,
             music_video: None,
             has_video: None,
+            hd: None,
+            favorited: None,
             location: None,
             file_folder_count: None,
             library_folder_count: None,
@@ -335,6 +339,8 @@ impl ElementsIterator {
                 "Purchased" => track.purchased = self.next_bool(),
                 "Music Video" => track.music_video = self.next_bool(),
                 "Has Video" => track.has_video = self.next_bool(),
+                "HD" => track.hd = self.next_bool(),
+                "Favorited" => track.favorited = self.next_bool(),
                 "Location" => track.location = self.next_str(),
                 "File Folder Count" => track.file_folder_count = self.next_int(),
                 "Library Folder Count" => track.library_folder_count = self.next_int(),

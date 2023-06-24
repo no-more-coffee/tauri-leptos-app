@@ -1,22 +1,11 @@
-use itunes_xml::{Playlist, Track};
+use itunes_xml::Track;
 use leptos::ev::MouseEvent;
 use leptos::*;
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use serde::Serialize;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
 use types::QueryParams;
-
-#[derive(Serialize)]
-struct ParseCommandArgs<'a> {
-    path: &'a str,
-}
-
-#[derive(Serialize)]
-struct QueryParamsArgs {
-    query: QueryParams,
-}
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
     FileDialogBuilder::new()
@@ -27,7 +16,23 @@ async fn pick_file() -> Result<Option<PathBuf>, String> {
 }
 
 #[derive(Serialize)]
-struct NoArgs;
+struct ParseCommandArgs<'a> {
+    path: &'a str,
+}
+
+async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
+    tauri::invoke(
+        "parse_itunes_xml_command",
+        &ParseCommandArgs { path: &lib_path },
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
+#[derive(Serialize)]
+struct QueryParamsArgs {
+    query: QueryParams,
+}
 
 async fn fetch_tracks() -> Result<Vec<Track>, String> {
     tauri::invoke(
@@ -40,45 +45,30 @@ async fn fetch_tracks() -> Result<Vec<Track>, String> {
     .map_err(|e| e.to_string())
 }
 
-// TODO Fix u64 id to str conversion
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Library {
-    pub tracks: HashMap<String, Track>,
-    pub playlists: HashMap<String, Playlist>,
-}
-
-async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
-    tauri::invoke(
-        "parse_itunes_xml_command",
-        &ParseCommandArgs { path: &lib_path },
-    )
-    .await
-    .map_err(|e| e.to_string())
-}
-
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
     let (status, set_status) = create_signal(cx, String::default());
     let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
-    let button_click = move |ev: MouseEvent| {
+    let choose_file = move |ev: MouseEvent| {
         ev.prevent_default();
 
         spawn_local(async move {
             match pick_file().await {
                 Ok(Some::<PathBuf>(f)) => {
                     let picked_file = f.to_string_lossy().to_string();
-                    set_status.set(picked_file.clone());
+                    set_status.set("Loading library file...".to_string());
 
                     spawn_local(async move {
                         match parse_itunes_xml(picked_file).await {
                             Ok(_) => {
-                                set_status.set("Library loaded".to_string());
+                                set_status.set("Loading tracks...".to_string());
 
                                 spawn_local(async move {
                                     match fetch_tracks().await {
                                         Ok(tracks) => {
                                             set_tracks.set(tracks);
+                                            set_status.set("Loaded tracks".to_string());
                                         }
                                         Err(e) => set_status.set(e),
                                     };
@@ -100,15 +90,17 @@ pub fn App(cx: Scope) -> impl IntoView {
             .map(|l| l.replacen("file://", "http://localhost:3000/files", 1));
         let track_play_element = match location_opt {
             Some(l) => view! { cx,
-                    <td><audio
+                <td>
+                    <audio
                         controls
                         preload="none"
                         src={l}>
                         "Cannot play the audio element"
-                    </audio></td>
+                    </audio>
+                </td>
             },
             None => view! { cx,
-                    <td>{"Not found"}</td>
+                <td>{"Not found"}</td>
             },
         };
         view! { cx,
@@ -142,12 +134,11 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <main class="container">
-            <div class="btn-group">
-                <button on:click=button_click>{"Choose Library"}</button>
-                <p><b>{ move || status.get() }</b></p>
-            </div>
+            <p><b>{ move || status.get() }</b></p>
+            
+            <button on:click=choose_file>{"Choose Library"}</button>
 
-            {tracks_table}
+            { move || (!tracks.get().is_empty()).then( {tracks_table } ) }
         </main>
     }
 }
