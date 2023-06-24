@@ -1,12 +1,13 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use itunes_xml::{parse_itunes_xml, Library};
+use itunes_xml::{parse_itunes_xml, Library, Track};
 use std::{
     collections::HashMap,
     sync::{Arc, Mutex},
 };
 use tauri::State;
+use types::QueryParams;
 
 struct AppState {
     library: Arc<Mutex<Library>>,
@@ -14,13 +15,19 @@ struct AppState {
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
-fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<String, String> {
+fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     println!("{:?}", path);
     // println!("{:?}", app_state.file_path.clone());
 
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
     *app_state.library.lock().map_err(|err| err.to_string())? = library;
-    Ok("Hello".to_string())
+    Ok(())
+}
+
+#[tauri::command]
+fn fetch_tracks_command(query: QueryParams, app_state: State<AppState>) -> Result<Vec<Track>, String> {
+    let library = app_state.library.lock().map_err(|err| err.to_string())?;
+    Ok(library.tracks.clone().into_values().take(query.limit).collect())
 }
 
 #[tauri::command]
@@ -59,6 +66,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             parse_itunes_xml_command,
             fetch_library_command,
+            fetch_tracks_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
+use types::QueryParams;
 
 #[derive(Serialize)]
 struct ParseCommandArgs<'a> {
@@ -13,28 +14,8 @@ struct ParseCommandArgs<'a> {
 }
 
 #[derive(Serialize)]
-struct NoArgs;
-
-async fn parse_itunes_xml(lib_path: String) -> Result<String, String> {
-    tauri::invoke(
-        "parse_itunes_xml_command",
-        &ParseCommandArgs { path: &lib_path },
-    )
-    .await
-    .map_err(|e| e.to_string())
-}
-
-async fn fetch_library() -> Result<Library, String> {
-    tauri::invoke("fetch_library_command", &NoArgs {})
-        .await
-        .map_err(|e| e.to_string())
-}
-
-// TODO Fix u64 id to str conversion
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Library {
-    pub tracks: HashMap<String, Track>,
-    pub playlists: HashMap<String, Playlist>,
+struct QueryParamsArgs {
+    query: QueryParams,
 }
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
@@ -45,56 +26,70 @@ async fn pick_file() -> Result<Option<PathBuf>, String> {
         .map_err(|e| e.to_string())
 }
 
+#[derive(Serialize)]
+struct NoArgs;
+
+async fn fetch_tracks() -> Result<Vec<Track>, String> {
+    tauri::invoke(
+        "fetch_tracks_command",
+        &QueryParamsArgs {
+            query: QueryParams { limit: 10 },
+        },
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
+// TODO Fix u64 id to str conversion
+#[derive(Debug, Serialize, Deserialize)]
+pub struct Library {
+    pub tracks: HashMap<String, Track>,
+    pub playlists: HashMap<String, Playlist>,
+}
+
+async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
+    tauri::invoke(
+        "parse_itunes_xml_command",
+        &ParseCommandArgs { path: &lib_path },
+    )
+    .await
+    .map_err(|e| e.to_string())
+}
+
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
-    // let (name, set_name) = create_signal(cx, String::default());
-    let (lib_path, set_lib_path) = create_signal(cx, String::default());
-    let (lib_loaded, set_lib_loaded) = create_signal(cx, String::default());
+    let (status, set_status) = create_signal(cx, String::default());
     let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
     let button_click = move |ev: MouseEvent| {
         ev.prevent_default();
-        spawn_local(async move {
-            let picked_file = match pick_file().await {
-                Ok(Some::<PathBuf>(f)) => f.to_string_lossy().to_string(),
-                Ok(None) => String::default(),
-                Err(e) => e,
-            };
-            set_lib_path.set(picked_file);
-        });
-    };
 
-    // let submit = move |ev: SubmitEvent| {
-    let submit = move |ev: MouseEvent| {
-        ev.prevent_default();
         spawn_local(async move {
-            if lib_path.get().is_empty() {
-                return;
-            }
+            match pick_file().await {
+                Ok(Some::<PathBuf>(f)) => {
+                    let picked_file = f.to_string_lossy().to_string();
+                    set_status.set(picked_file.clone());
 
-            match parse_itunes_xml(lib_path.get()).await {
-                Ok(lib_loaded) => {
-                    log!("{:?}", lib_loaded);
-                    set_lib_loaded.set(lib_loaded);
+                    spawn_local(async move {
+                        match parse_itunes_xml(picked_file).await {
+                            Ok(_) => {
+                                set_status.set("Library loaded".to_string());
+
+                                spawn_local(async move {
+                                    match fetch_tracks().await {
+                                        Ok(tracks) => {
+                                            set_tracks.set(tracks);
+                                        }
+                                        Err(e) => set_status.set(e),
+                                    };
+                                });
+                            }
+                            Err(e) => set_status.set(e),
+                        };
+                    });
                 }
-                Err(e) => log!("{:?}", e),
-            };
-        });
-    };
-
-    let load = move |ev: MouseEvent| {
-        ev.prevent_default();
-        spawn_local(async move {
-            if lib_loaded.get().is_empty() {
-                return;
-            }
-
-            match fetch_library().await {
-                Ok(library) => {
-                    log!("{:?}", library);
-                    set_tracks.set(library.tracks.into_values().collect());
-                }
-                Err(e) => log!("{:?}", e),
+                Ok(None) => set_status.set(String::default()),
+                Err(e) => set_status.set(e),
             };
         });
     };
@@ -147,12 +142,10 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <main class="container">
-            <button on:click=button_click>{"Choose Library"}</button>
-            <button on:click=submit>{"Read Library"}</button>
-            <button on:click=load>{"Load Tracks"}</button>
-
-            <p><b>{ move || lib_path.get() }</b></p>
-            <p><b>{ move || lib_loaded.get() }</b></p>
+            <div class="btn-group">
+                <button on:click=button_click>{"Choose Library"}</button>
+                <p><b>{ move || status.get() }</b></p>
+            </div>
 
             {tracks_table}
         </main>
