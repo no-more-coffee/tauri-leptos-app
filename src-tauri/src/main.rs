@@ -13,29 +13,29 @@ struct AppState {
     library: Arc<Mutex<Library>>,
 }
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 #[tauri::command]
 fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     println!("{:?}", path);
-    // println!("{:?}", app_state.file_path.clone());
-
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
     *app_state.library.lock().map_err(|err| err.to_string())? = library;
     Ok(())
 }
 
 #[tauri::command]
-fn fetch_tracks_command(query: QueryParams, app_state: State<AppState>) -> Result<Vec<Track>, String> {
+fn fetch_tracks_command(
+    query: QueryParams,
+    app_state: State<AppState>,
+) -> Result<Vec<Track>, String> {
     let library = app_state.library.lock().map_err(|err| err.to_string())?;
-    Ok(library.tracks.clone().into_values().take(query.limit).collect())
+    Ok(library
+        .tracks
+        .clone()
+        .into_values()
+        .take(query.limit)
+        .collect())
 }
 
-#[tauri::command]
-fn fetch_library_command(app_state: State<AppState>) -> Result<Library, String> {
-    let library = app_state.library.lock().map_err(|err| err.to_string())?;
-    Ok(library.clone())
-}
-
+// TODO Consider file access via tauri command alternative
 // #[tauri::command]
 // fn save_file_path(app_state: State<AppState>) -> Result<(), String> {
 //     let saved_file_path = app_state.file_path.clone();
@@ -47,11 +47,12 @@ fn fetch_library_command(app_state: State<AppState>) -> Result<Library, String> 
 //             *state = file_path.to_string_lossy().to_string();
 //         }
 //     });
-
+//
 //     Ok(())
 // }
 
 fn main() {
+    // Run backend
     tauri::async_runtime::spawn(backend::main());
 
     let app_state = AppState {
@@ -65,7 +66,6 @@ fn main() {
         .manage(app_state)
         .invoke_handler(tauri::generate_handler![
             parse_itunes_xml_command,
-            fetch_library_command,
             fetch_tracks_command,
         ])
         .run(tauri::generate_context!())

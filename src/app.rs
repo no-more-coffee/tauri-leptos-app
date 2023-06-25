@@ -103,6 +103,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 <td>{"Not found"}</td>
             },
         };
+
         view! { cx,
             <tr>
                 {track_play_element}
@@ -113,6 +114,7 @@ pub fn App(cx: Scope) -> impl IntoView {
             </tr>
         }
     };
+
     let tracks_table = move || {
         view! { cx,
             <table>
@@ -135,7 +137,7 @@ pub fn App(cx: Scope) -> impl IntoView {
     view! { cx,
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
-            
+
             <button on:click=choose_file>{"Choose Library"}</button>
 
             { move || (!tracks.get().is_empty()).then( {tracks_table } ) }

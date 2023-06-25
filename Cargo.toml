@@ -8,7 +8,7 @@ edition = "2021"
 itunes-xml = { path = "itunes-xml" }
 types = { path = "types" }
 
-leptos = { version = "0.2", features = ["stable"] }
+leptos = { version = "0.3.1", features = ["stable"] }
 serde = { version = "1.0", features = ["derive"] }
 serde-wasm-bindgen = "0.5"
 wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
