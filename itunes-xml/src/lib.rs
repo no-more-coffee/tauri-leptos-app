@@ -7,8 +7,22 @@ use xml::reader::{EventReader, XmlEvent};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Library {
+    pub metadata: HashMap<String, Element>,
     pub tracks: HashMap<u64, Track>,
     pub playlists: HashMap<u64, Playlist>,
+}
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+pub enum Element {
+    Plist,
+    Dict,
+    Array,
+    Key(String),
+    Boolean(bool),
+    Integer(i64),
+    String(Option<String>),
+    Data(Option<String>),
+    Date(String),
 }
 
 #[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
@@ -185,72 +199,72 @@ pub struct Playlist {
                                         */
 }
 
-#[derive(Debug)]
-enum Element {
-    Plist,
-    Dict,
-    Array,
-    Key(String),
-    Boolean(bool),
-    Integer(i64),
-    String(Option<String>),
-    Date(String),
-}
-
 pub fn parse_itunes_xml(file_path: &str) -> Result<Library, xml::reader::Error> {
     let file = File::open(file_path)?;
-    let reader = BufReader::new(file); // Buffering is important for performance
+    let reader = BufReader::new(file);
     let parser = EventReader::new(reader);
     let elements_iterator = ElementsIterator { parser };
 
-    parse_document(elements_iterator)
+    Ok(parse_document(elements_iterator).unwrap())
 }
 
-fn parse_document(mut it: ElementsIterator) -> Result<Library, xml::reader::Error> {
+#[derive(Debug)]
+pub struct Error {
+    pub err: String,
+}
+
+fn parse_document(mut it: ElementsIterator) -> Result<Library, String> {
     let mut tracks = HashMap::<u64, Track>::new();
     let mut playlists = HashMap::<u64, Playlist>::new();
+    let mut metadata = HashMap::<String, Element>::new();
 
     match it.next() {
         Some(Element::Plist) => {
-            // println!("Skipping 'plist' wrapper");
+            // println!("Skip plist wrapper start");
         }
-        element => panic!("Unexpected element {:?}", element),
+        element => return Err(format!("Unexpected element {:?}", element)),
     };
 
     match it.next() {
         Some(Element::Dict) => {
-            // println!("Root dict start")
+            // println!("Skip root dict start")
         }
-        element => panic!("Unexpected element {:?}", element),
+        element => return Err(format!("Unexpected element {:?}", element)),
     };
 
     loop {
         let current_key = match it.next() {
             Some(Element::Key(k)) => k,
+            Some(element) => return Err(format!("Unexpected element {:?}", element)),
             None => break,
-            element => panic!("Unexpected element {:?}", element),
         };
-        let current_value = it.next();
+        let current_value = match it.next() {
+            Some(element) => element,
+            None => return Err(format!("Received key without the value: {}", current_key)),
+        };
 
         match current_key.as_str() {
             "Tracks" => {
                 while let Some(track) = it.next_track() {
-                    // println!("Track: {:?}", track.id);
                     tracks.insert(track.id, track);
                 }
             }
             "Playlists" => {
                 while let Some(playlist) = it.next_playlist() {
-                    // println!("Playlist: {:?}", playlist);
                     playlists.insert(playlist.id, playlist);
                 }
             }
-            // key => (),
-            key => println!("Key: {:?}, value: {:?}", key, current_value),
+            _ => {
+                metadata.insert(current_key, current_value);
+            }
         }
     }
 
-    Ok(Library { tracks, playlists })
+    Ok(Library {
+        metadata,
+        tracks,
+        playlists,
+    })
 }
 
 struct ElementsIterator {

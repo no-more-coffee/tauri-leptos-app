@@ -57,6 +57,7 @@ fn main() {
 
     let app_state = AppState {
         library: Arc::new(Mutex::new(Library {
+            metadata: HashMap::new(),
             tracks: HashMap::new(),
             playlists: HashMap::new(),
         })),
