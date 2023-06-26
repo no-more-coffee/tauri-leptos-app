@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
+use std::error::Error;
 use std::io::BufReader;
 use std::{fmt::Debug, fs::File};
 
@@ -199,18 +200,14 @@ pub struct Playlist {
                                         */
 }
 
-pub fn parse_itunes_xml(file_path: &str) -> Result<Library, xml::reader::Error> {
+pub fn parse_itunes_xml(file_path: &str) -> Result<Library, Box<dyn Error>> {
     let file = File::open(file_path)?;
     let reader = BufReader::new(file);
     let parser = EventReader::new(reader);
     let elements_iterator = ElementsIterator { parser };
 
-    Ok(parse_document(elements_iterator).unwrap())
-}
-
-#[derive(Debug)]
-pub struct Error {
-    pub err: String,
+    let library = parse_document(elements_iterator)?;
+    Ok(library)
 }
 
 fn parse_document(mut it: ElementsIterator) -> Result<Library, String> {
@@ -509,7 +506,7 @@ impl Iterator for ElementsIterator {
                         "true" => "true",
                         "false" => "false",
                         "date" => "date",
-                        tag => panic!("Unexpected element {:?}", tag),
+                        tag => panic!("Unsupported element {:?}", tag),
                     };
                 }
                 Ok(XmlEvent::Characters(value)) => contents = Some(value),
