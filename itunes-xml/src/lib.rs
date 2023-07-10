@@ -26,7 +26,7 @@ pub enum Element {
     Date(String),
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize, Clone)]
+#[derive(Debug, PartialEq, Serialize, Deserialize, Clone, Default)]
 pub struct Track {
     pub id: u64,
     pub name: Option<String>,                // `bson:"Name,omitempty"`
@@ -90,74 +90,7 @@ pub struct Track {
     pub volume_adjustment: Option<i64>,      // `bson:"VolumeAdjustment,omitempty"`
 }
 
-impl Track {
-    fn default(id: u64) -> Track {
-        Track {
-            id,
-            name: None,
-            artist: None,
-            album_artist: None,
-            composer: None,
-            genre: None,
-            album: None,
-            kind: None,
-            loved: None,
-            disliked: None,
-            matched: None,
-            explicit: None,
-            compilation: None,
-            part_of_gapless_album: None,
-            movie: None,
-            podcast: None,
-            unplayed: None,
-            comments: None,
-            content_rating: None,
-            size: None,
-            total_time: None,
-            disc_number: None,
-            disc_count: None,
-            track_number: None,
-            track_count: None,
-            year: None,
-            bpm: None,
-            date_modified: None,
-            date_added: None,
-            bit_rate: None,
-            sample_rate: None,
-            equalizer: None,
-            play_count: None,
-            play_date: None,
-            play_date_utc: None,
-            skip_count: None,
-            skip_date: None,
-            release_date: None,
-            normalization: None,
-            rating: None,
-            rating_computed: None,
-            album_rating: None,
-            album_rating_computed: None,
-            artwork_count: None,
-            sort_name: None,
-            sort_album: None,
-            sort_album_artist: None,
-            sort_composer: None,
-            sort_artist: None,
-            persistent_id: None,
-            track_type: None,
-            purchased: None,
-            music_video: None,
-            has_video: None,
-            hd: None,
-            favorited: None,
-            location: None,
-            file_folder_count: None,
-            library_folder_count: None,
-            volume_adjustment: None,
-        }
-    }
-}
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, Default)]
 pub struct Playlist {
     pub id: u64,                     // <key>Playlist ID</key><integer>50344</integer>
     pub name: String, // `bson:"Name,omitempty"` // <key>Name</key><string>Music</string>
@@ -270,6 +203,8 @@ struct ElementsIterator {
 
 impl ElementsIterator {
     fn next_track(&mut self) -> Option<Track> {
+        let mut track = Track::default();
+
         let track_id_str = match self.next() {
             Some(Element::Key(k)) => k,
             None => return None,
@@ -281,10 +216,9 @@ impl ElementsIterator {
             element => panic!("Unexpected element {:?}", element),
         };
 
-        let track_id = track_id_str
+        track.id = track_id_str
             .parse::<u64>()
             .unwrap_or_else(|_| panic!("Failed to parse track id: {:?}", track_id_str));
-        let mut track = Track::default(track_id);
         loop {
             let field_key = match self.next() {
                 Some(Element::Key(k)) => k,
@@ -371,26 +305,7 @@ impl ElementsIterator {
             element => panic!("Unexpected element {:?}", element),
         };
 
-        let mut playlist = Playlist {
-            id: 0,
-            name: String::default(),
-            persistent_id: String::default(),
-            description: None,
-            parent_persistent_id: None,
-            all_items: false,
-            distinguished_kind: None,
-            music: None,
-            master: None,
-            visible: None,
-            folder: None,
-            movies: None,
-            tv_shows: None,
-            audiobooks: None,
-            podcasts: None,
-            smart_info: None,
-            smart_criteria: None,
-            items: HashSet::new(),
-        };
+        let mut playlist = Playlist::default();
 
         loop {
             let field_key = match self.next() {
