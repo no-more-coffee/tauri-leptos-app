@@ -1,13 +1,10 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use itunes_xml::{parse_itunes_xml, Library, Track};
+use itunes_xml::{parse_itunes_xml, Track};
 use rusqlite::{Connection, Result};
 
-use std::{
-    collections::HashMap,
-    sync::{Arc, Mutex},
-};
+use std::sync::{Arc, Mutex};
 use tauri::State;
 use types::QueryParams;
 
@@ -20,6 +17,22 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
     println!("{:?}", path);
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
+
+    if let Ok(_) = conn.execute("DROP TABLE tracks", ()) {
+        println!("Existing table dropped");
+    };
+
+    conn.execute(
+        "CREATE TABLE tracks (
+            id          INTEGER PRIMARY KEY,
+            name        TEXT,
+            artist      TEXT,
+            bpm         INTEGER,
+            location    TEXT
+        )",
+        (), // empty list of parameters.
+    ).map_err(|err| err.to_string())?;
+
     for (id, track) in &library.tracks {
         conn.execute(
             "INSERT INTO tracks (
@@ -35,7 +48,6 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
         )
         .map_err(|err| err.to_string())?;
     }
-    //*app_state.library.lock().map_err(|err| err.to_string())? = library;
     Ok(())
 }
 
@@ -60,9 +72,7 @@ fn fetch_tracks_command(
         })
         .map_err(|err| err.to_string())?;
 
-    Ok(library_iter
-        .map(|row| row.unwrap())
-        .collect())
+    Ok(library_iter.map(|row| row.unwrap()).collect())
 }
 
 // TODO Consider file access via tauri command alternative
@@ -86,17 +96,6 @@ fn main() {
     tauri::async_runtime::spawn(backend::main());
 
     let conn = Connection::open_in_memory().expect("Database open failed");
-    conn.execute(
-        "CREATE TABLE tracks (
-            id          INTEGER PRIMARY KEY,
-            name        TEXT,
-            artist      TEXT,
-            bpm         INTEGER,
-            location    TEXT
-        )",
-        (), // empty list of parameters.
-    )
-    .expect("Failed to create table");
 
     tauri::Builder::default()
         .manage(AppState {
