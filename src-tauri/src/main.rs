@@ -20,16 +20,21 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
     println!("{:?}", path);
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
-    let me = Person {
-        id: 0,
-        name: "Steven".to_string(),
-        data: None,
-    };
-    conn.execute(
-        "INSERT INTO person (name, data) VALUES (?1, ?2)",
-        (&me.name, &me.data),
-    )
-    .map_err(|err| err.to_string())?;
+    for (id, track) in &library.tracks {
+        conn.execute(
+            "INSERT INTO tracks (
+                id,
+                name,
+                artist,
+                bpm,
+                location
+            ) VALUES (
+                ?1, ?2, ?3, ?4, ?5
+            )",
+            (id, &track.name, &track.artist, &track.bpm, &track.location),
+        )
+        .map_err(|err| err.to_string())?;
+    }
     //*app_state.library.lock().map_err(|err| err.to_string())? = library;
     Ok(())
 }
@@ -40,34 +45,23 @@ fn fetch_tracks_command(
     app_state: State<AppState>,
 ) -> Result<Vec<Track>, String> {
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
-    let mut stmt = conn
-        .prepare("SELECT id, name, data FROM person")
+    let mut statement = conn
+        .prepare(format!("SELECT * FROM tracks LIMIT {}", query.limit).as_str())
         .map_err(|err| err.to_string())?;
-    let person_iter = stmt
+    let library_iter = statement
         .query_map([], |row| {
-            Ok(Person {
-                id: row.get(0)?,
-                name: row.get(1)?,
-                data: row.get(2)?,
-            })
+            let mut track = Track::default();
+            track.id = row.get(0)?;
+            track.name = row.get(1)?;
+            track.artist = row.get(2)?;
+            track.bpm = row.get(3)?;
+            track.location = row.get(4)?;
+            Ok(track)
         })
         .map_err(|err| err.to_string())?;
 
-    for person in person_iter {
-        println!("Found person {:?}", person.unwrap());
-    }
-
-    // let library = app_state.library.lock().map_err(|err| err.to_string())?;
-    let library = Library {
-        tracks: HashMap::new(),
-        metadata: HashMap::new(),
-        playlists: HashMap::new(),
-    };
-    Ok(library
-        .tracks
-        .clone()
-        .into_values()
-        .take(query.limit)
+    Ok(library_iter
+        .map(|row| row.unwrap())
         .collect())
 }
 
@@ -87,23 +81,18 @@ fn fetch_tracks_command(
 //     Ok(())
 // }
 
-#[derive(Debug)]
-struct Person {
-    id: i32,
-    name: String,
-    data: Option<Vec<u8>>,
-}
-
 fn main() {
     // Run backend
     tauri::async_runtime::spawn(backend::main());
 
     let conn = Connection::open_in_memory().expect("Database open failed");
     conn.execute(
-        "CREATE TABLE person (
-            id    INTEGER PRIMARY KEY,
-            name  TEXT NOT NULL,
-            data  BLOB
+        "CREATE TABLE tracks (
+            id          INTEGER PRIMARY KEY,
+            name        TEXT,
+            artist      TEXT,
+            bpm         INTEGER,
+            location    TEXT
         )",
         (), // empty list of parameters.
     )
