@@ -2,6 +2,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use itunes_xml::{parse_itunes_xml, Library, Track};
+use rusqlite::{Connection, Result};
+
 use std::{
     collections::HashMap,
     sync::{Arc, Mutex},
@@ -10,14 +12,25 @@ use tauri::State;
 use types::QueryParams;
 
 struct AppState {
-    library: Arc<Mutex<Library>>,
+    pub db: Arc<Mutex<Connection>>,
 }
 
 #[tauri::command]
 fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     println!("{:?}", path);
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
-    *app_state.library.lock().map_err(|err| err.to_string())? = library;
+    let conn = app_state.db.lock().map_err(|err| err.to_string())?;
+    let me = Person {
+        id: 0,
+        name: "Steven".to_string(),
+        data: None,
+    };
+    conn.execute(
+        "INSERT INTO person (name, data) VALUES (?1, ?2)",
+        (&me.name, &me.data),
+    )
+    .map_err(|err| err.to_string())?;
+    //*app_state.library.lock().map_err(|err| err.to_string())? = library;
     Ok(())
 }
 
@@ -26,7 +39,30 @@ fn fetch_tracks_command(
     query: QueryParams,
     app_state: State<AppState>,
 ) -> Result<Vec<Track>, String> {
-    let library = app_state.library.lock().map_err(|err| err.to_string())?;
+    let conn = app_state.db.lock().map_err(|err| err.to_string())?;
+    let mut stmt = conn
+        .prepare("SELECT id, name, data FROM person")
+        .map_err(|err| err.to_string())?;
+    let person_iter = stmt
+        .query_map([], |row| {
+            Ok(Person {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                data: row.get(2)?,
+            })
+        })
+        .map_err(|err| err.to_string())?;
+
+    for person in person_iter {
+        println!("Found person {:?}", person.unwrap());
+    }
+
+    // let library = app_state.library.lock().map_err(|err| err.to_string())?;
+    let library = Library {
+        tracks: HashMap::new(),
+        metadata: HashMap::new(),
+        playlists: HashMap::new(),
+    };
     Ok(library
         .tracks
         .clone()
@@ -51,20 +87,32 @@ fn fetch_tracks_command(
 //     Ok(())
 // }
 
+#[derive(Debug)]
+struct Person {
+    id: i32,
+    name: String,
+    data: Option<Vec<u8>>,
+}
+
 fn main() {
     // Run backend
     tauri::async_runtime::spawn(backend::main());
 
-    let app_state = AppState {
-        library: Arc::new(Mutex::new(Library {
-            metadata: HashMap::new(),
-            tracks: HashMap::new(),
-            playlists: HashMap::new(),
-        })),
-    };
+    let conn = Connection::open_in_memory().expect("Database open failed");
+    conn.execute(
+        "CREATE TABLE person (
+            id    INTEGER PRIMARY KEY,
+            name  TEXT NOT NULL,
+            data  BLOB
+        )",
+        (), // empty list of parameters.
+    )
+    .expect("Failed to create table");
 
     tauri::Builder::default()
-        .manage(app_state)
+        .manage(AppState {
+            db: Arc::new(Mutex::new(conn)),
+        })
         .invoke_handler(tauri::generate_handler![
             parse_itunes_xml_command,
             fetch_tracks_command,
