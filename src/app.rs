@@ -29,6 +29,12 @@ async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
     .map_err(|e| e.to_string())
 }
 
+async fn play_track(lib_path: String) -> Result<(), String> {
+    tauri::invoke("play_track_command", &ParseCommandArgs { path: &lib_path })
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[derive(Serialize)]
 struct QueryParamsArgs {
     query: QueryParams,
@@ -83,20 +89,25 @@ pub fn App(cx: Scope) -> impl IntoView {
             };
         });
     };
+    let on_play_track = move |ev: MouseEvent, l: String| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match play_track(l).await {
+                Ok(_) => set_status.set("Playing".to_string()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
 
     let track_row = move |track: Track| {
-        let location_opt = track
-            .location
-            .map(|l| l.replacen("file://", "http://localhost:3000/files", 1));
+        let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
+
         let track_play_element = match location_opt {
             Some(l) => view! { cx,
-                <td>
-                    <audio
-                        controls
-                        preload="none"
-                        src={l}>
-                        "Cannot play the audio element"
-                    </audio>
+            <td>
+                <button on:click = move |ev| on_play_track(ev, l.clone())>{"Play"}
+                </button>
                 </td>
             },
             None => view! { cx,

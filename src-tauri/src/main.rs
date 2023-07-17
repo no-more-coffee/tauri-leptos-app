@@ -2,14 +2,36 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use itunes_xml::{parse_itunes_xml, Track};
+use rodio::{source::Source, Decoder, OutputStream, Sink};
 use rusqlite::{Connection, Result};
-
+use std::fs::File;
+use std::io::BufReader;
 use std::sync::{Arc, Mutex};
 use tauri::State;
 use types::QueryParams;
 
 struct AppState {
     pub db: Arc<Mutex<Connection>>,
+}
+
+#[tauri::command]
+fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
+    dbg!(&path);
+    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
+    let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
+    let file = File::open(path).map_err(|err| err.to_string())?;
+    let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
+
+    /*stream_handle
+        .play_raw(source.convert_samples())
+        .map_err(|err| err.to_string())?;
+    std::thread::sleep(std::time::Duration::from_secs(5));
+    */
+    sink.append(source);
+    sink.sleep_until_end();
+    dbg!("End");
+
+    Ok(())
 }
 
 #[tauri::command]
@@ -31,7 +53,8 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
             location    TEXT
         )",
         (), // empty list of parameters.
-    ).map_err(|err| err.to_string())?;
+    )
+    .map_err(|err| err.to_string())?;
 
     for (id, track) in &library.tracks {
         conn.execute(
@@ -104,6 +127,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             parse_itunes_xml_command,
             fetch_tracks_command,
+            play_track_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
