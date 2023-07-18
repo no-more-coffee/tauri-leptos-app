@@ -7,6 +7,8 @@ use rusqlite::{Connection, Result};
 use std::fs::File;
 use std::io::BufReader;
 use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::Duration;
 use tauri::State;
 use types::QueryParams;
 
@@ -14,21 +16,36 @@ struct AppState {
     pub db: Arc<Mutex<Connection>>,
 }
 
+fn play_track(path: String) -> Result<(), String> {
+    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
+    let file = File::open(path).map_err(|err| err.to_string())?;
+    let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
+    stream_handle
+        .play_raw(source.convert_samples())
+        .map_err(|err| err.to_string())?;
+    thread::sleep(Duration::from_secs(10));
+    Ok(())
+}
+
 #[tauri::command]
 fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     dbg!(&path);
-    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
-    let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
-    let file = File::open(path).map_err(|err| err.to_string())?;
-    let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
+    let path_string = path.to_string();
 
-    /*stream_handle
-        .play_raw(source.convert_samples())
-        .map_err(|err| err.to_string())?;
-    std::thread::sleep(std::time::Duration::from_secs(5));
-    */
+    thread::spawn(move || match play_track(path_string.clone()) {
+        Ok(_) => {
+            dbg!("Played");
+        }
+        Err(err) => {
+            dbg!(err);
+        }
+    });
+
+    /*
+    let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
     sink.append(source);
     sink.sleep_until_end();
+    */
     dbg!("End");
 
     Ok(())
