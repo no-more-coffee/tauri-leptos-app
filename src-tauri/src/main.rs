@@ -2,13 +2,13 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use itunes_xml::{parse_itunes_xml, Track};
-use rodio::{source::Source, Decoder, OutputStream, Sink};
+use rodio::queue;
+use rodio::{Decoder, OutputStream, Sink};
 use rusqlite::{Connection, Result};
 use std::fs::File;
 use std::io::BufReader;
 use std::sync::{Arc, Mutex};
 use std::thread;
-use std::time::Duration;
 use tauri::State;
 use types::QueryParams;
 
@@ -16,14 +16,22 @@ struct AppState {
     pub db: Arc<Mutex<Connection>>,
 }
 
-fn play_track(path: String) -> Result<(), String> {
-    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
+fn play_track(
+    path: String,
+    sink: Arc<Sink>,
+    queue_rx: queue::SourcesQueueOutput<f32>,
+) -> Result<(), String> {
     let file = File::open(path).map_err(|err| err.to_string())?;
     let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
+
+    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
     stream_handle
-        .play_raw(source.convert_samples())
+        .play_raw(queue_rx)
         .map_err(|err| err.to_string())?;
-    thread::sleep(Duration::from_secs(10));
+
+    sink.append(source);
+    sink.sleep_until_end();
+
     Ok(())
 }
 
@@ -32,7 +40,11 @@ fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), Stri
     dbg!(&path);
     let path_string = path.to_string();
 
-    thread::spawn(move || match play_track(path_string.clone()) {
+    let (sink, queue_rx) = Sink::new_idle();
+    let sink_arc = Arc::new(sink);
+
+    // let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
+    thread::spawn(move || match play_track(path_string, sink_arc, queue_rx) {
         Ok(_) => {
             dbg!("Played");
         }
@@ -41,11 +53,6 @@ fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), Stri
         }
     });
 
-    /*
-    let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
-    sink.append(source);
-    sink.sleep_until_end();
-    */
     dbg!("End");
 
     Ok(())
@@ -57,7 +64,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
     let library = parse_itunes_xml(path).map_err(|err| err.to_string())?;
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
 
-    if let Ok(_) = conn.execute("DROP TABLE tracks", ()) {
+    if conn.execute("DROP TABLE tracks", ()).is_ok() {
         println!("Existing table dropped");
     };
 
@@ -102,12 +109,14 @@ fn fetch_tracks_command(
         .map_err(|err| err.to_string())?;
     let library_iter = statement
         .query_map([], |row| {
-            let mut track = Track::default();
-            track.id = row.get(0)?;
-            track.name = row.get(1)?;
-            track.artist = row.get(2)?;
-            track.bpm = row.get(3)?;
-            track.location = row.get(4)?;
+            let track = Track {
+                id: row.get(0)?,
+                name: row.get(1)?,
+                artist: row.get(2)?,
+                bpm: row.get(3)?,
+                location: row.get(4)?,
+                ..Default::default()
+            };
             Ok(track)
         })
         .map_err(|err| err.to_string())?;
@@ -133,7 +142,7 @@ fn fetch_tracks_command(
 
 fn main() {
     // Run backend
-    tauri::async_runtime::spawn(backend::main());
+    // tauri::async_runtime::spawn(backend::main());
 
     let conn = Connection::open_in_memory().expect("Database open failed");
 
