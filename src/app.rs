@@ -25,12 +25,21 @@ async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
         "parse_itunes_xml_command",
         &ParseCommandArgs { path: &lib_path },
     )
-    .await
-    .map_err(|e| e.to_string())
+        .await
+        .map_err(|e| e.to_string())
 }
 
 async fn play_track(lib_path: String) -> Result<(), String> {
     tauri::invoke("play_track_command", &ParseCommandArgs { path: &lib_path })
+        .await
+        .map_err(|e| e.to_string())
+}
+
+#[derive(Serialize)]
+struct NoArgs {}
+
+async fn pause() -> Result<bool, String> {
+    tauri::invoke("pause_command", &NoArgs {})
         .await
         .map_err(|e| e.to_string())
 }
@@ -47,8 +56,8 @@ async fn fetch_tracks() -> Result<Vec<Track>, String> {
             query: QueryParams { limit: 10 },
         },
     )
-    .await
-    .map_err(|e| e.to_string())
+        .await
+        .map_err(|e| e.to_string())
 }
 
 #[component]
@@ -89,12 +98,25 @@ pub fn App(cx: Scope) -> impl IntoView {
             };
         });
     };
+
     let on_play_track = move |ev: MouseEvent, l: String| {
         ev.prevent_default();
 
         spawn_local(async move {
             match play_track(l).await {
                 Ok(_) => set_status.set("Playing".to_string()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
+    let on_pause = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match pause().await {
+                Ok(true) => set_status.set("Paused".to_string()),
+                Ok(false) => set_status.set("Playing".to_string()),
                 Err(e) => set_status.set(e),
             }
         })
@@ -150,6 +172,8 @@ pub fn App(cx: Scope) -> impl IntoView {
             <p><b>{ move || status.get() }</b></p>
 
             <button on:click=choose_file>{"Choose Library"}</button>
+
+            <span><button on:click=on_pause>{">"}</button></span>
 
             { move || (!tracks.get().is_empty()).then( {tracks_table } ) }
         </main>

@@ -1,59 +1,41 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use itunes_xml::{parse_itunes_xml, Track};
-use rodio::queue;
-use rodio::{Decoder, OutputStream, Sink};
-use rusqlite::{Connection, Result};
 use std::fs::File;
 use std::io::BufReader;
 use std::sync::{Arc, Mutex};
-use std::thread;
+
+use rodio::{Decoder, OutputStream, Sink};
+use rusqlite::{Connection, Result};
 use tauri::State;
+
+use itunes_xml::{parse_itunes_xml, Track};
 use types::QueryParams;
 
 struct AppState {
     pub db: Arc<Mutex<Connection>>,
+    pub sink: Arc<Sink>,
 }
 
-fn play_track(
-    path: String,
-    sink: Arc<Sink>,
-    queue_rx: queue::SourcesQueueOutput<f32>,
-) -> Result<(), String> {
-    let file = File::open(path).map_err(|err| err.to_string())?;
-    let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
-
-    let (_stream, stream_handle) = OutputStream::try_default().map_err(|err| err.to_string())?;
-    stream_handle
-        .play_raw(queue_rx)
-        .map_err(|err| err.to_string())?;
-
-    sink.append(source);
-    sink.sleep_until_end();
-
-    Ok(())
+#[tauri::command]
+fn pause_command(app_state: State<AppState>) -> Result<bool, String> {
+    match app_state.sink.is_paused() {
+        false => {
+            app_state.sink.pause();
+            Ok(true)
+        }
+        true => {
+            app_state.sink.play();
+            Ok(false)
+        }
+    }
 }
 
 #[tauri::command]
 fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
-    dbg!(&path);
-    let path_string = path.to_string();
-
-    let (sink, queue_rx) = Sink::new_idle();
-    let sink_arc = Arc::new(sink);
-
-    // let sink = Sink::try_new(&stream_handle).map_err(|err| err.to_string())?;
-    thread::spawn(move || match play_track(path_string, sink_arc, queue_rx) {
-        Ok(_) => {
-            dbg!("Played");
-        }
-        Err(err) => {
-            dbg!(err);
-        }
-    });
-
-    dbg!("End");
+    let file = File::open(path).map_err(|err| err.to_string())?;
+    let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
+    app_state.sink.append(source);
 
     Ok(())
 }
@@ -78,7 +60,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
         )",
         (), // empty list of parameters.
     )
-    .map_err(|err| err.to_string())?;
+        .map_err(|err| err.to_string())?;
 
     for (id, track) in &library.tracks {
         conn.execute(
@@ -93,7 +75,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
             )",
             (id, &track.name, &track.artist, &track.bpm, &track.location),
         )
-        .map_err(|err| err.to_string())?;
+            .map_err(|err| err.to_string())?;
     }
     Ok(())
 }
@@ -146,14 +128,19 @@ fn main() {
 
     let conn = Connection::open_in_memory().expect("Database open failed");
 
+    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    let sink = Sink::try_new(&stream_handle).unwrap();
+
     tauri::Builder::default()
         .manage(AppState {
             db: Arc::new(Mutex::new(conn)),
+            sink: Arc::new(sink),
         })
         .invoke_handler(tauri::generate_handler![
             parse_itunes_xml_command,
             fetch_tracks_command,
             play_track_command,
+            pause_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
