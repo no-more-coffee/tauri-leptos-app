@@ -32,6 +32,12 @@ fn pause_command(app_state: State<AppState>) -> Result<bool, String> {
 }
 
 #[tauri::command]
+fn stop_command(app_state: State<AppState>) -> Result<(), String> {
+    app_state.sink.stop();
+    Ok(())
+}
+
+#[tauri::command]
 fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     let file = File::open(path).map_err(|err| err.to_string())?;
     let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
@@ -60,7 +66,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
         )",
         (), // empty list of parameters.
     )
-        .map_err(|err| err.to_string())?;
+    .map_err(|err| err.to_string())?;
 
     for (id, track) in &library.tracks {
         conn.execute(
@@ -75,7 +81,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
             )",
             (id, &track.name, &track.artist, &track.bpm, &track.location),
         )
-            .map_err(|err| err.to_string())?;
+        .map_err(|err| err.to_string())?;
     }
     Ok(())
 }
@@ -141,6 +147,7 @@ fn main() {
             fetch_tracks_command,
             play_track_command,
             pause_command,
+            stop_command,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

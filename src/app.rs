@@ -44,6 +44,12 @@ async fn pause() -> Result<bool, String> {
         .map_err(|e| e.to_string())
 }
 
+async fn stop() -> Result<(), String> {
+    tauri::invoke("stop_command", &NoArgs {})
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[derive(Serialize)]
 struct QueryParamsArgs {
     query: QueryParams,
@@ -122,6 +128,17 @@ pub fn App(cx: Scope) -> impl IntoView {
         })
     };
 
+    let on_stop = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match stop().await {
+                Ok(_) => set_status.set("Stopped".to_string()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
     let track_row = move |track: Track| {
         let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
 
@@ -173,9 +190,12 @@ pub fn App(cx: Scope) -> impl IntoView {
 
             <button on:click=choose_file>{"Choose Library"}</button>
 
-            <span><button on:click=on_pause>{">"}</button></span>
+            <span>
+                <button on:click=on_pause>{"⏯️"}</button>
+                <button on:click=on_stop>{"⏹️"}</button>
+            </span>
 
-            { move || (!tracks.get().is_empty()).then( {tracks_table } ) }
+            { move || (!tracks.get().is_empty()).then( { tracks_table } ) }
         </main>
     }
 }
