@@ -17,4 +17,4 @@ js-sys = "0.3"
 tauri-sys = { git = "https://github.com/JonasKruckenberg/tauri-sys" , features = ["all"]}
 
 [workspace]
-members = ["src-tauri", "itunes-xml", "backend", "types"]
+members = ["src-tauri", "itunes-xml", "types"]

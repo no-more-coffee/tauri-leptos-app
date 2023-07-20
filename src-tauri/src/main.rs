@@ -129,11 +129,10 @@ fn fetch_tracks_command(
 // }
 
 fn main() {
-    // Run backend
-    // tauri::async_runtime::spawn(backend::main());
-
+    // Open DB
     let conn = Connection::open_in_memory().expect("Database open failed");
 
+    // Open sound device
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
     let sink = Sink::try_new(&stream_handle).unwrap();
 

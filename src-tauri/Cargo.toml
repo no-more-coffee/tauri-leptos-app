@@ -15,7 +15,6 @@ tauri-build = { version = "1.3", features = [] }
 [dependencies]
 types = { path = "../types" }
 itunes-xml = { path = "../itunes-xml" }
-backend = { path = "../backend" }
 
 tauri = { version = "1.3", features = [ "fs-exists", "fs-rename-file", "fs-remove-dir", "fs-read-dir", "fs-create-dir", "fs-remove-file", "fs-copy-file", "fs-read-file", "fs-write-file", "dialog", "dialog-all", "shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
