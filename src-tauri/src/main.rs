@@ -39,6 +39,8 @@ fn stop_command(app_state: State<AppState>) -> Result<(), String> {
 
 #[tauri::command]
 fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
+    app_state.sink.stop();
+
     let file = File::open(path).map_err(|err| err.to_string())?;
     let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
     app_state.sink.append(source);
