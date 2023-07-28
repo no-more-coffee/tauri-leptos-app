@@ -1,12 +1,16 @@
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct QueryParams {
+pub struct QueryParams<'a> {
     pub limit: usize,
+    pub title: Option<&'a str>,
 }
 
-impl Default for QueryParams {
+impl<'a> Default for QueryParams<'a> {
     fn default() -> Self {
-        QueryParams { limit: 100 }
+        QueryParams {
+            limit: 100,
+            title: None,
+        }
     }
 }

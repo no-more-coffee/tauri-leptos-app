@@ -51,15 +51,15 @@ async fn stop() -> Result<(), String> {
 }
 
 #[derive(Serialize)]
-struct QueryParamsArgs {
-    query: QueryParams,
+struct QueryParamsArgs<'a> {
+    query: QueryParams<'a>,
 }
 
-async fn fetch_tracks() -> Result<Vec<Track>, String> {
+async fn fetch_tracks(title: Option<&str>) -> Result<Vec<Track>, String> {
     tauri::invoke(
         "fetch_tracks_command",
         &QueryParamsArgs {
-            query: QueryParams { limit: 10 },
+            query: QueryParams { limit: 10, title },
         },
     )
         .await
@@ -68,8 +68,25 @@ async fn fetch_tracks() -> Result<Vec<Track>, String> {
 
 #[component]
 pub fn App(cx: Scope) -> impl IntoView {
+    let (library_loaded, set_library_loaded) = create_signal(cx, false);
+
+    view! { cx,
+        <main class="container">
+
+
+            <Show
+                when=move || {library_loaded.get()}
+                fallback=move |cx| view! { cx, <ChooseLibrary set_library_loaded=set_library_loaded/> }
+            >
+                <TracksTable/>
+            </Show>
+        </main>
+    }
+}
+
+#[component]
+fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoView {
     let (status, set_status) = create_signal(cx, String::default());
-    let (tracks, set_tracks) = create_signal(cx, Vec::new());
 
     let choose_file = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -82,24 +99,45 @@ pub fn App(cx: Scope) -> impl IntoView {
 
                     spawn_local(async move {
                         match parse_itunes_xml(picked_file).await {
-                            Ok(_) => {
-                                set_status.set("Loading tracks...".to_string());
-
-                                spawn_local(async move {
-                                    match fetch_tracks().await {
-                                        Ok(tracks) => {
-                                            set_tracks.set(tracks);
-                                            set_status.set("Loaded tracks".to_string());
-                                        }
-                                        Err(e) => set_status.set(e),
-                                    };
-                                });
-                            }
+                            Ok(_) => { set_library_loaded.set(true) }
                             Err(e) => set_status.set(e),
                         };
                     });
                 }
                 Ok(None) => set_status.set(String::default()),
+                Err(e) => set_status.set(e),
+            };
+        });
+    };
+
+    view! { cx,
+        <main class="container">
+            <p><b>{ move || status.get() }</b></p>
+
+            <button on:click=choose_file>{"Choose Library"}</button>
+        </main>
+    }
+}
+
+#[component]
+fn TracksTable(cx: Scope) -> impl IntoView {
+    let (status, set_status) = create_signal(cx, String::default());
+    let (title_filter, set_title_filter) = create_signal(cx, String::default());
+    let (tracks, set_tracks) = create_signal(cx, Vec::new());
+
+    let fetch_them_ = move || {
+        set_status.set("Loading tracks...".to_string());
+        spawn_local(async move {
+            let tfs = title_filter.get();
+            let tf = match tfs.as_str() {
+                "" => None,
+                s => Some(s),
+            };
+            match fetch_tracks(tf).await {
+                Ok(tracks) => {
+                    set_tracks.set(tracks);
+                    set_status.set("Loaded tracks".to_string());
+                }
                 Err(e) => set_status.set(e),
             };
         });
@@ -139,6 +177,25 @@ pub fn App(cx: Scope) -> impl IntoView {
         })
     };
 
+    let title_filter_view = move || {
+        view! { cx,
+            <input type="text"
+                on:input=move |ev| {
+                    // event_target_value is a Leptos helper function
+                    // it functions the same way as event.target.value
+                    // in JavaScript, but smooths out some of the typecasting
+                    // necessary to make this work in Rust
+                    set_title_filter.set(event_target_value(&ev));
+                }
+
+            // the `prop:` syntax lets you update a DOM property,
+            // rather than an attribute.
+            prop:value=title_filter.get()
+            />
+            <p>"Name is: " {title_filter}</p>
+        }
+    };
+
     let track_row = move |track: Track| {
         let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
 
@@ -165,37 +222,73 @@ pub fn App(cx: Scope) -> impl IntoView {
         }
     };
 
-    let tracks_table = move || {
-        view! { cx,
-            <table>
-                <tr>
-                    <th>{"Play"}</th>
-                    <th>{"Track ID"}</th>
-                    <th>{"Name"}</th>
-                    <th>{"Artist"}</th>
-                    <th>{"BPM"}</th>
-                </tr>
-
-                { tracks.get().into_iter()
-                    .map(track_row)
-                    .collect::<Vec<_>>()
-                }
-            </table>
-        }
-    };
-
     view! { cx,
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
-
-            <button on:click=choose_file>{"Choose Library"}</button>
 
             <span>
                 <button on:click=on_pause>{"⏯️"}</button>
                 <button on:click=on_stop>{"⏹️"}</button>
             </span>
 
-            { move || (!tracks.get().is_empty()).then( { tracks_table } ) }
+            <table>
+            <tr>
+                <th>{"Play"}</th>
+                <th>{"Track ID"}</th>
+                <th>{"Name"}</th>
+                <th>{"Artist"}</th>
+                <th>{"BPM"}</th>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th>
+                    {title_filter_view}
+                </th>
+                <th>{"Artist"}</th>
+                <th>{"BPM"}</th>
+            </tr>
+
+            { tracks.get().into_iter()
+                .map(track_row)
+                .collect::<Vec<_>>()
+            }
+            </table>
         </main>
+    }
+}
+
+#[component]
+fn ControlledComponent(cx: Scope) -> impl IntoView {
+    // create a signal to hold the value
+    let (name, set_name) = create_signal(cx, "Controlled".to_string());
+
+    view! { cx,
+        <input type="text"
+            // fire an event whenever the input changes
+            on:input=move |ev| {
+                // event_target_value is a Leptos helper function
+                // it functions the same way as event.target.value
+                // in JavaScript, but smooths out some of the typecasting
+                // necessary to make this work in Rust
+                set_name.set(event_target_value(&ev));
+            }
+
+            // the `prop:` syntax lets you update a DOM property,
+            // rather than an attribute.
+            //
+            // IMPORTANT: the `value` *attribute* only sets the
+            // initial value, until you have made a change.
+            // The `value` *property* sets the current value.
+            // This is a quirk of the DOM; I didn't invent it.
+            // Other frameworks gloss this over; I think it's
+            // more important to give you access to the browser
+            // as it really works.
+            //
+            // tl;dr: use prop:value for form inputs
+            prop:value=name.get()
+        />
+        <p>"Name is: " {name.get()}</p>
     }
 }

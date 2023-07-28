@@ -80,7 +80,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
                 location
             ) VALUES (
                 ?1, ?2, ?3, ?4, ?5
-            )",
+            );",
             (id, &track.name, &track.artist, &track.bpm, &track.location),
         )
         .map_err(|err| err.to_string())?;
@@ -94,8 +94,23 @@ fn fetch_tracks_command(
     app_state: State<AppState>,
 ) -> Result<Vec<Track>, String> {
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
+
+    let title_filter = match query.title {
+        Some(param) => format!("WHERE title LIKE '{}'", param),
+        None => String::default(),
+    };
+
     let mut statement = conn
-        .prepare(format!("SELECT * FROM tracks LIMIT {}", query.limit).as_str())
+        .prepare(
+            format!(
+                "SELECT *
+                FROM tracks
+                {}
+                LIMIT {};",
+                title_filter, query.limit,
+            )
+            .as_str(),
+        )
         .map_err(|err| err.to_string())?;
     let library_iter = statement
         .query_map([], |row| {
@@ -132,7 +147,7 @@ fn fetch_tracks_command(
 
 fn main() {
     // Open DB
-    let conn = Connection::open_in_memory().expect("Database open failed");
+    let conn = Connection::open("db.sqlite").expect("Database open failed");
 
     // Open sound device
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
