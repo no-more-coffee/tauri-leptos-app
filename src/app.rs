@@ -76,7 +76,7 @@ pub fn App(cx: Scope) -> impl IntoView {
                 when=move || {library_loaded.get()}
                 fallback=move |cx| view! { cx, <ChooseLibrary set_library_loaded=set_library_loaded/> }
             >
-                <TracksView/>
+                <LibraryView/>
             </Show>
         </main>
     }
@@ -118,9 +118,8 @@ fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoV
 }
 
 #[component]
-fn TracksView(cx: Scope) -> impl IntoView {
+fn LibraryView(cx: Scope) -> impl IntoView {
     let (status, set_status) = create_signal(cx, String::default());
-    let (title_filter, set_title_filter) = create_signal(cx, String::default());
 
     let on_pause = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -145,25 +144,6 @@ fn TracksView(cx: Scope) -> impl IntoView {
         })
     };
 
-    let title_filter_view = move || {
-        view! { cx,
-            <input type="text"
-                on:input=move |ev| {
-                    // event_target_value is a Leptos helper function
-                    // it functions the same way as event.target.value
-                    // in JavaScript, but smooths out some of the typecasting
-                    // necessary to make this work in Rust
-                    set_title_filter.set(event_target_value(&ev));
-                }
-
-            // the `prop:` syntax lets you update a DOM property,
-            // rather than an attribute.
-            prop:value=title_filter.get()
-            />
-            <p>"Name is: " {title_filter}</p>
-        }
-    };
-
     view! { cx,
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
@@ -173,28 +153,42 @@ fn TracksView(cx: Scope) -> impl IntoView {
                 <button on:click=on_stop>{"⏹️"}</button>
             </span>
 
-            <table>
-                <tr>
-                    <th>{"Play"}</th>
-                    <th>{"Track ID"}</th>
-                    <th>{"Name"}</th>
-                    <th>{"Artist"}</th>
-                    <th>{"BPM"}</th>
-                </tr>
-
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th>
-                        {title_filter_view}
-                    </th>
-                    <th>{"Artist"}</th>
-                    <th>{"BPM"}</th>
-                </tr>
-
-                <TracksComponent title_filter=title_filter/>
-            </table>
+            <TracksTable/>
         </main>
+    }
+}
+
+#[component]
+fn TracksTable(cx: Scope) -> impl IntoView {
+    let (title_filter, set_title_filter) = create_signal(cx, String::default());
+
+    view! { cx,
+        <table>
+            <tr>
+                <th>{"Play"}</th>
+                <th>{"Track ID"}</th>
+                <th>{"Name"}</th>
+                <th>{"Artist"}</th>
+                <th>{"BPM"}</th>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th></th>
+                <th>
+                    <input type="text"
+                        on:input=move |ev| {
+                            set_title_filter.set(event_target_value(&ev));
+                        }
+                        prop:value={move || title_filter.get()}
+                    />
+                </th>
+                <th>{"Artist"}</th>
+                <th>{"BPM"}</th>
+            </tr>
+
+            <TracksComponent title_filter=title_filter/>
+        </table>
     }
 }
 
@@ -224,7 +218,7 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
                 .map(track_row)
                 .collect_view(cx)
                 .into_view(cx),
-            Err(e) => view! { cx, <p>"Error:" { e }</p> }.into_view(cx),
+            Err(e) => view! { cx, <p>"Error: " {e}</p> }.into_view(cx),
         },
     }
 }
@@ -271,39 +265,5 @@ fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
             <td>{track.artist}</td>
             <td>{track.bpm}</td>
         </tr>
-    }
-}
-
-#[component]
-fn ControlledComponent(cx: Scope) -> impl IntoView {
-    // create a signal to hold the value
-    let (name, set_name) = create_signal(cx, "Controlled".to_string());
-
-    view! { cx,
-        <input type="text"
-            // fire an event whenever the input changes
-            on:input=move |ev| {
-                // event_target_value is a Leptos helper function
-                // it functions the same way as event.target.value
-                // in JavaScript, but smooths out some of the typecasting
-                // necessary to make this work in Rust
-                set_name.set(event_target_value(&ev));
-            }
-
-            // the `prop:` syntax lets you update a DOM property,
-            // rather than an attribute.
-            //
-            // IMPORTANT: the `value` *attribute* only sets the
-            // initial value, until you have made a change.
-            // The `value` *property* sets the current value.
-            // This is a quirk of the DOM; I didn't invent it.
-            // Other frameworks gloss this over; I think it's
-            // more important to give you access to the browser
-            // as it really works.
-            //
-            // tl;dr: use prop:value for form inputs
-            prop:value=name.get()
-        />
-        <p>"Name is: " {name.get()}</p>
     }
 }
