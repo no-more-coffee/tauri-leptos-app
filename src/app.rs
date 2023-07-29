@@ -25,8 +25,8 @@ async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
         "parse_itunes_xml_command",
         &ParseCommandArgs { path: &lib_path },
     )
-        .await
-        .map_err(|e| e.to_string())
+    .await
+    .map_err(|e| e.to_string())
 }
 
 async fn play_track(lib_path: String) -> Result<(), String> {
@@ -62,8 +62,8 @@ async fn fetch_tracks(title: Option<&str>) -> Result<Vec<Track>, String> {
             query: QueryParams { limit: 10, title },
         },
     )
-        .await
-        .map_err(|e| e.to_string())
+    .await
+    .map_err(|e| e.to_string())
 }
 
 #[component]
@@ -72,13 +72,11 @@ pub fn App(cx: Scope) -> impl IntoView {
 
     view! { cx,
         <main class="container">
-
-
             <Show
                 when=move || {library_loaded.get()}
                 fallback=move |cx| view! { cx, <ChooseLibrary set_library_loaded=set_library_loaded/> }
             >
-                <TracksTable/>
+                <TracksView/>
             </Show>
         </main>
     }
@@ -99,7 +97,7 @@ fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoV
 
                     spawn_local(async move {
                         match parse_itunes_xml(picked_file).await {
-                            Ok(_) => { set_library_loaded.set(true) }
+                            Ok(_) => set_library_loaded.set(true),
                             Err(e) => set_status.set(e),
                         };
                     });
@@ -120,39 +118,9 @@ fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoV
 }
 
 #[component]
-fn TracksTable(cx: Scope) -> impl IntoView {
+fn TracksView(cx: Scope) -> impl IntoView {
     let (status, set_status) = create_signal(cx, String::default());
     let (title_filter, set_title_filter) = create_signal(cx, String::default());
-    let (tracks, set_tracks) = create_signal(cx, Vec::new());
-
-    let fetch_them_ = move || {
-        set_status.set("Loading tracks...".to_string());
-        spawn_local(async move {
-            let tfs = title_filter.get();
-            let tf = match tfs.as_str() {
-                "" => None,
-                s => Some(s),
-            };
-            match fetch_tracks(tf).await {
-                Ok(tracks) => {
-                    set_tracks.set(tracks);
-                    set_status.set("Loaded tracks".to_string());
-                }
-                Err(e) => set_status.set(e),
-            };
-        });
-    };
-
-    let on_play_track = move |ev: MouseEvent, l: String| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match play_track(l).await {
-                Ok(_) => set_status.set("Playing".to_string()),
-                Err(e) => set_status.set(e),
-            }
-        })
-    };
 
     let on_pause = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -196,32 +164,6 @@ fn TracksTable(cx: Scope) -> impl IntoView {
         }
     };
 
-    let track_row = move |track: Track| {
-        let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
-
-        let track_play_element = match location_opt {
-            Some(l) => view! { cx,
-            <td>
-                <button on:click = move |ev| on_play_track(ev, l.clone())>{"Play"}
-                </button>
-                </td>
-            },
-            None => view! { cx,
-                <td>{"Not found"}</td>
-            },
-        };
-
-        view! { cx,
-            <tr>
-                {track_play_element}
-                <td>{track.id}</td>
-                <td>{track.name}</td>
-                <td>{track.artist}</td>
-                <td>{track.bpm}</td>
-            </tr>
-        }
-    };
-
     view! { cx,
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
@@ -250,12 +192,99 @@ fn TracksTable(cx: Scope) -> impl IntoView {
                 <th>{"BPM"}</th>
             </tr>
 
-            { tracks.get().into_iter()
-                .map(track_row)
-                .collect::<Vec<_>>()
-            }
+            <TracksComponent title_filter=title_filter/>
+
             </table>
         </main>
+    }
+}
+
+#[component]
+fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView {
+    let async_data = create_resource(
+        cx,
+        move || title_filter.get(),
+        move |tfs| async move {
+            let tf = match tfs.as_str() {
+                "" => None,
+                s => Some(s),
+            };
+            fetch_tracks(tf).await
+        },
+    );
+
+    let on_play_track = move |ev: MouseEvent, l: String| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match play_track(l).await {
+                Ok(_) => {
+                    // set_status.set("Playing".to_string())
+                    log!("Should be playing");
+                }
+                Err(e) => {
+                    log!("Play track error: {}", e);
+                    // set_status.set(e)
+                }
+            }
+        })
+    };
+
+    let track_row = move |track: Track| {
+        let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
+
+        let track_play_element = match location_opt {
+            Some(l) => view! { cx,
+            <td>
+                <button on:click = move |ev| on_play_track(ev, l.clone())>{"Play"}
+                </button>
+                </td>
+            },
+            None => view! { cx,
+                <td>{"Not found"}</td>
+            },
+        };
+
+        view! { cx,
+            <tr>
+                {track_play_element}
+                <td>{track.id}</td>
+                <td>{track.name}</td>
+                <td>{track.artist}</td>
+                <td>{track.bpm}</td>
+            </tr>
+        }
+    };
+
+    let tracks_view = move || match async_data.read(cx) {
+        None => {
+            log!("Loaded nothing");
+            view! { cx, <p>"Loading..."</p> }.into_view(cx)
+        }
+        Some(data) => {
+            match data {
+                Ok(tracks) => {
+                    // set_status.set("Loaded tracks".to_string());
+                    log!("Tracks set");
+
+                    let tracks_rows = tracks.into_iter().map(track_row).collect::<Vec<_>>();
+
+                    view! { cx,
+                        {tracks_rows}
+                    }.into_view(cx)
+                }
+                Err(e) => {
+                    // set_status.set(e)
+                    log!("Load tracks error: {}", e);
+                    view! { cx, <p>"Error"</p> }.into_view(cx)
+                }
+            }
+        }
+    };
+
+
+    view! { cx,
+        {tracks_view}
     }
 }
 
