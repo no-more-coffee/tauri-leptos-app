@@ -290,7 +290,7 @@ impl ElementsIterator {
                 "File Folder Count" => track.file_folder_count = self.next_int(),
                 "Library Folder Count" => track.library_folder_count = self.next_int(),
                 "Volume Adjustment" => track.volume_adjustment = self.next_int(),
-                field => {dbg!("Unknown field: {:?}, {:?}", field, self.next());},
+                field => {eprintln!("Unknown field: {:?}, {:?}", field, self.next());},
             }
         }
 

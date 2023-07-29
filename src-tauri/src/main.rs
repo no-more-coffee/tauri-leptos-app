@@ -96,7 +96,10 @@ fn fetch_tracks_command(
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
 
     let title_filter = match query.title {
-        Some(param) => format!("WHERE name LIKE '{}'", param),
+        Some(param) => format!(
+            "WHERE LOWER( name ) LIKE '%{}%'",
+            param.split_whitespace().collect::<Vec<&str>>().join("%")
+        ),
         None => String::default(),
     };
 
