@@ -6,6 +6,7 @@ use std::path::PathBuf;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
 use types::QueryParams;
+use urlencoding::decode;
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
     FileDialogBuilder::new()
@@ -225,8 +226,6 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
 
 #[component]
 fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
-    let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
-
     let on_play_track = move |ev: MouseEvent, l: String| {
         ev.prevent_default();
 
@@ -244,7 +243,14 @@ fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
         })
     };
 
-    let track_play_element = match location_opt {
+    let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
+    let locop = match location_opt {
+        Some(l) => decode(l.as_str())
+            .map(|l| l.to_string())
+            .ok(),
+        None => None,
+    };
+    let track_play_element = match locop {
         Some(l) => view! { cx,
             <td>
                 <button on:click = move |ev| on_play_track(ev, l.clone())>
