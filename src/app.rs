@@ -174,26 +174,25 @@ fn TracksView(cx: Scope) -> impl IntoView {
             </span>
 
             <table>
-            <tr>
-                <th>{"Play"}</th>
-                <th>{"Track ID"}</th>
-                <th>{"Name"}</th>
-                <th>{"Artist"}</th>
-                <th>{"BPM"}</th>
-            </tr>
+                <tr>
+                    <th>{"Play"}</th>
+                    <th>{"Track ID"}</th>
+                    <th>{"Name"}</th>
+                    <th>{"Artist"}</th>
+                    <th>{"BPM"}</th>
+                </tr>
 
-            <tr>
-                <th></th>
-                <th></th>
-                <th>
-                    {title_filter_view}
-                </th>
-                <th>{"Artist"}</th>
-                <th>{"BPM"}</th>
-            </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        {title_filter_view}
+                    </th>
+                    <th>{"Artist"}</th>
+                    <th>{"BPM"}</th>
+                </tr>
 
-            <TracksComponent title_filter=title_filter/>
-
+                <TracksComponent title_filter=title_filter/>
             </table>
         </main>
     }
@@ -204,7 +203,7 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
     let async_data = create_resource(
         cx,
         move || title_filter.get(),
-        move |tfs| async move {
+        |tfs| async move {
             let tf = match tfs.as_str() {
                 "" => None,
                 s => Some(s),
@@ -212,6 +211,27 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
             fetch_tracks(tf).await
         },
     );
+
+    let track_row = move |track: Track| {
+        view! { cx, <TrackRow track=track/> }
+    };
+
+    move || match async_data.read(cx) {
+        None => view! { cx, <p>"Loading..."</p> }.into_view(cx),
+        Some(data) => match data {
+            Ok(tracks) => tracks
+                .into_iter()
+                .map(track_row)
+                .collect_view(cx)
+                .into_view(cx),
+            Err(e) => view! { cx, <p>"Error:" { e }</p> }.into_view(cx),
+        },
+    }
+}
+
+#[component]
+fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
+    let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
 
     let on_play_track = move |ev: MouseEvent, l: String| {
         ev.prevent_default();
@@ -230,61 +250,27 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
         })
     };
 
-    let track_row = move |track: Track| {
-        let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
-
-        let track_play_element = match location_opt {
-            Some(l) => view! { cx,
+    let track_play_element = match location_opt {
+        Some(l) => view! { cx,
             <td>
-                <button on:click = move |ev| on_play_track(ev, l.clone())>{"Play"}
+                <button on:click = move |ev| on_play_track(ev, l.clone())>
+                    {"Play"}
                 </button>
-                </td>
-            },
-            None => view! { cx,
-                <td>{"Not found"}</td>
-            },
-        };
-
-        view! { cx,
-            <tr>
-                {track_play_element}
-                <td>{track.id}</td>
-                <td>{track.name}</td>
-                <td>{track.artist}</td>
-                <td>{track.bpm}</td>
-            </tr>
-        }
+            </td>
+        },
+        None => view! { cx,
+            <td>{"Not found"}</td>
+        },
     };
-
-    let tracks_view = move || match async_data.read(cx) {
-        None => {
-            log!("Loaded nothing");
-            view! { cx, <p>"Loading..."</p> }.into_view(cx)
-        }
-        Some(data) => {
-            match data {
-                Ok(tracks) => {
-                    // set_status.set("Loaded tracks".to_string());
-                    log!("Tracks set");
-
-                    let tracks_rows = tracks.into_iter().map(track_row).collect::<Vec<_>>();
-
-                    view! { cx,
-                        {tracks_rows}
-                    }.into_view(cx)
-                }
-                Err(e) => {
-                    // set_status.set(e)
-                    log!("Load tracks error: {}", e);
-                    view! { cx, <p>"Error"</p> }.into_view(cx)
-                }
-            }
-        }
-    };
-
 
     view! { cx,
-        {tracks_view}
+        <tr>
+            {track_play_element}
+            <td>{track.id}</td>
+            <td>{track.name}</td>
+            <td>{track.artist}</td>
+            <td>{track.bpm}</td>
+        </tr>
     }
 }
 
