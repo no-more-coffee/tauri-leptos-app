@@ -23,6 +23,7 @@ wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 serde-wasm-bindgen = "0.5"
 rusqlite = { version = "0.29", features = ["bundled"] }
 rodio = "0.17.1"
+url = "2.4.0"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem

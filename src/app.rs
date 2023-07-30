@@ -1,12 +1,13 @@
-use itunes_xml::Track;
-use leptos::ev::MouseEvent;
-use leptos::*;
-use serde::Serialize;
 use std::path::PathBuf;
+
+use leptos::*;
+use leptos::ev::MouseEvent;
+use serde::Serialize;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
+
+use itunes_xml::Track;
 use types::QueryParams;
-use urlencoding::decode;
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
     FileDialogBuilder::new()
@@ -21,6 +22,11 @@ struct ParseCommandArgs<'a> {
     path: &'a str,
 }
 
+#[derive(Serialize)]
+struct PlayTrackArgs<'a> {
+    path: &'a str,
+}
+
 async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
     tauri::invoke(
         "parse_itunes_xml_command",
@@ -30,8 +36,8 @@ async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
     .map_err(|e| e.to_string())
 }
 
-async fn play_track(lib_path: String) -> Result<(), String> {
-    tauri::invoke("play_track_command", &ParseCommandArgs { path: &lib_path })
+async fn play_track(lib_path: &str) -> Result<(), String> {
+    tauri::invoke("play_track_command", &PlayTrackArgs { path: lib_path })
         .await
         .map_err(|e| e.to_string())
 }
@@ -226,11 +232,11 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
 
 #[component]
 fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
-    let on_play_track = move |ev: MouseEvent, l: String| {
+    let on_play_track = move |ev: MouseEvent, location: String| {
         ev.prevent_default();
 
         spawn_local(async move {
-            match play_track(l).await {
+            match play_track(&location).await {
                 Ok(_) => {
                     // set_status.set("Playing".to_string())
                     log!("Should be playing");
@@ -243,17 +249,10 @@ fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
         })
     };
 
-    let location_opt = track.location.map(|l| l.replacen("file://", "", 1));
-    let locop = match location_opt {
-        Some(l) => decode(l.as_str())
-            .map(|l| l.to_string())
-            .ok(),
-        None => None,
-    };
-    let track_play_element = match locop {
-        Some(l) => view! { cx,
+   let track_play_element = match track.location {
+        Some(location) => view! { cx,
             <td>
-                <button on:click = move |ev| on_play_track(ev, l.clone())>
+                <button on:click = move |ev| on_play_track(ev, location.clone())>
                     {"Play"}
                 </button>
             </td>

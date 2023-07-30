@@ -8,6 +8,7 @@ use std::sync::{Arc, Mutex};
 use rodio::{Decoder, OutputStream, Sink};
 use rusqlite::{Connection, Result};
 use tauri::State;
+use url::Url;
 
 use itunes_xml::{parse_itunes_xml, Track};
 use types::QueryParams;
@@ -41,7 +42,9 @@ fn stop_command(app_state: State<AppState>) -> Result<(), String> {
 fn play_track_command(path: &str, app_state: State<AppState>) -> Result<(), String> {
     app_state.sink.stop();
 
-    let file = File::open(path).map_err(|err| err.to_string())?;
+    let file_url = Url::parse(path).map_err(|err| err.to_string())?;
+    let path_buf = file_url.to_file_path().map_err(|_| "Failed to parse location")?;
+    let file = File::open(path_buf).map_err(|err| err.to_string())?;
     let source = Decoder::new(BufReader::new(file)).map_err(|err| err.to_string())?;
     app_state.sink.append(source);
 
@@ -68,7 +71,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
         )",
         (), // empty list of parameters.
     )
-    .map_err(|err| err.to_string())?;
+        .map_err(|err| err.to_string())?;
 
     for (id, track) in &library.tracks {
         conn.execute(
@@ -83,7 +86,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
             );",
             (id, &track.name, &track.artist, &track.bpm, &track.location),
         )
-        .map_err(|err| err.to_string())?;
+            .map_err(|err| err.to_string())?;
     }
     Ok(())
 }
@@ -112,7 +115,7 @@ fn fetch_tracks_command(
                 LIMIT {};",
                 title_filter, query.limit,
             )
-            .as_str(),
+                .as_str(),
         )
         .map_err(|err| err.to_string())?;
     let library_iter = statement

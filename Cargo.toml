@@ -14,7 +14,6 @@ wasm-bindgen = { version = "0.2", features = ["serde-serialize"] }
 wasm-bindgen-futures = "0.4"
 js-sys = "0.3"
 tauri-sys = { git = "https://github.com/JonasKruckenberg/tauri-sys" , features = ["all"]}
-urlencoding = "2.1.3"
 
 [workspace]
 members = ["src-tauri", "itunes-xml", "types"]
