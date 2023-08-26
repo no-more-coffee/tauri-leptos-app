@@ -6,7 +6,7 @@ use std::io::BufReader;
 use std::sync::{Arc, Mutex};
 
 use rodio::{Decoder, OutputStream, Sink};
-use rusqlite::{Connection, Result};
+use rusqlite::{params_from_iter, Connection, Result};
 use tauri::State;
 use url::Url;
 
@@ -98,28 +98,25 @@ fn fetch_tracks_command(
 ) -> Result<Vec<Track>, String> {
     let conn = app_state.db.lock().map_err(|err| err.to_string())?;
 
-    let title_filter = match query.title {
-        Some(param) => format!(
-            "WHERE LOWER( name ) LIKE '%{}%'",
-            param.split_whitespace().collect::<Vec<&str>>().join("%")
-        ),
-        None => String::default(),
+    let mut query_parts = vec![];
+    let mut params: Vec<String> = vec![];
+
+    if let Some(title) = query.title {
+        query_parts.push("WHERE LOWER( name ) LIKE '%' || (?) || '%'");
+        params.push(title.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
 
+    query_parts.push("LIMIT (?)");
+    params.push(query.limit.to_string());
+
     let mut statement = conn
-        .prepare(
-            format!(
-                "SELECT *
-                FROM tracks
-                {}
-                LIMIT {};",
-                title_filter, query.limit,
-            )
-                .as_str(),
-        )
+        .prepare(format!(
+            "SELECT * FROM tracks {};",
+            query_parts.join(" "),
+        ).as_str())
         .map_err(|err| err.to_string())?;
     let library_iter = statement
-        .query_map([], |row| {
+        .query_map(params_from_iter(params.iter()), |row| {
             let track = Track {
                 id: row.get(0)?,
                 name: row.get(1)?,
