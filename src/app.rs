@@ -1,12 +1,13 @@
 use std::path::PathBuf;
 
-use leptos::*;
 use leptos::ev::MouseEvent;
+use leptos::*;
 use serde::Serialize;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
 
 use itunes_xml::Track;
+use tracing::field::debug;
 use types::QueryParams;
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
@@ -62,11 +63,22 @@ struct QueryParamsArgs<'a> {
     query: QueryParams<'a>,
 }
 
-async fn fetch_tracks(title: Option<&str>) -> Result<Vec<Track>, String> {
+async fn fetch_tracks(
+    title: Option<&str>,
+    artist: Option<&str>,
+    bpm: Option<i64>,
+    location: Option<&str>,
+) -> Result<Vec<Track>, String> {
     tauri::invoke(
         "fetch_tracks_command",
         &QueryParamsArgs {
-            query: QueryParams { limit: 10, title },
+            query: QueryParams {
+                limit: 10,
+                title,
+                artist,
+                bpm,
+                location,
+            },
         },
     )
     .await
@@ -168,6 +180,8 @@ fn LibraryView(cx: Scope) -> impl IntoView {
 #[component]
 fn TracksTable(cx: Scope) -> impl IntoView {
     let (title_filter, set_title_filter) = create_signal(cx, String::default());
+    let (artist_filter, set_artist_filter) = create_signal(cx, String::default());
+    let (bpm_filter, set_bpm_filter) = create_signal(cx, String::default());
 
     view! { cx,
         <table>
@@ -190,17 +204,43 @@ fn TracksTable(cx: Scope) -> impl IntoView {
                         prop:value={move || title_filter.get()}
                     />
                 </th>
-                <th>{"Artist"}</th>
-                <th>{"BPM"}</th>
+                <th>
+                    <input type="text"
+                        on:input=move |ev| {
+                            set_artist_filter.set(event_target_value(&ev));
+                        }
+                        prop:value={move || artist_filter.get()}
+                    />
+                </th>
+                <th>
+                    <input type="text"
+                        on:input=move |ev| {
+                            set_bpm_filter.set(event_target_value(&ev));
+                        }
+                        prop:value={move || bpm_filter.get()}
+                    />
+                </th>
             </tr>
 
-            <TracksComponent title_filter=title_filter/>
+            <TracksComponent
+                title_filter=title_filter
+                artist_filter=artist_filter
+                bpm_filter=bpm_filter
+            />
         </table>
     }
 }
 
 #[component]
-fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView {
+fn TracksComponent(
+    cx: Scope,
+    title_filter: ReadSignal<String>,
+    artist_filter: ReadSignal<String>,
+    bpm_filter: ReadSignal<String>,
+) -> impl IntoView {
+    // Add bpm conversion later
+    debug(bpm_filter);
+    debug(artist_filter);
     let async_data = create_resource(
         cx,
         move || title_filter.get(),
@@ -209,7 +249,7 @@ fn TracksComponent(cx: Scope, title_filter: ReadSignal<String>) -> impl IntoView
                 "" => None,
                 s => Some(s),
             };
-            fetch_tracks(tf).await
+            fetch_tracks(tf, None, None, None).await
         },
     );
 
@@ -249,7 +289,7 @@ fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
         })
     };
 
-   let track_play_element = match track.location {
+    let track_play_element = match track.location {
         Some(location) => view! { cx,
             <td>
                 <button on:click = move |ev| on_play_track(ev, location.clone())>
