@@ -104,30 +104,37 @@ fn fetch_tracks_command(
     let mut params: Vec<String> = vec![];
 
     if let Some(title) = query.title {
-        query_parts.push("WHERE LOWER( name ) LIKE '%' || (?) || '%'");
+        query_parts.push("(LOWER( name ) LIKE '%' || (?) || '%')");
         params.push(title.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
 
     if let Some(artist) = query.artist {
-        query_parts.push("WHERE LOWER( artist ) LIKE '%' || (?) || '%'");
+        query_parts.push("(LOWER( artist ) LIKE '%' || (?) || '%')");
         params.push(artist.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
 
-    if let Some(bpm) = query.artist {
-        query_parts.push("WHERE LOWER( bpm ) LIKE '%' || (?) || '%'");
+    /*
+    if let Some(bpm) = query.bpm {
+        query_parts.push("(LOWER( bpm ) LIKE '%' || (?) || '%')");
         params.push(bpm.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
+    */
 
-    if let Some(location) = query.artist {
-        query_parts.push("WHERE LOWER( location ) LIKE '%' || (?) || '%'");
+    if let Some(location) = query.location {
+        query_parts.push("(LOWER( location ) LIKE '%' || (?) || '%')");
         params.push(location.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
 
-    query_parts.push("LIMIT (?)");
+    let wheres = match query_parts.is_empty() {
+        true => "".to_string(),
+        false => format!("WHERE {}", query_parts.join(" AND ")),
+    };
+
+    let full_query = format!("SELECT * FROM tracks {} LIMIT (?);", wheres);
     params.push(query.limit.to_string());
 
     let mut statement = conn
-        .prepare(format!("SELECT * FROM tracks {};", query_parts.join(" "),).as_str())
+        .prepare(full_query.as_str())
         .map_err(|err| err.to_string())?;
     let library_iter = statement
         .query_map(params_from_iter(params.iter()), |row| {

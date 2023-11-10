@@ -7,7 +7,6 @@ use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
 
 use itunes_xml::Track;
-use tracing::field::debug;
 use types::QueryParams;
 
 async fn pick_file() -> Result<Option<PathBuf>, String> {
@@ -177,11 +176,23 @@ fn LibraryView(cx: Scope) -> impl IntoView {
     }
 }
 
+#[derive(Clone, PartialEq)]
+struct Filters {
+    title: String,
+    artist: String,
+    bpm: String,
+}
+
 #[component]
 fn TracksTable(cx: Scope) -> impl IntoView {
     let (title_filter, set_title_filter) = create_signal(cx, String::default());
     let (artist_filter, set_artist_filter) = create_signal(cx, String::default());
     let (bpm_filter, set_bpm_filter) = create_signal(cx, String::default());
+    let filters = move || Filters {
+        title: title_filter.get(),
+        artist: artist_filter.get(),
+        bpm: bpm_filter.get(),
+    };
 
     view! { cx,
         <table>
@@ -213,7 +224,7 @@ fn TracksTable(cx: Scope) -> impl IntoView {
                     />
                 </th>
                 <th>
-                    <input type="text"
+                    <input type="number" min="0" max="500"
                         on:input=move |ev| {
                             set_bpm_filter.set(event_target_value(&ev));
                         }
@@ -223,33 +234,28 @@ fn TracksTable(cx: Scope) -> impl IntoView {
             </tr>
 
             <TracksComponent
-                title_filter=title_filter
-                artist_filter=artist_filter
-                bpm_filter=bpm_filter
+                filters=Signal::derive(cx, filters)
             />
         </table>
     }
 }
 
 #[component]
-fn TracksComponent(
-    cx: Scope,
-    title_filter: ReadSignal<String>,
-    artist_filter: ReadSignal<String>,
-    bpm_filter: ReadSignal<String>,
-) -> impl IntoView {
+fn TracksComponent(cx: Scope, filters: Signal<Filters>) -> impl IntoView {
     // Add bpm conversion later
-    debug(bpm_filter);
-    debug(artist_filter);
     let async_data = create_resource(
         cx,
-        move || title_filter.get(),
-        |tfs| async move {
-            let tf = match tfs.as_str() {
+        move || filters.get(),
+        |value| async move {
+            let title_filter = match value.title.as_str() {
                 "" => None,
                 s => Some(s),
             };
-            fetch_tracks(tf, None, None, None).await
+            let artist_filter = match value.artist.as_str() {
+                "" => None,
+                s => Some(s),
+            };
+            fetch_tracks(title_filter, artist_filter, None, None).await
         },
     );
 
