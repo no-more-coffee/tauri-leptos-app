@@ -1,6 +1,7 @@
 use std::path::PathBuf;
 
 use leptos::ev::MouseEvent;
+use leptos::logging::log;
 use leptos::*;
 use serde::Serialize;
 use tauri_sys::dialog::FileDialogBuilder;
@@ -85,14 +86,14 @@ async fn fetch_tracks(
 }
 
 #[component]
-pub fn App(cx: Scope) -> impl IntoView {
-    let (library_loaded, set_library_loaded) = create_signal(cx, false);
+pub fn App() -> impl IntoView {
+    let (library_loaded, set_library_loaded) = create_signal(false);
 
-    view! { cx,
+    view! {
         <main class="container">
             <Show
                 when=move || {library_loaded.get()}
-                fallback=move |cx| view! { cx, <ChooseLibrary set_library_loaded=set_library_loaded/> }
+                fallback=move || view! { <ChooseLibrary set_library_loaded=set_library_loaded/> }
             >
                 <LibraryView/>
             </Show>
@@ -101,8 +102,8 @@ pub fn App(cx: Scope) -> impl IntoView {
 }
 
 #[component]
-fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoView {
-    let (status, set_status) = create_signal(cx, String::default());
+fn ChooseLibrary(set_library_loaded: WriteSignal<bool>) -> impl IntoView {
+    let (status, set_status) = create_signal(String::default());
 
     let choose_file = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -126,7 +127,7 @@ fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoV
         });
     };
 
-    view! { cx,
+    view! {
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
 
@@ -136,8 +137,8 @@ fn ChooseLibrary(cx: Scope, set_library_loaded: WriteSignal<bool>) -> impl IntoV
 }
 
 #[component]
-fn LibraryView(cx: Scope) -> impl IntoView {
-    let (status, set_status) = create_signal(cx, String::default());
+fn LibraryView() -> impl IntoView {
+    let (status, set_status) = create_signal(String::default());
 
     let on_pause = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -162,7 +163,7 @@ fn LibraryView(cx: Scope) -> impl IntoView {
         })
     };
 
-    view! { cx,
+    view! {
         <main class="container">
             <p><b>{ move || status.get() }</b></p>
 
@@ -176,25 +177,27 @@ fn LibraryView(cx: Scope) -> impl IntoView {
     }
 }
 
-#[derive(Clone, PartialEq)]
-struct Filters {
+#[derive(Clone, PartialEq, Default, Debug)]
+struct State {
     title: String,
     artist: String,
     bpm: String,
+    location: String,
 }
 
 #[component]
-fn TracksTable(cx: Scope) -> impl IntoView {
-    let (title_filter, set_title_filter) = create_signal(cx, String::default());
-    let (artist_filter, set_artist_filter) = create_signal(cx, String::default());
-    let (bpm_filter, set_bpm_filter) = create_signal(cx, String::default());
-    let filters = move || Filters {
-        title: title_filter.get(),
-        artist: artist_filter.get(),
-        bpm: bpm_filter.get(),
-    };
+fn TracksTable() -> impl IntoView {
+    let state = create_rw_signal(State::default());
+    let (title_filter, set_title_filter) =
+        create_slice(state, |state| state.title.clone(), |state, v| state.title = v);
+    let (artist_filter, set_artist_filter) =
+        create_slice(state, |state| state.artist.clone(), |state, v| state.artist = v);
+    let (bpm_filter, set_bpm_filter) =
+        create_slice(state, |state| state.bpm.clone(), |state, v| state.bpm = v);
+    let (location_filter, set_location_filter) =
+        create_slice(state, |state| state.location.clone(), |state, v| state.location = v);
 
-    view! { cx,
+    view! {
         <table>
             <tr>
                 <th>{"Play"}</th>
@@ -224,7 +227,7 @@ fn TracksTable(cx: Scope) -> impl IntoView {
                     />
                 </th>
                 <th>
-                    <input type="number" min="0" max="500"
+                    <input type="number" min="1" max="500"
                         on:input=move |ev| {
                             set_bpm_filter.set(event_target_value(&ev));
                         }
@@ -234,18 +237,17 @@ fn TracksTable(cx: Scope) -> impl IntoView {
             </tr>
 
             <TracksComponent
-                filters=Signal::derive(cx, filters)
+                state
             />
         </table>
     }
 }
 
 #[component]
-fn TracksComponent(cx: Scope, filters: Signal<Filters>) -> impl IntoView {
+fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
     // Add bpm conversion later
     let async_data = create_resource(
-        cx,
-        move || filters.get(),
+        move || state.get(),
         |value| async move {
             let title_filter = match value.title.as_str() {
                 "" => None,
@@ -260,24 +262,20 @@ fn TracksComponent(cx: Scope, filters: Signal<Filters>) -> impl IntoView {
     );
 
     let track_row = move |track: Track| {
-        view! { cx, <TrackRow track=track/> }
+        view! { <TrackRow track=track/> }
     };
 
-    move || match async_data.read(cx) {
-        None => view! { cx, <p>"Loading..."</p> }.into_view(cx),
+    move || match async_data.get() {
+        None => view! { <p>"Loading..."</p> }.into_view(),
         Some(data) => match data {
-            Ok(tracks) => tracks
-                .into_iter()
-                .map(track_row)
-                .collect_view(cx)
-                .into_view(cx),
-            Err(e) => view! { cx, <p>"Error: " {e}</p> }.into_view(cx),
+            Ok(tracks) => tracks.into_iter().map(track_row).collect_view().into_view(),
+            Err(e) => view! { <p>"Error: " {e}</p> }.into_view(),
         },
     }
 }
 
 #[component]
-fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
+fn TrackRow(track: Track) -> impl IntoView {
     let on_play_track = move |ev: MouseEvent, location: String| {
         ev.prevent_default();
 
@@ -296,19 +294,19 @@ fn TrackRow(cx: Scope, track: Track) -> impl IntoView {
     };
 
     let track_play_element = match track.location {
-        Some(location) => view! { cx,
+        Some(location) => view! {
             <td>
                 <button on:click = move |ev| on_play_track(ev, location.clone())>
                     {"Play"}
                 </button>
             </td>
         },
-        None => view! { cx,
+        None => view! {
             <td>{"Not found"}</td>
         },
     };
 
-    view! { cx,
+    view! {
         <tr>
             {track_play_element}
             <td>{track.id}</td>
