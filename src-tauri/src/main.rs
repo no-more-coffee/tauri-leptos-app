@@ -113,12 +113,15 @@ fn fetch_tracks_command(
         params.push(artist.split_whitespace().collect::<Vec<&str>>().join("%"));
     };
 
-    /*
-    if let Some(bpm) = query.bpm {
-        query_parts.push("(LOWER( bpm ) LIKE '%' || (?) || '%')");
-        params.push(bpm.split_whitespace().collect::<Vec<&str>>().join("%"));
+    if let Some(bpm) = query.bpm_min {
+        query_parts.push("( bpm >= (?) )");
+        params.push(bpm.to_string());
     };
-    */
+ 
+    if let Some(bpm) = query.bpm_max {
+        query_parts.push("( bpm <= (?) )");
+        params.push(bpm.to_string());
+    };
 
     if let Some(location) = query.location {
         query_parts.push("(LOWER( location ) LIKE '%' || (?) || '%')");
@@ -133,6 +136,7 @@ fn fetch_tracks_command(
     let full_query = format!("SELECT * FROM tracks {} LIMIT (?);", wheres);
     params.push(query.limit.to_string());
 
+    println!("{full_query:?}, {params:?}");
     let mut statement = conn
         .prepare(full_query.as_str())
         .map_err(|err| err.to_string())?;

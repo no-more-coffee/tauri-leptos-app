@@ -5,7 +5,8 @@ pub struct QueryParams<'a> {
     pub limit: usize,
     pub title: Option<&'a str>,
     pub artist: Option<&'a str>,
-    pub bpm: Option<i64>,
+    pub bpm_min: Option<i64>,
+    pub bpm_max: Option<i64>,
     pub location: Option<&'a str>,
 }
 
@@ -15,7 +16,8 @@ impl<'a> Default for QueryParams<'a> {
             limit: 100,
             title: None,
             artist: None,
-            bpm: None,
+            bpm_min: None,
+            bpm_max: None,
             location: None,
         }
     }

@@ -64,19 +64,22 @@ struct QueryParamsArgs<'a> {
 }
 
 async fn fetch_tracks(
+    limit: usize,
     title: Option<&str>,
     artist: Option<&str>,
-    bpm: Option<i64>,
+    bpm_min: Option<i64>,
+    bpm_max: Option<i64>,
     location: Option<&str>,
 ) -> Result<Vec<Track>, String> {
     tauri::invoke(
         "fetch_tracks_command",
         &QueryParamsArgs {
             query: QueryParams {
-                limit: 10,
+                limit,
                 title,
                 artist,
-                bpm,
+                bpm_min,
+                bpm_max,
                 location,
             },
         },
@@ -179,9 +182,11 @@ fn LibraryView() -> impl IntoView {
 
 #[derive(Clone, PartialEq, Default, Debug)]
 struct State {
+    limit: String,
     title: String,
     artist: String,
-    bpm: String,
+    bpm_min: String,
+    bpm_max: String,
     location: String,
 }
 
@@ -198,8 +203,16 @@ fn TracksTable() -> impl IntoView {
         |state| state.artist.clone(),
         |state, v| state.artist = v,
     );
-    let (bpm_filter, set_bpm_filter) =
-        create_slice(state, |state| state.bpm.clone(), |state, v| state.bpm = v);
+    let (bpm_min_filter, set_bpm_min_filter) = create_slice(
+        state,
+        |state| state.bpm_min.clone(),
+        |state, v| state.bpm_min = v,
+    );
+    let (bpm_max_filter, set_bpm_max_filter) = create_slice(
+        state,
+        |state| state.bpm_max.clone(),
+        |state, v| state.bpm_max = v,
+    );
     let (location_filter, set_location_filter) = create_slice(
         state,
         |state| state.location.clone(),
@@ -239,9 +252,15 @@ fn TracksTable() -> impl IntoView {
                 <th>
                     <input type="number" min="1" max="500"
                         on:input=move |ev| {
-                            set_bpm_filter.set(event_target_value(&ev));
+                            set_bpm_min_filter.set(event_target_value(&ev));
                         }
-                        prop:value={move || bpm_filter.get()}
+                        prop:value={move || bpm_min_filter.get()}
+                    />
+                    <input type="number" min="1" max="500"
+                        on:input=move |ev| {
+                            set_bpm_max_filter.set(event_target_value(&ev));
+                        }
+                        prop:value={move || bpm_max_filter.get()}
                     />
                 </th>
                 <th>
@@ -263,23 +282,24 @@ fn TracksTable() -> impl IntoView {
 
 #[component]
 fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
-    // Add bpm conversion later
     let async_data = create_resource(
         move || state.get(),
         |value| async move {
-            let title_filter = match value.title.as_str() {
+            let title = match value.title.as_str() {
                 "" => None,
                 s => Some(s),
             };
-            let artist_filter = match value.artist.as_str() {
+            let artist = match value.artist.as_str() {
                 "" => None,
                 s => Some(s),
             };
-            let location_filter = match value.location.as_str() {
+            let bpm_min = value.bpm_min.parse::<i64>().ok();
+            let bpm_max = value.bpm_max.parse::<i64>().ok();
+            let location = match value.location.as_str() {
                 "" => None,
                 s => Some(s),
             };
-            fetch_tracks(title_filter, artist_filter, None, location_filter).await
+            fetch_tracks(100, title, artist, bpm_min, bpm_max, location).await
         },
     );
 
