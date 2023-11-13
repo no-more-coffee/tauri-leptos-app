@@ -188,14 +188,23 @@ struct State {
 #[component]
 fn TracksTable() -> impl IntoView {
     let state = create_rw_signal(State::default());
-    let (title_filter, set_title_filter) =
-        create_slice(state, |state| state.title.clone(), |state, v| state.title = v);
-    let (artist_filter, set_artist_filter) =
-        create_slice(state, |state| state.artist.clone(), |state, v| state.artist = v);
+    let (title_filter, set_title_filter) = create_slice(
+        state,
+        |state| state.title.clone(),
+        |state, v| state.title = v,
+    );
+    let (artist_filter, set_artist_filter) = create_slice(
+        state,
+        |state| state.artist.clone(),
+        |state, v| state.artist = v,
+    );
     let (bpm_filter, set_bpm_filter) =
         create_slice(state, |state| state.bpm.clone(), |state, v| state.bpm = v);
-    let (location_filter, set_location_filter) =
-        create_slice(state, |state| state.location.clone(), |state, v| state.location = v);
+    let (location_filter, set_location_filter) = create_slice(
+        state,
+        |state| state.location.clone(),
+        |state, v| state.location = v,
+    );
 
     view! {
         <table>
@@ -205,6 +214,7 @@ fn TracksTable() -> impl IntoView {
                 <th>{"Name"}</th>
                 <th>{"Artist"}</th>
                 <th>{"BPM"}</th>
+                <th>{"Location"}</th>
             </tr>
 
             <tr>
@@ -234,7 +244,15 @@ fn TracksTable() -> impl IntoView {
                         prop:value={move || bpm_filter.get()}
                     />
                 </th>
-            </tr>
+                <th>
+                    <input type="text"
+                        on:input=move |ev| {
+                            set_location_filter.set(event_target_value(&ev));
+                        }
+                        prop:value={move || location_filter.get()}
+                    />
+                </th>
+             </tr>
 
             <TracksComponent
                 state
@@ -257,7 +275,11 @@ fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
                 "" => None,
                 s => Some(s),
             };
-            fetch_tracks(title_filter, artist_filter, None, None).await
+            let location_filter = match value.location.as_str() {
+                "" => None,
+                s => Some(s),
+            };
+            fetch_tracks(title_filter, artist_filter, None, location_filter).await
         },
     );
 
@@ -293,7 +315,7 @@ fn TrackRow(track: Track) -> impl IntoView {
         })
     };
 
-    let track_play_element = match track.location {
+    let track_play_element = match track.location.clone() {
         Some(location) => view! {
             <td>
                 <button on:click = move |ev| on_play_track(ev, location.clone())>
@@ -313,6 +335,7 @@ fn TrackRow(track: Track) -> impl IntoView {
             <td>{track.name}</td>
             <td>{track.artist}</td>
             <td>{track.bpm}</td>
+            <td>{track.location}</td>
         </tr>
     }
 }
