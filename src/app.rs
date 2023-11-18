@@ -88,40 +88,37 @@ async fn fetch_tracks(
         .map_err(|e| e.to_string())
 }
 
+async fn fetch_library_loaded() -> Result<bool, String> {
+    tauri::invoke(
+        "is_library_loaded_command",
+        &NoArgs {},
+    )
+        .await
+        .map_err(|e| e.to_string())
+}
+
 #[component]
 pub fn App() -> impl IntoView {
-    let (library_loaded, set_library_loaded) = create_signal(false);
+    let (file_chosen, set_file_chosen) = create_signal(false);
+    let library_fetched = create_resource(
+        move || file_chosen.get(),
+        |_| async move { fetch_library_loaded().await },
+    );
 
-    async fn fetch_library_loaded() -> Result<bool, String> {
-        tauri::invoke(
-            "is_library_loaded_command",
-            &NoArgs {},
-        )
-            .await
-            .map_err(|e| e.to_string())
-    }
-    let library_fetched = create_resource(|| (), |_| async move { fetch_library_loaded().await });
+    let contents = move || match library_fetched.get() {
+        None => view! {
+            <p>"Loading..."</p>}.into_view(),
+        Some(Err(e)) => view! {
+            <p>"Error: " {e}</p>}.into_view(),
+        Some(Ok(true)) => view! {
+            <LibraryView/>}.into_view(),
+        Some(Ok(false)) => view! {
+            <ChooseLibrary set_library_loaded=set_file_chosen />}.into_view(),
+    };
 
     view! {
         <main class="container">
-            <Show
-                when=move || {library_loaded.get()}
-                fallback=move || view! {
-                    {move || match library_fetched.get() {
-                        None => view! { <p>"Loading..."</p> }.into_view(),
-                        Some(Err(e))=> view! { <p>"Error: " { e }</p> }.into_view(),
-                        Some(Ok(true))=> {
-                            set_library_loaded.set(true);
-                            view! {<LibraryView/>}.into_view()
-                        },
-                        Some(Ok(false))=> view! {
-                            <ChooseLibrary set_library_loaded=set_library_loaded/>
-                        }.into_view(),
-                    }}
-                }
-            >
-                <LibraryView/>
-            </Show>
+            { contents }
         </main>
     }
 }
