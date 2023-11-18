@@ -99,9 +99,8 @@ async fn fetch_library_loaded() -> Result<bool, String> {
 
 #[component]
 pub fn App() -> impl IntoView {
-    let (file_chosen, set_file_chosen) = create_signal(false);
     let library_fetched = create_resource(
-        move || file_chosen.get(),
+        || (),
         |_| async move { fetch_library_loaded().await },
     );
 
@@ -113,7 +112,7 @@ pub fn App() -> impl IntoView {
         Some(Ok(true)) => view! {
             <LibraryView/>}.into_view(),
         Some(Ok(false)) => view! {
-            <ChooseLibrary set_library_loaded=set_file_chosen />}.into_view(),
+            <ChooseLibrary library_fetched=library_fetched />}.into_view(),
     };
 
     view! {
@@ -124,7 +123,7 @@ pub fn App() -> impl IntoView {
 }
 
 #[component]
-fn ChooseLibrary(set_library_loaded: WriteSignal<bool>) -> impl IntoView {
+fn ChooseLibrary(library_fetched: Resource<(), Result<bool, String>>) -> impl IntoView {
     let (status, set_status) = create_signal(String::default());
 
     let choose_file = move |ev: MouseEvent| {
@@ -138,7 +137,7 @@ fn ChooseLibrary(set_library_loaded: WriteSignal<bool>) -> impl IntoView {
 
                     spawn_local(async move {
                         match parse_itunes_xml(picked_file).await {
-                            Ok(_) => set_library_loaded.set(true),
+                            Ok(_) => library_fetched.refetch(),
                             Err(e) => set_status.set(e),
                         };
                     });
@@ -395,3 +394,17 @@ fn SidePanel() -> impl IntoView {
 
     (0..items.get()).map(track_row).collect_view().into_view()
 }
+
+/*
+At src/app.rs:407:15, you access a signal or memo (defined at src/app.rs:401:30) outside a reactive tracking context. This might mean your app is not responding to changes in signal values in the way you expect.
+
+1. If this is inside a `view!` macro, make sure you are passing a function, not a value.
+  ❌ NO  <p>{x.get() * 2}</p>
+  ✅ YES <p>{move || x.get() * 2}</p>
+
+2. If it’s in the body of a component, try wrapping this access in a closure:
+  ❌ NO  let y = x.get() * 2
+  ✅ YES let y = move || x.get() * 2.
+
+3. If you’re *trying* to access the value without tracking, use `.get_untracked()` or `.with_untracked()` instead.
+ */
