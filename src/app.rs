@@ -92,11 +92,33 @@ async fn fetch_tracks(
 pub fn App() -> impl IntoView {
     let (library_loaded, set_library_loaded) = create_signal(false);
 
+    async fn fetch_library_loaded() -> Result<bool, String> {
+        tauri::invoke(
+            "is_library_loaded_command",
+            &NoArgs {},
+        )
+            .await
+            .map_err(|e| e.to_string())
+    }
+    let library_fetched = create_resource(|| (), |_| async move { fetch_library_loaded().await });
+
     view! {
         <main class="container">
             <Show
                 when=move || {library_loaded.get()}
-                fallback=move || view! { <ChooseLibrary set_library_loaded=set_library_loaded/> }
+                fallback=move || view! {
+                    {move || match library_fetched.get() {
+                        None => view! { <p>"Loading..."</p> }.into_view(),
+                        Some(Err(e))=> view! { <p>"Error: " { e }</p> }.into_view(),
+                        Some(Ok(true))=> {
+                            set_library_loaded.set(true);
+                            view! {<LibraryView/>}.into_view()
+                        },
+                        Some(Ok(false))=> view! {
+                            <ChooseLibrary set_library_loaded=set_library_loaded/>
+                        }.into_view(),
+                    }}
+                }
             >
                 <LibraryView/>
             </Show>

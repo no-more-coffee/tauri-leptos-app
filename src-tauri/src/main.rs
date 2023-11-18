@@ -94,6 +94,16 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
 }
 
 #[tauri::command]
+fn is_library_loaded_command(
+    app_state: State<AppState>,
+) -> Result<bool, String> {
+    let conn = app_state.db.lock().map_err(|err| err.to_string())?;
+    let mut stmt = conn.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name=(?);").map_err(|err| err.to_string())?;
+    let mut rows = stmt.query(["tracks"]).map_err(|err| err.to_string())?;
+    Ok(rows.next().map_err(|err| err.to_string())?.is_some())
+}
+
+#[tauri::command]
 fn fetch_tracks_command(
     query: QueryParams,
     app_state: State<AppState>,
@@ -187,6 +197,7 @@ fn main() {
             sink: Arc::new(sink),
         })
         .invoke_handler(tauri::generate_handler![
+            is_library_loaded_command,
             parse_itunes_xml_command,
             fetch_tracks_command,
             play_track_command,
