@@ -16,16 +16,36 @@
 
 .container {
   margin: 0;
-  padding-top: 10vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  gap: var(--s1); /* The space (margin) between the sidebar and non-sidebar */
   text-align: center;
 }
 
-.row {
+.main {
+  flex-grow: 3;
+  flex-shrink: 3;
+  flex-basis: auto;
+  width: 200px;
+  overflow: auto; /* Enable scrolling on overflow */
+  /* justify-content: center; */
+}
+
+.side {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  width: 100px;
+  /* justify-content: center; */
+}
+
+.queue {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.queue-item {
+  height: 40px;
 }
 
 a {
@@ -96,4 +116,3 @@ button {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
-

@@ -33,8 +33,8 @@ async fn parse_itunes_xml(lib_path: String) -> Result<(), String> {
         "parse_itunes_xml_command",
         &ParseCommandArgs { path: &lib_path },
     )
-    .await
-    .map_err(|e| e.to_string())
+        .await
+        .map_err(|e| e.to_string())
 }
 
 async fn play_track(lib_path: &str) -> Result<(), String> {
@@ -84,8 +84,8 @@ async fn fetch_tracks(
             },
         },
     )
-    .await
-    .map_err(|e| e.to_string())
+        .await
+        .map_err(|e| e.to_string())
 }
 
 #[component]
@@ -131,11 +131,11 @@ fn ChooseLibrary(set_library_loaded: WriteSignal<bool>) -> impl IntoView {
     };
 
     view! {
-        <main class="container">
-            <p><b>{ move || status.get() }</b></p>
+        <div class="pick-file">
+            <p class="status"><b>{ move || status.get() }</b></p>
 
             <button on:click=choose_file>{"Choose Library"}</button>
-        </main>
+        </div>
     }
 }
 
@@ -167,8 +167,8 @@ fn LibraryView() -> impl IntoView {
     };
 
     view! {
-        <main class="container">
-            <p><b>{ move || status.get() }</b></p>
+        <div class="main">
+            <p class="status"><b>{ move || status.get() }</b></p>
 
             <span>
                 <button on:click=on_pause>{"⏯️"}</button>
@@ -176,7 +176,13 @@ fn LibraryView() -> impl IntoView {
             </span>
 
             <TracksTable/>
-        </main>
+        </div>
+
+        <div class="side">
+            <div class="queue">
+                <SidePanel/>
+            </div>
+        </div>
     }
 }
 
@@ -358,4 +364,15 @@ fn TrackRow(track: Track) -> impl IntoView {
             <td>{track.location}</td>
         </tr>
     }
+}
+
+#[component]
+fn SidePanel() -> impl IntoView {
+    let (items, set_items) = create_signal(5);
+
+    let track_row = move |track: u64| {
+        view! { <div class="queue-item">Hello { track } </div> }
+    };
+
+    (0..items.get()).map(track_row).collect_view().into_view()
 }

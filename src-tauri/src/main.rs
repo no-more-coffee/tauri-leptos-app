@@ -73,7 +73,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
         )",
         (), // empty list of parameters.
     )
-    .map_err(|err| err.to_string())?;
+        .map_err(|err| err.to_string())?;
 
     for (id, track) in &library.tracks {
         conn.execute(
@@ -88,7 +88,7 @@ fn parse_itunes_xml_command(path: &str, app_state: State<AppState>) -> Result<()
             );",
             (id, &track.name, &track.artist, &track.bpm, &track.location),
         )
-        .map_err(|err| err.to_string())?;
+            .map_err(|err| err.to_string())?;
     }
     Ok(())
 }
@@ -117,7 +117,7 @@ fn fetch_tracks_command(
         query_parts.push("( bpm >= (?) )");
         params.push(bpm.to_string());
     };
- 
+
     if let Some(bpm) = query.bpm_max {
         query_parts.push("( bpm <= (?) )");
         params.push(bpm.to_string());
