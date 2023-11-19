@@ -16,21 +16,9 @@
 
 .container {
   margin: 0;
-  /* justify-content: center; */
-  gap: var(--s1); /* The space (margin) between the sidebar and non-sidebar */
-  text-align: center;
-
-  /*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size
-    and then moved into place and padded with negative margin and padding*/
+  justify-content: center;
   display: flex;
-  overflow: auto;
-  height: 100vh;
-  margin-top: -100px;
-  padding-top: 100px;
-  position: relative;
-  width: 100%;
-  backface-visibility: hidden;
-  will-change: overflow;
+  height: 100vh; /* Enables independent scroll of flex items */
 }
 
 /*All the scrollable sections should overflow and be whatever height they need to be.
@@ -39,11 +27,8 @@
 */
 .main,
 .side {
-    overflow: auto;
-    height: auto;
-    padding: .5rem;
+    overflow: scroll;
     -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;
 }
 
 .main {
@@ -51,7 +36,6 @@
   flex-shrink: 3;
   flex-basis: auto;
   width: 200px;
-  overflow: auto; /* Enable scrolling on overflow */
   /* justify-content: center; */
 }
 
