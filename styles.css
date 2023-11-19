@@ -27,8 +27,8 @@
 */
 .main,
 .side {
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .main {
@@ -45,15 +45,21 @@
   flex-basis: auto;
   width: 100px;
   /* justify-content: center; */
-}
-
-.queue {
   display: flex;
   flex-direction: column;
+  height: 100vh; /* Enables independent scroll of flex items */
+}
+
+.queue,
+.history {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 }
 
 .queue-item {
-  flex-grow: 1;
+  flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 0;
   height: 60px;

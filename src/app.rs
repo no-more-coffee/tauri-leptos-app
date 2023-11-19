@@ -198,9 +198,7 @@ fn LibraryView() -> impl IntoView {
         </div>
 
         <div class="side">
-            <div class="queue">
-                <SidePanel queue=queue set_queue=set_queue/>
-            </div>
+            <SidePanel queue=queue set_queue=set_queue/>
         </div>
     }
 }
@@ -402,8 +400,22 @@ fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) 
         <div class="queue-item"><p>{ track.name }</p></div>
     };
 
-    move || queue.get()
+    let to_go = move || queue.get()
         .into_iter()
         .map(track_view)
-        .collect_view()
+        .collect_view();
+
+    view! {
+        <div class="history">
+            { to_go }
+        </div>
+
+        <div class="current">
+            <div class="queue-item"><p>{ "hello" }</p></div>
+        </div>
+
+        <div class="queue">
+            { to_go }
+        </div>
+    }
 }
