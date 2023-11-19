@@ -160,6 +160,7 @@ fn ChooseLibrary(library_fetched: Resource<(), Result<bool, String>>) -> impl In
 #[component]
 fn LibraryView() -> impl IntoView {
     let (status, set_status) = create_signal(String::default());
+    let (queue, set_queue) = create_signal(Vec::<Track>::default());
 
     let on_pause = move |ev: MouseEvent| {
         ev.prevent_default();
@@ -193,12 +194,12 @@ fn LibraryView() -> impl IntoView {
                 <button on:click=on_stop>{"⏹️"}</button>
             </span>
 
-            <TracksTable/>
+            <TracksTable set_queue=set_queue/>
         </div>
 
         <div class="side">
             <div class="queue">
-                <SidePanel/>
+                <SidePanel queue=queue set_queue=set_queue/>
             </div>
         </div>
     }
@@ -215,7 +216,7 @@ struct State {
 }
 
 #[component]
-fn TracksTable() -> impl IntoView {
+fn TracksTable(set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
     let state = create_rw_signal(State::default());
     let (title_filter, set_title_filter) = create_slice(
         state,
@@ -246,7 +247,7 @@ fn TracksTable() -> impl IntoView {
     view! {
         <table>
             <tr>
-                <th>{"Play"}</th>
+                <th>{"Controls"}</th>
                 <th>{"Track ID"}</th>
                 <th>{"Name"}</th>
                 <th>{"Artist"}</th>
@@ -299,13 +300,14 @@ fn TracksTable() -> impl IntoView {
 
             <TracksComponent
                 state
+                set_queue
             />
         </table>
     }
 }
 
 #[component]
-fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
+fn TracksComponent(state: RwSignal<State>, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
     let async_data = create_resource(
         move || state.get(),
         |value| async move {
@@ -328,7 +330,7 @@ fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
     );
 
     let track_row = move |track: Track| {
-        view! { <TrackRow track=track/> }
+        view! { <TrackRow track set_queue/> }
     };
 
     move || match async_data.get() {
@@ -341,7 +343,7 @@ fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
 }
 
 #[component]
-fn TrackRow(track: Track) -> impl IntoView {
+fn TrackRow(track: Track, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
     let on_play_track = move |ev: MouseEvent, location: String| {
         ev.prevent_default();
 
@@ -372,9 +374,19 @@ fn TrackRow(track: Track) -> impl IntoView {
         },
     };
 
+    let track_clone = track.clone();
     view! {
         <tr>
-            {track_play_element}
+            // {track_play_element}
+            <td>
+                <button on:click=move |_|
+                    set_queue.update(|queue|
+                        queue.push(track_clone.clone())
+                    )
+                >
+                    "Add"
+                </button>
+            </td>
             <td>{track.id}</td>
             <td>{track.name}</td>
             <td>{track.artist}</td>
@@ -385,12 +397,13 @@ fn TrackRow(track: Track) -> impl IntoView {
 }
 
 #[component]
-fn SidePanel() -> impl IntoView {
-    let (items, set_items) = create_signal(5);
-
-    let track_row = move |track: u64| {
-        view! { <div class="queue-item">Hello { track } </div> }
+fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+    let track_view = |track: Track| view! {
+        <div class="queue-item"><p>{ track.name }</p></div>
     };
 
-    (0..items.get()).map(track_row).collect_view().into_view()
+    move || queue.get()
+        .into_iter()
+        .map(track_view)
+        .collect_view()
 }
