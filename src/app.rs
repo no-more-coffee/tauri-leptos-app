@@ -159,41 +159,10 @@ fn ChooseLibrary(library_fetched: Resource<(), Result<bool, String>>) -> impl In
 
 #[component]
 fn LibraryView() -> impl IntoView {
-    let (status, set_status) = create_signal(String::default());
     let (queue, set_queue) = create_signal(Vec::<Track>::default());
-
-    let on_pause = move |ev: MouseEvent| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match pause().await {
-                Ok(true) => set_status.set("Paused".to_string()),
-                Ok(false) => set_status.set("Playing".to_string()),
-                Err(e) => set_status.set(e),
-            }
-        })
-    };
-
-    let on_stop = move |ev: MouseEvent| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match stop().await {
-                Ok(_) => set_status.set("Stopped".to_string()),
-                Err(e) => set_status.set(e),
-            }
-        })
-    };
 
     view! {
         <div class="main">
-            <p class="status"><b>{ move || status.get() }</b></p>
-
-            <span>
-                <button on:click=on_pause>{"⏯️"}</button>
-                <button on:click=on_stop>{"⏹️"}</button>
-            </span>
-
             <TracksTable set_queue=set_queue/>
         </div>
 
@@ -342,47 +311,16 @@ fn TracksComponent(state: RwSignal<State>, set_queue: WriteSignal<Vec<Track>>) -
 
 #[component]
 fn TrackRow(track: Track, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
-    let on_play_track = move |ev: MouseEvent, location: String| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match play_track(&location).await {
-                Ok(_) => {
-                    // set_status.set("Playing".to_string())
-                    log!("Should be playing");
-                }
-                Err(e) => {
-                    log!("Play track error: {}", e);
-                    // set_status.set(e)
-                }
-            }
-        })
-    };
-
-    let track_play_element = match track.location.clone() {
-        Some(location) => view! {
-            <td>
-                <button on:click = move |ev| on_play_track(ev, location.clone())>
-                    {"Play"}
-                </button>
-            </td>
-        },
-        None => view! {
-            <td>{"Not found"}</td>
-        },
-    };
-
     let track_clone = track.clone();
     view! {
         <tr>
-            // {track_play_element}
             <td>
                 <button on:click=move |_|
                     set_queue.update(|queue|
                         queue.push(track_clone.clone())
                     )
                 >
-                    "Add"
+                    "➕"
                 </button>
             </td>
             <td>{track.id}</td>
@@ -396,6 +334,9 @@ fn TrackRow(track: Track, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
 
 #[component]
 fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+    let (status, set_status) = create_signal(String::default());
+    let (current, set_current) = create_signal(None);
+
     let track_view = |track: Track| view! {
         <div class="queue-item"><p>{ track.name }</p></div>
     };
@@ -405,13 +346,82 @@ fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) 
         .map(track_view)
         .collect_view();
 
+    let on_pause = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match pause().await {
+                Ok(true) => set_status.set("Paused".to_string()),
+                Ok(false) => set_status.set("Playing".to_string()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
+    let on_stop = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match stop().await {
+                Ok(_) => set_status.set("Stopped".to_string()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
+    let on_next = move |ev: MouseEvent| {
+        ev.prevent_default();
+        let q = queue.get();
+        let next_track = q.into_iter().next();
+        set_current.set(next_track.clone());
+        match next_track {
+            Some(track) => {
+                set_queue.update(|queue| { queue.remove(0); });
+
+                match track.location {
+                    Some(location) => spawn_local(async move {
+                        match play_track(&location).await {
+                            Ok(_) => {
+                                // set_status.set("Playing".to_string())
+                                log!("Should be playing");
+                            }
+                            Err(e) => {
+                                log!("Play track error: {}", e);
+                                // set_status.set(e)
+                            }
+                        }
+                    }),
+                    None => log!("HERE 1")
+                }
+            }
+            None => log!("HERE 2")
+        }
+    };
+
     view! {
         <div class="history">
             { to_go }
         </div>
 
         <div class="current">
-            <div class="queue-item"><p>{ "hello" }</p></div>
+            <div class="queue-item">
+                <p class="status"><b>{ move || status.get() }</b></p>
+
+                <span>
+                    <button on:click=on_next>{"⏭️"}</button>
+                    <button on:click=on_pause>{"⏯️"}</button>
+                    <button on:click=on_stop>{"⏹️"}</button>
+                </span>
+
+                {move || match current.get() {
+                    Some(track) => view! {
+                        <p>{track.name}</p>
+                    },
+                    None => view! {
+                        <p>{"Not found"}</p>
+                    },
+                }}
+            </div>
         </div>
 
         <div class="queue">
