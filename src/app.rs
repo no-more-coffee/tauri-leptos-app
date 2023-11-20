@@ -1,8 +1,8 @@
+use std::collections::VecDeque;
 use std::path::PathBuf;
 
-use leptos::ev::MouseEvent;
-use leptos::logging::log;
 use leptos::*;
+use leptos::ev::MouseEvent;
 use serde::Serialize;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
@@ -159,7 +159,7 @@ fn ChooseLibrary(library_fetched: Resource<(), Result<bool, String>>) -> impl In
 
 #[component]
 fn LibraryView() -> impl IntoView {
-    let (queue, set_queue) = create_signal(Vec::<Track>::default());
+    let (queue, set_queue) = create_signal(VecDeque::<Track>::default());
 
     view! {
         <div class="main">
@@ -183,7 +183,7 @@ struct State {
 }
 
 #[component]
-fn TracksTable(set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+fn TracksTable(set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
     let state = create_rw_signal(State::default());
     let (title_filter, set_title_filter) = create_slice(
         state,
@@ -274,7 +274,7 @@ fn TracksTable(set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
 }
 
 #[component]
-fn TracksComponent(state: RwSignal<State>, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+fn TracksComponent(state: RwSignal<State>, set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
     let async_data = create_resource(
         move || state.get(),
         |value| async move {
@@ -310,14 +310,14 @@ fn TracksComponent(state: RwSignal<State>, set_queue: WriteSignal<Vec<Track>>) -
 }
 
 #[component]
-fn TrackRow(track: Track, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+fn TrackRow(track: Track, set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
     let track_clone = track.clone();
     view! {
         <tr>
             <td>
                 <button on:click=move |_|
                     set_queue.update(|queue|
-                        queue.push(track_clone.clone())
+                        queue.push_back(track_clone.clone())
                     )
                 >
                     "➕"
@@ -333,15 +333,21 @@ fn TrackRow(track: Track, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
 }
 
 #[component]
-fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) -> impl IntoView {
+fn SidePanel(queue: ReadSignal<VecDeque<Track>>, set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
     let (status, set_status) = create_signal(String::default());
-    let (current, set_current) = create_signal(None);
+    let (current, set_current) = create_signal(Option::<Track>::None);
+    let (history, set_history) = create_signal(Vec::<Track>::default());
 
     let track_view = |track: Track| view! {
         <div class="queue-item"><p>{ track.name }</p></div>
     };
 
-    let to_go = move || queue.get()
+    let queue_view = move || queue.get()
+        .into_iter()
+        .map(track_view)
+        .collect_view();
+
+    let history_view = move || history.get()
         .into_iter()
         .map(track_view)
         .collect_view();
@@ -361,6 +367,11 @@ fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) 
     let on_stop = move |ev: MouseEvent| {
         ev.prevent_default();
 
+        if let Some(track) = current.get() {
+            set_history.update(|history| history.push(track))
+        };
+        set_current.set(None);
+
         spawn_local(async move {
             match stop().await {
                 Ok(_) => set_status.set("Stopped".to_string()),
@@ -371,36 +382,42 @@ fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) 
 
     let on_next = move |ev: MouseEvent| {
         ev.prevent_default();
-        let q = queue.get();
-        let next_track = q.into_iter().next();
-        set_current.set(next_track.clone());
-        match next_track {
-            Some(track) => {
-                set_queue.update(|queue| { queue.remove(0); });
 
-                match track.location {
+        if let Some(track) = current.get() {
+            set_history.update(|history| history.push(track))
+        };
+
+        match queue.get().front() {
+            None => {
+                set_current.set(None);
+
+                spawn_local(async move {
+                    match stop().await {
+                        Ok(_) => set_status.set("Stopped".to_string()),
+                        Err(e) => set_status.set(e),
+                    }
+                })
+            }
+            Some(track) => {
+                set_current.set(Some((*track).clone()));
+                set_queue.update(|queue| { queue.pop_front(); });
+
+                match (*track).clone().location {
+                    None => set_status.set("Not found".to_string()),
                     Some(location) => spawn_local(async move {
                         match play_track(&location).await {
-                            Ok(_) => {
-                                // set_status.set("Playing".to_string())
-                                log!("Should be playing");
-                            }
-                            Err(e) => {
-                                log!("Play track error: {}", e);
-                                // set_status.set(e)
-                            }
+                            Ok(_) => set_status.set("Playing".to_string()),
+                            Err(e) => set_status.set(e),
                         }
                     }),
-                    None => log!("HERE 1")
                 }
             }
-            None => log!("HERE 2")
         }
     };
 
     view! {
         <div class="history">
-            { to_go }
+            { history_view }
         </div>
 
         <div class="current">
@@ -425,7 +442,7 @@ fn SidePanel(queue: ReadSignal<Vec<Track>>, set_queue: WriteSignal<Vec<Track>>) 
         </div>
 
         <div class="queue">
-            { to_go }
+            { queue_view }
         </div>
     }
 }
