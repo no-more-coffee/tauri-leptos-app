@@ -16,10 +16,19 @@
 
 .container {
   margin: 0;
+  justify-content: center;
   display: flex;
-  /* justify-content: center; */
-  gap: var(--s1); /* The space (margin) between the sidebar and non-sidebar */
-  text-align: center;
+  height: 100vh; /* Enables independent scroll of flex items */
+}
+
+/*All the scrollable sections should overflow and be whatever height they need to be.
+ As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+ WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.main,
+.side {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .main {
@@ -27,7 +36,6 @@
   flex-shrink: 3;
   flex-basis: auto;
   width: 200px;
-  overflow: auto; /* Enable scrolling on overflow */
   /* justify-content: center; */
 }
 
@@ -37,15 +45,25 @@
   flex-basis: auto;
   width: 100px;
   /* justify-content: center; */
-}
-
-.queue {
   display: flex;
   flex-direction: column;
+  height: 100vh; /* Enables independent scroll of flex items */
+}
+
+.queue,
+.history {
+  flex-grow: 1;
+  flex-basis: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
 }
 
 .queue-item {
-  height: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 0;
+  height: 70px;
 }
 
 a {

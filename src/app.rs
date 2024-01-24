@@ -1,8 +1,8 @@
+use std::collections::VecDeque;
 use std::path::PathBuf;
 
-use leptos::ev::MouseEvent;
-use leptos::logging::log;
 use leptos::*;
+use leptos::ev::MouseEvent;
 use serde::Serialize;
 use tauri_sys::dialog::FileDialogBuilder;
 use tauri_sys::tauri;
@@ -159,47 +159,15 @@ fn ChooseLibrary(library_fetched: Resource<(), Result<bool, String>>) -> impl In
 
 #[component]
 fn LibraryView() -> impl IntoView {
-    let (status, set_status) = create_signal(String::default());
-
-    let on_pause = move |ev: MouseEvent| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match pause().await {
-                Ok(true) => set_status.set("Paused".to_string()),
-                Ok(false) => set_status.set("Playing".to_string()),
-                Err(e) => set_status.set(e),
-            }
-        })
-    };
-
-    let on_stop = move |ev: MouseEvent| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match stop().await {
-                Ok(_) => set_status.set("Stopped".to_string()),
-                Err(e) => set_status.set(e),
-            }
-        })
-    };
+    let (queue, set_queue) = create_signal(VecDeque::<Track>::default());
 
     view! {
         <div class="main">
-            <p class="status"><b>{ move || status.get() }</b></p>
-
-            <span>
-                <button on:click=on_pause>{"⏯️"}</button>
-                <button on:click=on_stop>{"⏹️"}</button>
-            </span>
-
-            <TracksTable/>
+            <TracksTable set_queue=set_queue/>
         </div>
 
         <div class="side">
-            <div class="queue">
-                <SidePanel/>
-            </div>
+            <SidePanel queue=queue set_queue=set_queue/>
         </div>
     }
 }
@@ -215,7 +183,7 @@ struct State {
 }
 
 #[component]
-fn TracksTable() -> impl IntoView {
+fn TracksTable(set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
     let state = create_rw_signal(State::default());
     let (title_filter, set_title_filter) = create_slice(
         state,
@@ -246,7 +214,7 @@ fn TracksTable() -> impl IntoView {
     view! {
         <table>
             <tr>
-                <th>{"Play"}</th>
+                <th>{"Controls"}</th>
                 <th>{"Track ID"}</th>
                 <th>{"Name"}</th>
                 <th>{"Artist"}</th>
@@ -299,13 +267,17 @@ fn TracksTable() -> impl IntoView {
 
             <TracksComponent
                 state
+                set_queue
             />
         </table>
     }
 }
 
 #[component]
-fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
+fn TracksComponent(
+    state: RwSignal<State>,
+    set_queue: WriteSignal<VecDeque<Track>>,
+) -> impl IntoView {
     let async_data = create_resource(
         move || state.get(),
         |value| async move {
@@ -328,7 +300,7 @@ fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
     );
 
     let track_row = move |track: Track| {
-        view! { <TrackRow track=track/> }
+        view! { <TrackRow track set_queue/> }
     };
 
     move || match async_data.get() {
@@ -341,40 +313,19 @@ fn TracksComponent(state: RwSignal<State>) -> impl IntoView {
 }
 
 #[component]
-fn TrackRow(track: Track) -> impl IntoView {
-    let on_play_track = move |ev: MouseEvent, location: String| {
-        ev.prevent_default();
-
-        spawn_local(async move {
-            match play_track(&location).await {
-                Ok(_) => {
-                    // set_status.set("Playing".to_string())
-                    log!("Should be playing");
-                }
-                Err(e) => {
-                    log!("Play track error: {}", e);
-                    // set_status.set(e)
-                }
-            }
-        })
-    };
-
-    let track_play_element = match track.location.clone() {
-        Some(location) => view! {
-            <td>
-                <button on:click = move |ev| on_play_track(ev, location.clone())>
-                    {"Play"}
-                </button>
-            </td>
-        },
-        None => view! {
-            <td>{"Not found"}</td>
-        },
-    };
-
+fn TrackRow(track: Track, set_queue: WriteSignal<VecDeque<Track>>) -> impl IntoView {
+    let track_clone = track.clone();
     view! {
         <tr>
-            {track_play_element}
+            <td>
+                <button on:click=move |_|
+                    set_queue.update(|queue|
+                        queue.push_back(track_clone.clone())
+                    )
+                >
+                    "+"
+                </button>
+            </td>
             <td>{track.id}</td>
             <td>{track.name}</td>
             <td>{track.artist}</td>
@@ -385,14 +336,119 @@ fn TrackRow(track: Track) -> impl IntoView {
 }
 
 #[component]
-fn SidePanel() -> impl IntoView {
-    let (items, set_items) = create_signal(5);
+fn SidePanel(
+    queue: ReadSignal<VecDeque<Track>>,
+    set_queue: WriteSignal<VecDeque<Track>>,
+) -> impl IntoView {
+    let (status, set_status) = create_signal(String::default());
+    let (current, set_current) = create_signal(Option::<Track>::None);
+    let (history, set_history) = create_signal(Vec::<Track>::default());
 
-    let track_row = move |track: u64| {
-        view! { <div class="queue-item">Hello { track } </div> }
+    let track_view = |track: Track| {
+        view! {
+            <div class="queue-item"><p>{ track.name }</p></div>
+        }
     };
 
-    (0..items.get()).map(track_row).collect_view().into_view()
+    let queue_view = move || queue.get().into_iter().map(track_view).collect_view();
+
+    let history_view = move || history.get().into_iter().map(track_view).collect_view();
+
+    let on_pause = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        spawn_local(async move {
+            match pause().await {
+                Ok(true) => set_status.set("Paused".to_string()),
+                Ok(false) => {
+                    let status = current.get()
+                        .and_then(|track| track.name)
+                        .unwrap_or_default();
+                    set_status.set(status)
+                }
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
+    let on_stop = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        if let Some(track) = current.get() {
+            set_history.update(|history| history.push(track))
+        };
+        set_current.set(None);
+
+        spawn_local(async move {
+            match stop().await {
+                Ok(_) => set_status.set(String::default()),
+                Err(e) => set_status.set(e),
+            }
+        })
+    };
+
+    let on_next = move |ev: MouseEvent| {
+        ev.prevent_default();
+
+        if let Some(track) = current.get() {
+            set_history.update(|history| history.push(track))
+        };
+
+        match queue.get().front() {
+            None => {
+                set_current.set(None);
+
+                spawn_local(async move {
+                    match stop().await {
+                        Ok(_) => set_status.set(String::default()),
+                        Err(e) => set_status.set(e),
+                    }
+                })
+            }
+            Some(track) => {
+                set_current.set(Some((*track).clone()));
+                set_queue.update(|queue| {
+                    queue.pop_front();
+                });
+
+                match (*track).clone().location {
+                    None => set_status.set("Not found".to_string()),
+                    Some(location) => spawn_local(async move {
+                        match play_track(&location).await {
+                            Ok(_) => {
+                                let status = current.get()
+                                    .and_then(|track| track.name)
+                                    .unwrap_or_default();
+                                set_status.set(status)
+                            }
+                            Err(e) => set_status.set(e),
+                        }
+                    }),
+                }
+            }
+        }
+    };
+
+    view! {
+        <div class="history">
+            { history_view }
+        </div>
+
+        <div class="queue-item" style="display: flex; flex-direction: row;">
+            <div class="controls" style="display: flex; flex-direction: column;">
+                <div on:click=on_next>{"⏭️"}</div>
+                <div on:click=on_pause>{"⏯️"}</div>
+                <div on:click=on_stop>{"⏹️"}</div>
+            </div>
+            <div class="status" style="overflow: scroll">
+                <p>{ move || status.get() }</p>
+            </div>
+        </div>
+
+        <div class="queue">
+            { queue_view }
+        </div>
+    }
 }
 
 /*
